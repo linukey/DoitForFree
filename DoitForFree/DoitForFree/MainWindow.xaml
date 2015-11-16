@@ -4,8 +4,78 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DoitForFree"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:UI="clr-namespace:DoitForFree.UI"
+        mc:Ignorable="d" Icon="Images/icon.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MaxHeight="660" MinHeight="660" MaxWidth="1100" MinWidth="1100"
+        Title="MainWindow" Height="660" Width="1100" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+  
+    <!--资源-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="UI/ResourceDirectory.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="245"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--顶栏菜单-->
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="#1162A0">
+            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="5,5,15,5">
+                <UI:ImageButton x:Name="btnClose" Width="27" Height="26" ImagePath="Images/关闭.png" Template="{StaticResource imageButton}" Click="btnClose_Click"/>
+                <UI:ImageButton x:Name="btnMin" Width="27" Height="26" ImagePath="Images/最小化.png" Template="{StaticResource imageButton}" Click="btnMin_Click" />
+                <UI:ImageButton x:Name="btnMenu" Width="27" Height="26" ImagePath="Images/设置菜单.png" Template="{StaticResource imageButton}" Click="btnMenu_Click">
+                    <UI:ImageButton.ContextMenu>
+                        <ContextMenu Name="downMenu" Width="200" Placement="MousePoint" BorderBrush="AliceBlue" BorderThickness="1">
+                            <MenuItem Header="设置" Template="{StaticResource downMenu}"/>
+                            <MenuItem Header="计划于回顾" Template="{StaticResource downMenu}"/>
+                            <MenuItem Header="新增" Template="{StaticResource downMenu}"/>
+                            <MenuItem Header="退出账户" Template="{StaticResource downMenu}"/>
+                        </ContextMenu>
+                    </UI:ImageButton.ContextMenu>
+                </UI:ImageButton>
+            </StackPanel>
+        </Grid>
+        
+        <!--右侧菜单-->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Template="{StaticResource scrollviewer}">
+                <StackPanel Orientation="Vertical" Background="#F2F3F5">
+                    <UI:MenuButton x:Name="menu收集" Height="30" Text="收集" Template="{StaticResource MenuButtonTitle}"/>
+                    <UI:MenuButton x:Name="menu收集箱" Height="30" Text="收集箱" ImagePath="Images/收集箱.png" Template="{StaticResource MenuButton}"/>
+                    <Separator />
+                    <UI:MenuButton x:Name="menu聚焦" Height="30" Text="聚焦" Template="{StaticResource MenuButtonTitle}" />
+                    <UI:MenuButton x:Name="menu今日待办" Height="30" Text="今日待办" ImagePath="Images/今日待办.png" Template="{StaticResource MenuButton}" />
+                    <UI:MenuButton x:Name="menu正在行动" Height="30" Text="正在行动" ImagePath="Images/正在行动.png" Template="{StaticResource MenuButton}" />
+                    <UI:MenuButton x:Name="menu过期" Height="30" Text="过期" ImagePath="Images/过期.png" Template="{StaticResource MenuButton}" />
+                    <Separator />
+                    <UI:MenuButton x:Name="menu所有项目" Height="30" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click"/>
+                    <Separator />
+                    <UI:MenuButton x:Name="menu所有目标" Height="30" Text="所有目标" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有目标_Click"/>
+                    <Separator />
+                    <UI:MenuButton x:Name="menu所有情境" Height="30" Text="所有情境" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有情境_Click"/>
+                    <Separator />
+                    <UI:MenuButton x:Name="menu已完成" Height="30" Text="已完成" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu已完成_Click"/>
+                    <Separator />
+                    <UI:MenuButton x:Name="menu垃圾箱" Height="30" Text="垃圾箱" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu垃圾箱_Click"/>
+                    <Separator />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="1" Background="#FFFFFF">
+        </Grid>
+        
+        <Grid Grid.Row="2" Grid.Column="2" Background="#FFFFFF">
+            <Separator Margin="0,0,0,59" />
+        </Grid>
     </Grid>
 </Window>
