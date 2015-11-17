@@ -96,11 +96,11 @@
                         <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Rectangle.Fill>
                 </Rectangle>
-                <TextBox x:Name="tbx" Height="34" Width="245" Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent}}" BorderThickness="0" Padding="10" FontSize="12" />
+                <TextBox x:Name="tbx" Height="40" Width="245" Text="{Binding Text,RelativeSource={RelativeSource TemplatedParent}}" BorderThickness="0" Padding="10" FontSize="12" />
             </StackPanel>
         </Border>
     </ControlTemplate>
-    <ControlTemplate x:Key="LoginTbx2" TargetType="local:PwdButton">
+    <ControlTemplate x:Key="LoginTbx2" TargetType="local:MenuButton">
         <Border BorderThickness="1" BorderBrush="Gray">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Rectangle Height="18" Width="18" Margin="2">
@@ -108,7 +108,7 @@
                         <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Rectangle.Fill>
                 </Rectangle>
-                <PasswordBox x:Name="tbx" Height="34" Width="245" PasswordChar="*" Password="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" /> <!--="{Binding Text,RelativeSource={RelativeSource TemplatedParent}}"--> <!--BorderThickness="0" Padding="10" FontSize="12"-->
+                <PasswordBox x:Name="tbx" Height="34" Width="245" PasswordChar="*" Password="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" />
             </StackPanel>
         </Border>
     </ControlTemplate>

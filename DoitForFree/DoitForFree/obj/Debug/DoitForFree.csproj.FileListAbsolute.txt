@@ -17,7 +17,6 @@ C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitFo
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree.pdb
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\bin\Debug\DoitForFree.exe
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\bin\Debug\DoitForFree.pdb
-C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree.csprojResolveAssemblyReference.cache
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\MainWindow.g.cs
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\App.g.cs
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree_MarkupCompile.cache
@@ -30,3 +29,6 @@ C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\Genera
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\ResourceDirectory.baml
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Login.g.cs
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Login.baml
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Register.g.cs
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Register.baml
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree.csprojResolveAssemblyReference.cache

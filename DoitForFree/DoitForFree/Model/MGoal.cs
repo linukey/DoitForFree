@@ -13,7 +13,7 @@ namespace DoitForFree.Model
         private string mDiscription;
         private DateTime mStartDate;
         private DateTime mEndDate;
-        private int mCycle;
+        private string mUser;
         #endregion
 
         #region 字段
@@ -69,28 +69,28 @@ namespace DoitForFree.Model
             }
         }
 
-        public int MCycle
+        public string MUser
         {
             get
             {
-                return mCycle;
+                return mUser;
             }
 
             set
             {
-                mCycle = value;
+                mUser = value;
             }
         }
         #endregion
 
         public MGoal() { }
-        public MGoal(string name, string discription, DateTime startdate, DateTime enddate, int cycle)
+        public MGoal(string name, string discription, DateTime startdate, DateTime enddate, string user)
         {
             this.mName = name;
             this.mDiscription = discription;
             this.mStartDate = startdate;
             this.mEndDate = enddate;
-            this.mCycle = cycle;
+            this.MUser = user;
         }
     }
 }

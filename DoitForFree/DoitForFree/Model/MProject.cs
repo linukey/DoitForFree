@@ -13,7 +13,7 @@ namespace DoitForFree.Model
         private string mDiscription;
         private DateTime mStartDate;
         private DateTime mEndDate;
-        private int mCycle;
+        private string mUser;
         #endregion
 
         #region 属性
@@ -65,28 +65,29 @@ namespace DoitForFree.Model
                 mEndDate = value;
             }
         }
-        public int MCycle
+
+        public string MUser
         {
             get
             {
-                return mCycle;
+                return mUser;
             }
 
             set
             {
-                mCycle = value;
+                mUser = value;
             }
         }
         #endregion
 
         public MProject() { }
-        public MProject(string name, string discription, DateTime startdate, DateTime enddate, int cycle)
+        public MProject(string name, string discription, DateTime startdate, DateTime enddate, string user)
         {
             this.mName = name;
             this.mDiscription = discription;
             this.mStartDate = startdate;
             this.mEndDate = enddate;
-            this.mCycle = cycle;
+            this.mUser = user;
         }
     }
 }

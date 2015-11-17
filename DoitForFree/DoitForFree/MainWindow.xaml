@@ -58,14 +58,19 @@
                     <UI:MenuButton x:Name="menu过期" Height="30" Text="过期" ImagePath="Images/过期.png" Template="{StaticResource MenuButton}" />
                     <Separator />
                     <UI:MenuButton x:Name="menu所有项目" Height="30" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click"/>
+                    <WrapPanel Name="wp所有项目" Background="Red" />
                     <Separator />
                     <UI:MenuButton x:Name="menu所有目标" Height="30" Text="所有目标" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有目标_Click"/>
+                    <WrapPanel Name="wp所有目标" Background="Red" />
                     <Separator />
                     <UI:MenuButton x:Name="menu所有情境" Height="30" Text="所有情境" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有情境_Click"/>
+                    <WrapPanel Name="wp所有情境" Background="Red" />
                     <Separator />
                     <UI:MenuButton x:Name="menu已完成" Height="30" Text="已完成" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu已完成_Click"/>
+                    <WrapPanel Name="wp已完成" Background="Red" />
                     <Separator />
                     <UI:MenuButton x:Name="menu垃圾箱" Height="30" Text="垃圾箱" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu垃圾箱_Click"/>
+                    <WrapPanel Name="wp垃圾箱" Background="Red" />
                     <Separator />
                 </StackPanel>
             </ScrollViewer>

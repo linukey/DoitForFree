@@ -15,7 +15,7 @@ namespace DoitForFree.BAL
         #region Add
         public bool Add(MProject p)
         {
-            string cmdStr = "insert into T_project(名称,描述,开始时间,截止时间,周期) values(@name,@discription,@startdate,@enddate,@cycle)";
+            string cmdStr = "insert into T_project(项目名称,项目描述,开始时间,截止时间,用户编码) values(@name,@discription,@startdate,@enddate,@user)";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -33,11 +33,11 @@ namespace DoitForFree.BAL
             enddate.ParameterName = "@enddate";
             enddate.Value = p.MEndDate;
 
-            DbParameter cycle = factory.CreateParameter();
-            cycle.ParameterName = "@cycle";
-            cycle.Value = p.MCycle;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = p.MUser;
 
-            if(new ProjectDAL().Add(cmdStr, name, discription, startdate, enddate, cycle) == 1)
+            if (new ProjectDAL().Add(cmdStr, name, discription, startdate, enddate, user) == 1)
             {
                 return true;
             }
@@ -48,7 +48,7 @@ namespace DoitForFree.BAL
         #region Delete
         public bool Delete(string name)
         {
-            string cmdStr = "delete from T_project where 名称=@name";
+            string cmdStr = "delete from T_project where 项目名称=@name";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
@@ -64,7 +64,7 @@ namespace DoitForFree.BAL
         #region Update
         public bool Update(string prename, MProject p)
         {
-            string cmdStr = "update T_project set 名称=@name,描述=@discription,开始时间=@startdate,截止时间=@enddate,周期=@cycle where 名称=@prename";
+            string cmdStr = "update T_project set 项目名称=@name,项目描述=@discription,开始时间=@startdate,截止时间=@enddate,用户编码=@user where 项目名称=@prename";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -82,14 +82,14 @@ namespace DoitForFree.BAL
             enddate.ParameterName = "@enddate";
             enddate.Value = p.MEndDate;
 
-            DbParameter cycle = factory.CreateParameter();
-            cycle.ParameterName = "@cycle";
-            cycle.Value = p.MCycle;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = p.MUser;
 
             DbParameter pn = factory.CreateParameter();
             pn.ParameterName = "@prename";
             pn.Value = prename;
-            if (new ProjectDAL().Update(cmdStr, name, discription, startdate, enddate, cycle, pn) == 1)
+            if (new ProjectDAL().Update(cmdStr, name, discription, startdate, enddate, pn, user) == 1)
             {
                 return true;
             }
@@ -100,7 +100,7 @@ namespace DoitForFree.BAL
         #region Select
         public MProject Select(string name)
         {
-            string cmdStr = "select * from T_project where 名称=@name";
+            string cmdStr = "select * from T_project where 项目名称=@name";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
@@ -111,14 +111,21 @@ namespace DoitForFree.BAL
             {
                 p = new MProject();
                 DataRow row = dt.Rows[0];
-                p.MName = row["名称"].ToString();
-                p.MDiscription = row["描述"].ToString();
+                p.MName = row["项目名称"].ToString();
+                p.MDiscription = row["项目描述"].ToString();
                 p.MStartDate = DateTime.Parse(row["开始时间"].ToString());
                 p.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                p.MCycle = Convert.ToInt32(row["周期"].ToString());
-                return p;
+                p.MUser = row["项目名称"].ToString();
             }
             return p;
+        }
+        #endregion
+
+        #region SelectAll
+        public DataTable SelectAll()
+        {
+            string cmdStr = "select * from T_project";
+            return new ProjectDAL().Select(cmdStr);
         }
         #endregion
     }

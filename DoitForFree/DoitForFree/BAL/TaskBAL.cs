@@ -18,7 +18,7 @@ namespace DoitForFree.BAL
         #region Add
         public bool Add(MTask t)
         {
-            string cmdStr = "insert into T_task(名称,描述,开始时间,截止时间,周期,类型,情境,项目,目标,状态) values(@name,@discription,@startdate,@enddate,@cycle,@type,@situation,@project,@goal,@state)";
+            string cmdStr = "insert into T_task(任务名称,任务描述,开始时间,截止时间,类型,所属情境,所属项目,所属目标,状态,用户编码) values(@name,@discription,@startdate,@enddate,@type,@situation,@project,@goal,@state,@user)";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -35,10 +35,6 @@ namespace DoitForFree.BAL
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
             enddate.Value = t.MEndDate.ToString("yyyy-MM-dd");
-
-            DbParameter cycle = factory.CreateParameter();
-            cycle.ParameterName = "@cycle";
-            cycle.Value = t.MCycle;
 
             DbParameter type = factory.CreateParameter();
             type.ParameterName = "@type";
@@ -60,7 +56,11 @@ namespace DoitForFree.BAL
             state.ParameterName = "@state";
             state.Value = t.MState.ToString();
 
-            if(new TaskDAL().Add(cmdStr, name, discription, startdate, enddate, cycle, type, situation, project, goal, state) == 1)
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = t.MUser;
+
+            if (new TaskDAL().Add(cmdStr, name, discription, startdate, enddate, type, situation, project, goal, state, user) == 1)
             {
                 return true;
             }
@@ -71,7 +71,7 @@ namespace DoitForFree.BAL
         #region Delete
         public bool Delete(string name)
         {
-            string cmdStr = "delete from T_task where 名称 = @name";
+            string cmdStr = "delete from T_task where 任务名称 = @name";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
@@ -87,7 +87,7 @@ namespace DoitForFree.BAL
         #region Update
         public bool Update(string prename, MTask t)
         {
-            string cmdStr = "update T_task set 名称=@name,描述=@discription,开始时间=@startdate,截止时间=@enddate,周期=@cycle,类型=@type,情境=@situation,项目=@project,目标=@goal,状态=@state where 名称=@prename";
+            string cmdStr = "update T_task set 任务名称=@name,任务描述=@discription,开始时间=@startdate,截止时间=@enddate,类型=@type,所属情境=@situation,所属项目=@project,所属目标=@goal,状态=@state,用户编码=@user where 任务名称=@prename";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -104,10 +104,6 @@ namespace DoitForFree.BAL
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
             enddate.Value = t.MEndDate.ToString("yyyy-MM-dd");
-
-            DbParameter cycle = factory.CreateParameter();
-            cycle.ParameterName = "@cycle";
-            cycle.Value = t.MCycle;
 
             DbParameter type = factory.CreateParameter();
             type.ParameterName = "@type";
@@ -133,7 +129,11 @@ namespace DoitForFree.BAL
             pn.ParameterName = "@prename";
             pn.Value = prename;
 
-            if (new TaskDAL().Update(cmdStr, name, discription, startdate, enddate, cycle, type, situation, project, goal, state, pn) == 1)
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = t.MUser;
+
+            if (new TaskDAL().Update(cmdStr, name, discription, startdate, enddate, type, situation, project, goal, state, pn, user) == 1)
             {
                 return true;
             }
@@ -144,7 +144,7 @@ namespace DoitForFree.BAL
         #region Select
         public MTask Select(string name)
         {
-            string cmdStr = "select * from T_task where 名称 = @name";
+            string cmdStr = "select * from T_task where 任务名称 = @name";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
@@ -155,29 +155,34 @@ namespace DoitForFree.BAL
             {
                 t = new MTask();
                 DataRow row = dt.Rows[0];
-                t.MName = row["名称"].ToString();
-                t.MDiscription = row["描述"].ToString();
+                t.MName = row["任务名称"].ToString();
+                t.MDiscription = row["任务描述"].ToString();
                 t.MStartDate = DateTime.Parse(row["开始时间"].ToString());
                 t.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                t.MCycle = Convert.ToInt32(row["周期"].ToString());
 
                 if (row["类型"].ToString() == "今日待办") t.MType = MTask.TaskType.今日待办;
                 else if (row["类型"].ToString() == "正在行动") t.MType = MTask.TaskType.正在行动;
                 else if (row["类型"].ToString() == "过期") t.MType = MTask.TaskType.过期;
                 else t.MType = MTask.TaskType.收集箱;
 
-                if (row["情境"].ToString() == "家里") t.MSituation = MTask.TaskSituation.家里;
-                else if (row["情境"].ToString() == "办公室") t.MSituation = MTask.TaskSituation.办公室;
-                else t.MSituation = MTask.TaskSituation.外出;
-
-                t.MProject = row["项目"].ToString();
-                t.MGoal = row["目标"].ToString();
+                t.MSituation = row["所属情境"].ToString();
+                t.MProject = row["所属项目"].ToString();
+                t.MGoal = row["所属目标"].ToString();
+                t.MSituation = row["用户编码"].ToString();
 
                 if (row["状态"].ToString() == "已完成") t.MState = MTask.TaskState.已完成;
                 else if (row["状态"].ToString() == "未完成") t.MState = MTask.TaskState.未完成;
                 else t.MState = MTask.TaskState.垃圾箱;
             }
             return t;
+        }
+        #endregion
+
+        #region SelectAll
+        public DataTable SelectAll()
+        {
+            string cmdStr = "select * from T_task";
+            return new TaskDAL().Select(cmdStr);
         }
         #endregion
     }

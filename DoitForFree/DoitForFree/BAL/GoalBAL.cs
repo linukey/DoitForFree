@@ -15,7 +15,7 @@ namespace DoitForFree.BAL
         #region Add
         public bool Add(MGoal g)
         {
-            string cmdStr = "insert into T_goal(名称,描述,开始时间,截止时间,周期) values(@name,@discription,@startdate,@enddate,@cycle)";
+            string cmdStr = "insert into T_goal(目标名称,目标描述,开始时间,截止时间,用户编码) values(@name,@discription,@startdate,@enddate,@user)";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -33,11 +33,11 @@ namespace DoitForFree.BAL
             enddate.ParameterName = "@enddate";
             enddate.Value = g.MEndDate;
 
-            DbParameter cycle = factory.CreateParameter();
-            cycle.ParameterName = "@cycle";
-            cycle.Value = g.MCycle;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = g.MUser;
 
-            if (new GoalDAL().Add(cmdStr, name, discription, startdate, enddate, cycle) == 1)
+            if (new GoalDAL().Add(cmdStr, name, discription, startdate, enddate, user) == 1)
             {
                 return true;
             }
@@ -48,7 +48,7 @@ namespace DoitForFree.BAL
         #region Delete
         public bool Delete(string name)
         {
-            string cmdStr = "delete from T_goal where 名称=@name";
+            string cmdStr = "delete from T_goal where 目标名称=@name";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
@@ -64,7 +64,7 @@ namespace DoitForFree.BAL
         #region Update
         public bool Update(string prename, MGoal p)
         {
-            string cmdStr = "update T_goal set 名称=@name,描述=@discription,开始时间=@startdate,截止时间=@enddate,周期=@cycle where 名称=@prename";
+            string cmdStr = "update T_goal set 目标名称=@name,目标描述=@discription,开始时间=@startdate,截止时间=@enddate,用户编码=@user where 目标名称=@prename";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -82,15 +82,15 @@ namespace DoitForFree.BAL
             enddate.ParameterName = "@enddate";
             enddate.Value = p.MEndDate;
 
-            DbParameter cycle = factory.CreateParameter();
-            cycle.ParameterName = "@cycle";
-            cycle.Value = p.MCycle;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = p.MUser;
 
             DbParameter pn = factory.CreateParameter();
             pn.ParameterName = "@prename";
             pn.Value = prename;
 
-            if (new GoalDAL().Update(cmdStr, name, discription, startdate, enddate, cycle, pn) == 1)
+            if (new GoalDAL().Update(cmdStr, name, discription, startdate, enddate, user, pn) == 1)
             {
                 return true;
             }
@@ -101,7 +101,7 @@ namespace DoitForFree.BAL
         #region Select
         public MGoal Select(string name)
         {
-            string cmdStr = "select * from T_goal where 名称=@name";
+            string cmdStr = "select * from T_goal where 目标名称=@name";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
@@ -112,14 +112,20 @@ namespace DoitForFree.BAL
             {
                 p = new MGoal();
                 DataRow row = dt.Rows[0];
-                p.MName = row["名称"].ToString();
-                p.MDiscription = row["描述"].ToString();
+                p.MName = row["目标名称"].ToString();
+                p.MDiscription = row["目标描述"].ToString();
                 p.MStartDate = DateTime.Parse(row["开始时间"].ToString());
                 p.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                p.MCycle = Convert.ToInt32(row["周期"].ToString());
-                return p;
+                p.MUser = row["用户编码"].ToString();
             }
             return p;
+        }
+        #endregion
+        #region SelectAll
+        public DataTable SelectAll()
+        {
+            string cmdStr = "select * from T_goal";
+            return new GoalDAL().Select(cmdStr);
         }
         #endregion
     }
