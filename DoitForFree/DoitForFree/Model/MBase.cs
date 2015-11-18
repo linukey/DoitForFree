@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DoitForFree.Model
 {
-    internal static class Resource
+    internal interface IMBase
     {
-        public static string userName;
-        public static string mSituation;
+        string MName { set; get; }
     }
 }

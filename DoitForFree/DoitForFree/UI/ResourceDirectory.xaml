@@ -67,8 +67,39 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="MenuButtonCalendar" TargetType="local:MenuButton">
+        <Border Name="bd" Background="White">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5,5,5">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Margin="5,5,10,5"/>
+            </StackPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="AliceBlue" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <ControlTemplate x:Key="MenuButtonTitle" TargetType="local:MenuButton">
         <Border Background="#F2F3F5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Margin="10,5,5,5" />
+                <Rectangle Name="rt" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MenuButtonNode" TargetType="local:MenuButton">
+        <Border Background="#EAEAEA">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Margin="10,5,5,5" />
                 <Rectangle Name="rt" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -206,4 +237,41 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="MenuButton左侧菜单按钮" TargetType="local:MenuButton">
+        <Setter Property="Height" Value="40" />
+    </Style>
+    <ControlTemplate x:Key="MenuButton添加按钮" TargetType="local:MenuButton">
+        <Border>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Rectangle Height="36" Width="36" Margin="30,10,5,10">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" FontSize="18" Margin="5,18,18,18"/>
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="MenuButton情境节点" TargetType="local:MenuButton">
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="855" />
+        <Setter Property="Margin" Value="5,1,5,1" />
+    </Style>
+    
+    <!--NewTask输入框样式-->
+    <Style x:Key="TextBox输入" TargetType="TextBox">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <ControlTemplate x:Key="Button确定取消" TargetType="Button">
+        <Border Name="bd" Background="#F5F6F7">
+            <TextBlock Text="{TemplateBinding Content}" Margin="17,8,17,8" FontSize="18"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Cursor" Value="Hand" />
+                <Setter TargetName="bd" Property="Background" Value="AliceBlue" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 </ResourceDictionary>

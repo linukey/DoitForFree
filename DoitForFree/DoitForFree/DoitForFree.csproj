@@ -60,6 +60,7 @@
     <Compile Include="BAL\UserBAL.cs" />
     <Compile Include="DAL\SituationDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="Model\MBase.cs" />
     <Compile Include="Model\MUser.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\MSituation.cs" />
@@ -68,6 +69,9 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MenuButton.cs" />
+    <Compile Include="UI\NewTask.xaml.cs">
+      <DependentUpon>NewTask.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
@@ -91,6 +95,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NewTask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -160,6 +168,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\情境节点.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\新项目.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\已完成.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\日历.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\类型.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\项目.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

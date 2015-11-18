@@ -7,8 +7,6 @@ using System.Data.Common;
 using DoitForFree.DAL;
 using DoitForFree.Model;
 using System.Windows;
-using System.Data.Common;
-using DoitForFree.DAL;
 using System.Data;
 
 namespace DoitForFree.BAL
@@ -179,10 +177,14 @@ namespace DoitForFree.BAL
         #endregion
 
         #region SelectAll
-        public DataTable SelectAll()
+        public DataTable SelectAll(string userName)
         {
-            string cmdStr = "select * from T_task";
-            return new TaskDAL().Select(cmdStr);
+            string cmdStr = "select * from T_task where 用户编码=@username";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@username";
+            user.Value = userName;
+            return new TaskDAL().Select(cmdStr, user);
         }
         #endregion
     }

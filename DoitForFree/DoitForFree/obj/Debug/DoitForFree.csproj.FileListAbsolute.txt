@@ -32,3 +32,5 @@ C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Log
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Register.g.cs
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Register.baml
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree.csprojResolveAssemblyReference.cache
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewTask.g.cs
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewTask.baml

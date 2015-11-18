@@ -122,10 +122,14 @@ namespace DoitForFree.BAL
         #endregion
 
         #region SelectAll
-        public DataTable SelectAll()
+        public DataTable SelectAll(string userName)
         {
-            string cmdStr = "select * from T_project";
-            return new ProjectDAL().Select(cmdStr);
+            string cmdStr = "select * from T_project where 用户编码=@username";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@username";
+            user.Value = userName;
+            return new ProjectDAL().Select(cmdStr, user);
         }
         #endregion
     }

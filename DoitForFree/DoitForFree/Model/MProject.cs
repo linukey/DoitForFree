@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoitForFree.Model
 {
-    internal class MProject
+    public class MProject : IMBase
     {
         #region 字段
         private string mName;

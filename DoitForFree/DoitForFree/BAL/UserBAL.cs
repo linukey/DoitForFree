@@ -90,11 +90,24 @@ namespace DoitForFree.BAL
             return s;
         }
         #endregion
-        #region 查询全部
-        public DataTable SelectAll()
+        #region SelectAll
+        public DataTable SelectAll(string userName = null)
         {
-            string cmdStr = "select * from T_user";
-            DataTable dt = new UserDAL().Select(cmdStr);
+            DataTable dt = null;
+            if (userName != null)
+            {
+                string cmdStr = "select * from T_user where 用户编码=@username";
+                DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+                DbParameter user = factory.CreateParameter();
+                user.ParameterName = "@username";
+                user.Value = userName;
+                dt = new UserDAL().Select(cmdStr, user);
+            }
+            else
+            {
+                string cmdStr = "select * from T_user";
+                dt = new UserDAL().Select(cmdStr);
+            }
             return dt;
         }
         #endregion

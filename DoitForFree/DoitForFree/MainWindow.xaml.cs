@@ -29,6 +29,7 @@ namespace DoitForFree
         private List<MSituation> situationList = null; //情境列表
         private List<MGoal> goalList = null; //目标列表
         private List<MTask> taskList = null; //任务列表
+        private MenuButton curSelect = null; //当前选中节点
 
         private const int MenuButtonNodeHeight = 30;
         private const int MenuButtonNodeWidth = 245;
@@ -68,103 +69,39 @@ namespace DoitForFree
         #region 左侧菜单栏处理
         private void menu所有项目_Click(object sender, RoutedEventArgs e)
         {
-            this.menu所有项目.ImagePath = this.menu所有项目.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
-            if (this.menu所有项目.ImagePath == "Images/下箭头.png")
-            {
-                foreach(MProject m in projectList)
-                {
-                    MenuButton project = new MenuButton();
-                    project.Height = MenuButtonNodeHeight;
-                    project.Width = MenuButtonNodeWidth;
-                    project.Template = (ControlTemplate)FindResource("MenuButton");
-                    project.ImagePath = "Images/情境节点.png";
-                    project.Text = m.MName;
-                    wp所有项目.Children.Add(project);
-                }
-            }
-            else wp所有项目.Children.Clear();
+            InitMenuButton(projectList, menu所有项目, wp所有项目);
         }
 
         private void menu所有目标_Click(object sender, RoutedEventArgs e)
         {
-            this.menu所有目标.ImagePath = this.menu所有目标.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
-            if (this.menu所有目标.ImagePath == "Images/下箭头.png")
-            {
-                foreach(MGoal g in goalList)
-                {
-                    MenuButton goal = new MenuButton();
-                    goal.Height = MenuButtonNodeHeight;
-                    goal.Width = MenuButtonNodeWidth;
-                    goal.Template = (ControlTemplate)FindResource("MenuButton");
-                    goal.ImagePath = "Images/情境节点.png";
-                    goal.Text = g.MName;
-                    wp所有目标.Children.Add(goal);
-                }
-            }
-            else wp所有目标.Children.Clear();
+            InitMenuButton(goalList, menu所有目标, wp所有目标);
         }
 
         private void menu所有情境_Click(object sender, RoutedEventArgs e)
         {
-            this.menu所有情境.ImagePath = this.menu所有情境.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
+            InitMenuButton(situationList, menu所有情境, wp所有情境);
             if (this.menu所有情境.ImagePath == "Images/下箭头.png")
             {
-                foreach(MSituation s in situationList)
+                wp右侧显示.Children.Clear();
+                foreach (MSituation s in situationList)
                 {
-                    MenuButton situation = new MenuButton();
-                    situation.Height = MenuButtonNodeHeight;
-                    situation.Width = MenuButtonNodeWidth;
-                    situation.Template = (ControlTemplate)FindResource("MenuButton");
-                    situation.ImagePath = "Images/情境节点.png";
-                    situation.Text = s.MName;
-                    wp所有情境.Children.Add(situation);
+                    MenuButton m = new MenuButton();
+                    m.Style = (Style)FindResource("MenuButton情境节点");
+                    m.Template = (ControlTemplate)FindResource("MenuButtonTitle");
+                    m.Text = s.MName;
+                    m.MouseDoubleClick += MenuButton_MouseDoubleClick;
+                    m.Click += MenuButton_Click_1;
+                    wp右侧显示.Children.Add(m);
                 }
             }
-            else wp所有情境.Children.Clear();
         }
 
         private void menu已完成_Click(object sender, RoutedEventArgs e)
         {
-            this.menu已完成.ImagePath = this.menu已完成.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
-            if (this.menu已完成.ImagePath == "Images/下箭头.png")
-            {
-                foreach (MTask t in taskList)
-                {
-                    if (t.MState == MTask.TaskState.已完成)
-                    {
-                        MenuButton task = new MenuButton();
-                        task.Height = MenuButtonNodeHeight;
-                        task.Width = MenuButtonNodeWidth;
-                        task.Template = (ControlTemplate)FindResource("MenuButton");
-                        task.ImagePath = "Images/情境节点.png";
-                        task.Text = t.MName;
-                        wp已完成.Children.Add(task);
-                    }
-                }
-            }
-            else wp已完成.Children.Clear();
         }
 
         private void menu垃圾箱_Click(object sender, RoutedEventArgs e)
         {
-            this.menu垃圾箱.ImagePath = this.menu垃圾箱.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
-            if (this.menu垃圾箱.ImagePath == "Images/下箭头.png")
-            {
-                foreach (MTask t in taskList)
-                {
-                    if (t.MState == MTask.TaskState.垃圾箱)
-                    {
-                        MenuButton task = new MenuButton();
-                        task.Height = MenuButtonNodeHeight;
-                        task.Width = MenuButtonNodeWidth;
-                        task.Template = (ControlTemplate)FindResource("MenuButton");
-                        task.ImagePath = "Images/情境节点.png";
-                        task.Text = t.MName;
-                        wp垃圾箱.Children.Add(task);
-                    }
-                }
-            }
-            else wp垃圾箱.Children.Clear();
         }
         #endregion
 
@@ -173,7 +110,7 @@ namespace DoitForFree
         public void InitProjectList()
         {
             projectList = new List<MProject>();
-            DataTable dt = new ProjectBAL().SelectAll();
+            DataTable dt = new ProjectBAL().SelectAll(Resource.userName);
             foreach (DataRow row in dt.Rows)
             {
                 MProject m = new MProject();
@@ -183,26 +120,42 @@ namespace DoitForFree
                 m.MEndDate = DateTime.Parse(row["截止时间"].ToString());
                 m.MUser = row["用户编码"].ToString();
                 projectList.Add(m);
-;            }
+                ;
+            }
         }
         //初始化情境列表
         public void InitSituationList()
         {
             situationList = new List<MSituation>();
-            DataTable dt = new SituationBAL().SelectAll();
-            foreach(DataRow row in dt.Rows)
+            DataTable dt = new SituationBAL().SelectAll(Resource.userName);
+            DataRow row = dt.Rows[0];
+            string str = row["情境名称"].ToString();
+            int start = 0;
+            for (int i = 0; i < str.Length; i++)
             {
-                MSituation s = new MSituation();
-                s.MName = row["情境名称"].ToString();
-                s.MUser = row["用户编码"].ToString();
-                situationList.Add(s);
+                if (str[i] == ';')
+                {
+                    MSituation s = new MSituation();
+                    s.MName = str.Substring(start, i - start);
+                    s.MUser = Resource.userName;
+                    situationList.Add(s);
+                    start = i + 1;
+                }
+                else if (i + 1 == str.Length && start != str.Length)
+                {
+                    MSituation s = new MSituation();
+                    s.MName = str.Substring(start, i - start + 1);
+                    s.MUser = Resource.userName;
+                    situationList.Add(s);
+                    start = i + 1;
+                }
             }
         }
         //初始化目标列表
         public void InitGoalList()
         {
             goalList = new List<MGoal>();
-            DataTable dt = new GoalBAL().SelectAll();
+            DataTable dt = new GoalBAL().SelectAll(Resource.userName);
             foreach (DataRow row in dt.Rows)
             {
                 MGoal g = new MGoal();
@@ -218,8 +171,8 @@ namespace DoitForFree
         public void InitTaskList()
         {
             taskList = new List<MTask>();
-            DataTable dt = new TaskBAL().SelectAll();
-            foreach(DataRow row in dt.Rows)
+            DataTable dt = new TaskBAL().SelectAll(Resource.userName);
+            foreach (DataRow row in dt.Rows)
             {
                 MTask t = new MTask();
                 t.MName = row["任务名称"].ToString();
@@ -235,6 +188,69 @@ namespace DoitForFree
                 taskList.Add(t);
             }
         }
-    #endregion
-}
+        #endregion
+
+        #region 左侧菜单效果
+        //左侧菜单单击动态显示效果
+        private void setMargin(MenuButton m, string judge)
+        {
+            if (judge == "下箭头")
+                m.Margin = new Thickness(m.Margin.Left, m.Margin.Top, m.Margin.Right, m.Margin.Bottom + 10);
+            else m.Margin = new Thickness(m.Margin.Left, m.Margin.Top, m.Margin.Right, m.Margin.Bottom - 10);
+        }
+        //左侧菜单单击数据加载
+        private void InitMenuButton(IEnumerable<IMBase> l, MenuButton m, WrapPanel wp)
+        {
+            m.ImagePath = m.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
+            setMargin(m, m.ImagePath == "Images/下箭头.png" ? "下箭头" : "右箭头");
+            if (m.ImagePath == "Images/下箭头.png")
+            {
+                foreach (IMBase mm in l)
+                {
+                    MenuButton project = new MenuButton();
+                    project.Height = MenuButtonNodeHeight;
+                    project.Width = MenuButtonNodeWidth;
+                    project.Template = (ControlTemplate)FindResource("MenuButton");
+                    project.ImagePath = "Images/情境节点.png";
+                    project.Text = mm.MName;
+                    wp.Children.Add(project);
+                }
+            }
+            else wp.Children.Clear();
+        }
+        //左侧菜单鼠标手势变换
+        private void mouseChangeEnter(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Hand;
+        }
+        private void mouseChangeLeave(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Arrow;
+        }
+        #endregion
+
+        #region 添加
+        //新任务
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            new NewTask(projectList, goalList, situationList).Show();
+        }
+        #endregion
+
+        #region 情境节点处理
+        //情境节点双击事件
+        private void MenuButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("1");
+        }
+        //情境节点点击事件
+        private void MenuButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (curSelect != null)
+                curSelect.Template = (ControlTemplate)FindResource("MenuButtonTitle");
+            ((MenuButton)sender).Template = (ControlTemplate)FindResource("MenuButtonNode");
+            curSelect = (MenuButton)sender;
+        }
+        #endregion
+    }
 }

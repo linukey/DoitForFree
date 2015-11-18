@@ -83,10 +83,14 @@ namespace DoitForFree.BAL
         }
         #endregion
         #region SelectAll
-        public DataTable SelectAll()
+        public DataTable SelectAll(string userName)
         {
-            string cmdStr = "select * from T_situation";
-            return new SituationDAL().Select(cmdStr);
+            string cmdStr = "select * from T_situation where 用户编码=@username";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@username";
+            user.Value = userName;
+            return new SituationDAL().Select(cmdStr, user);
         }
         #endregion
     }

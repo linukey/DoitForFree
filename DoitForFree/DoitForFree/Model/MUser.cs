@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoitForFree.Model
 {
-    internal class MUser
+    internal class MUser : IMBase 
     {
         private string mName;
         private string mPwd;

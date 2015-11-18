@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoitForFree.Model
 {
-    internal class MSituation
+    public class MSituation : IMBase
     {
         private string mName;
         private string mUser;

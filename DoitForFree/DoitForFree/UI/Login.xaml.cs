@@ -99,6 +99,7 @@ namespace DoitForFree.UI
                 else if (user.MPwd != btnPwd.Text.Trim()) MessageBox.Show("密码错误！");
                 else
                 {
+                    Resource.userName = btnUser.Text.Trim();
                     new MainWindow().Show();
                     this.Close();
                 }

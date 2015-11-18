@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoitForFree.Model
 {
-    internal class MGoal
+    public class MGoal : IMBase
     {
         #region 字段
         private string mName;
