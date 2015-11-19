@@ -50,12 +50,12 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Template="{StaticResource scrollviewer}">
                 <StackPanel Orientation="Vertical" Background="#F2F3F5">
                     <UI:MenuButton x:Name="menu收集" Style="{StaticResource MenuButton左侧菜单按钮}" Text="收集" Template="{StaticResource MenuButtonTitle}"/>
-                    <UI:MenuButton x:Name="menu收集箱" Style="{StaticResource MenuButton左侧菜单按钮}" Text="收集箱" ImagePath="Images/收集箱.png" Template="{StaticResource MenuButton}"/>
+                    <UI:MenuButton x:Name="menu收集箱" Style="{StaticResource MenuButton左侧菜单按钮}" Text="收集箱" ImagePath="Images/收集箱.png" Template="{StaticResource MenuButton}" Click="menu收集箱_Click"/>
                     <Separator />
                     <UI:MenuButton x:Name="menu聚焦" Style="{StaticResource MenuButton左侧菜单按钮}" Text="聚焦" Template="{StaticResource MenuButtonTitle}" />
-                    <UI:MenuButton x:Name="menu今日待办" Style="{StaticResource MenuButton左侧菜单按钮}" Text="今日待办" ImagePath="Images/今日待办.png" Template="{StaticResource MenuButton}" />
-                    <UI:MenuButton x:Name="menu正在行动" Style="{StaticResource MenuButton左侧菜单按钮}" Text="正在行动" ImagePath="Images/正在行动.png" Template="{StaticResource MenuButton}" />
-                    <UI:MenuButton x:Name="menu过期" Style="{StaticResource MenuButton左侧菜单按钮}" Text="过期" ImagePath="Images/过期.png" Template="{StaticResource MenuButton}" />
+                    <UI:MenuButton x:Name="menu今日待办" Style="{StaticResource MenuButton左侧菜单按钮}" Text="今日待办" ImagePath="Images/今日待办.png" Template="{StaticResource MenuButton}" Click="menu今日待办_Click"/>
+                    <UI:MenuButton x:Name="menu正在行动" Style="{StaticResource MenuButton左侧菜单按钮}" Text="正在行动" ImagePath="Images/正在行动.png" Template="{StaticResource MenuButton}" Click="menu正在行动_Click"/>
+                    <UI:MenuButton x:Name="menu过期" Style="{StaticResource MenuButton左侧菜单按钮}" Text="过期" ImagePath="Images/过期.png" Template="{StaticResource MenuButton}" Click="menu过期_Click"/>
                     <Separator />
                     <UI:MenuButton x:Name="menu所有项目" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
                     <WrapPanel Name="wp所有项目" Background="Red" />
@@ -78,16 +78,16 @@
         
         <Grid Grid.Row="1" Grid.Column="1" Background="#FFFFFF">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <WrapPanel Name="wp右侧显示">
-                    <UI:MenuButton Content="aaa" Template="{StaticResource MenuButtonTitle}" />
+                <WrapPanel Name="wp右侧显示" Orientation="Vertical">
+                    
                 </WrapPanel>
             </ScrollViewer>
         </Grid>
         
         <Grid Grid.Row="2" Grid.Column="2" Background="#FFFFFF">
             <Separator Margin="0,0,0,59" />
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <UI:MenuButton Text="新项目" ImagePath="Images/新项目.png" Template="{StaticResource MenuButton添加按钮}" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave" Click="MenuButton_Click"/>
+            <StackPanel Name="spn添加栏" Orientation="Horizontal" VerticalAlignment="Center">
+                
             </StackPanel>
         </Grid>
     </Grid>

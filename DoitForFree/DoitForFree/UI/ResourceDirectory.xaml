@@ -274,4 +274,50 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
+    <ControlTemplate x:Key="TitleButton" TargetType="local:TitleButton">
+        <Border Background="#FFFFFF">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Week, RelativeSource={RelativeSource TemplatedParent}}" Margin="20,5,5,5" FontSize="17"/>
+                <TextBlock Text="{Binding Month, RelativeSource={RelativeSource TemplatedParent}}" Margin="5,6,5,5" FontSize="17"/>
+                <Rectangle Width="20" Height="20">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
+    <ControlTemplate x:Key="TitleNodeButton" TargetType="local:TitleNodeButton">
+        <Border Name="bd" Background="#F5F5F5" Margin="25,2,10,2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Rectangle Width="24" Height="24" Margin="5,0,5,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}" FontSize="17" Margin="5,5,10,5" />
+                <TextBlock Text="截止时间:" FontSize="16" Margin="10,6,5,6"/>
+                <TextBlock Text="{Binding Time, RelativeSource={RelativeSource TemplatedParent}}" FontSize="16" Margin="5,7,10,7" />
+                <TextBlock Text="描述:" FontSize="16" Margin="10,6,5,6" />
+                <TextBlock Text="{Binding Discription, RelativeSource={RelativeSource TemplatedParent}}" FontSize="16" Margin="5,6.5,10,6.5" />
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
+    <ControlTemplate x:Key="TitleNodeButton2" TargetType="local:TitleNodeButton">
+        <Border Name="bd" Background="#EAEAEA" Margin="25,2,10,2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Rectangle Width="24" Height="24" Margin="5,0,5,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}" FontSize="17" Margin="5,5,10,5" />
+                <TextBlock Text="截止时间:" FontSize="16" Margin="10,6,5,6"/>
+                <TextBlock Text="{Binding Time, RelativeSource={RelativeSource TemplatedParent}}" FontSize="16" Margin="5,7,10,7" />
+                <TextBlock Text="描述:" FontSize="16" Margin="10,6,5,6" />
+                <TextBlock Text="{Binding Discription, RelativeSource={RelativeSource TemplatedParent}}" FontSize="16" Margin="5,6.5,10,6.5" />
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
 </ResourceDictionary>

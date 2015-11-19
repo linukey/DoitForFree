@@ -75,6 +75,7 @@
     <Compile Include="UI\Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\TitleButton.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -183,6 +184,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\项目.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\任务.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DoitForFree.Model;
 using System.Threading;
+using DoitForFree.BAL;
 
 namespace DoitForFree.UI
 {
@@ -21,11 +22,15 @@ namespace DoitForFree.UI
     /// </summary>
     public partial class NewTask : Window
     {
-        List<MProject> projectList = null;
-        List<MGoal> goalList = null;
-        List<MSituation> situationList = null;
+        private List<MProject> projectList = null;
+        private List<MGoal> goalList = null;
+        private List<MSituation> situationList = null;
+        private string type;
+        private string preTitle;
 
         private delegate void Execute();
+
+        public enum WindowType { 添加, 修改};
 
         public NewTask()
         {
@@ -36,9 +41,29 @@ namespace DoitForFree.UI
 
         public NewTask(List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList)
         {
+            type = WindowType.添加.ToString();
+            InitializeComponent();
+            btn确定.IsEnabled = false;
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
             this.projectList = projectList;
             this.goalList = goalList;
             this.situationList = situationList;
+        }
+
+        public NewTask(string title, string discription, string enddate, string type, string project, string goal, string situation)
+        {
+            type = WindowType.修改.ToString();
+            preTitle = title;
+            InitializeComponent();
+            btn确定.IsEnabled = false;
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
+            tbx标题.Text = title;
+            tbx描述.Text = discription;
+            MenuButton情境.Text = situation;
+            MenuButton目标.Text = goal;
+            MenuButton类型.Text = type;
+            MenuButton项目.Text = project;
+            MenuButton截止时间.Text = enddate;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -82,7 +107,7 @@ namespace DoitForFree.UI
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime date = (DateTime)Calendar截止时间.SelectedDate;
-            this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd");
+            this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd")+" "+DateTime.Now.ToString("hh:mm:ss");
         }
 
         private void Calendar截止时间_MouseLeave(object sender, MouseEventArgs e)
@@ -143,7 +168,21 @@ namespace DoitForFree.UI
             if (((Button)sender).Name == "btn取消") this.Close();
             else if (((Button)sender).Name == "btn确定")
             {
-
+                MTask task = new MTask();
+                task.MName = tbx标题.Text.Trim();
+                task.MDiscription = tbx描述.Text.Trim();
+                task.MProject = MenuButton项目.Text.Trim();
+                task.MSituation = MenuButton情境.Text.Trim();
+                task.MGoal = MenuButton目标.Text.Trim();
+                task.MStartDate = DateTime.Now;
+                task.MEndDate = DateTime.Parse(MenuButton截止时间.Text.Trim().ToString());
+                task.MType = MTask.stringToTaskType(MenuButton类型.Text.Trim());
+                task.MState = MTask.stringToTaskState("未完成");
+                task.MUser = Resource.userName;
+                if (type == "添加")
+                    new TaskBAL().Add(task);
+                else if (type == "修改")
+                    new TaskBAL().Update(preTitle, task);
             }
         }
 
