@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Common;
 using DoitForFree.DAL;
 using DoitForFree.Model;
-using System.Windows;
 using System.Data;
 
 namespace DoitForFree.BAL
@@ -28,11 +23,11 @@ namespace DoitForFree.BAL
 
             DbParameter startdate = factory.CreateParameter();
             startdate.ParameterName = "@startdate";
-            startdate.Value = t.MStartDate.ToString("yyyy-MM-dd");
+            startdate.Value = t.MStartDate.ToString("yyyy-MM-dd hh:mm:ss");
 
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
-            enddate.Value = t.MEndDate.ToString("yyyy-MM-dd");
+            enddate.Value = t.MEndDate.ToString("yyyy-MM-dd hh:mm:ss");
 
             DbParameter type = factory.CreateParameter();
             type.ParameterName = "@type";

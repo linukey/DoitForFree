@@ -1,18 +1,7 @@
 ﻿using DoitForFree.BAL;
 using DoitForFree.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DoitForFree.UI
 {
@@ -24,10 +13,12 @@ namespace DoitForFree.UI
         bool bUser = false;
         bool bPasswd = false;
 
+        #region 构造函数
         public Login()
         {
             InitializeComponent();
         }
+        #endregion
 
         #region 窗体处理
         //窗体移动
@@ -40,7 +31,7 @@ namespace DoitForFree.UI
         {
             this.Close();
         }
-        
+
         //设置菜单点击事件
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -55,43 +46,41 @@ namespace DoitForFree.UI
         #endregion
 
         #region 登录信息处理
-        private void btnUser_LostFocus(object sender, RoutedEventArgs e)
+        private void btn_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (btnUser.Text.Trim() == "")
-                btnUser.Text = "用户名";
-            else if (btnUser.Text.Length > 10)
-                btnUser.Text = "用户名限制10字符！";
-            else if(btnUser.Text.Trim() != "用户名限制10字符！" && btnUser.Text.Trim() != "用户名")
-                bUser = true;
+            MenuButton button = (MenuButton)sender;
+            if (button.Name == "btnUser")
+            {
+                if (btnUser.Text.Trim() == "") btnUser.Text = "用户名";
+                else if (btnUser.Text.Length > 10) btnUser.Text = "用户名限制10字符！";
+                else if (btnUser.Text.Trim() != "用户名限制10字符！" && btnUser.Text.Trim() != "用户名") bUser = true;
+            }
+            else if (button.Name == "btnPwd")
+            {
+                if (btnPwd.Text == "") btnPwd.Text = "密码";
+                else if (btnPwd.Text != "密码") bPasswd = true;
+            }
         }
-
-        private void btnUser_GotFocus(object sender, RoutedEventArgs e)
+        private void btn_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (btnUser.Text.Trim() == "用户名")
-                btnUser.Text = "";
-            else if (btnUser.Text.Trim() == "用户名限制10字符！")
-                btnUser.Text = "";
-        }
-
-        private void btnPwd_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (btnPwd.Text == "")
-                btnPwd.Text = "密码";
-            else if(btnPwd.Text != "密码")
-                bPasswd = true;
-        }
-
-        private void btnPwd_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (btnPwd.Text == "密码")
-                btnPwd.Text = "";
+            MenuButton button = (MenuButton)sender;
+            if (button.Name == "btnUser")
+            {
+                if (btnUser.Text.Trim() == "用户名") btnUser.Text = "";
+                else if (btnUser.Text.Trim() == "用户名限制10字符！") btnUser.Text = "";
+            }
+            else if (button.Name == "btnPwd")
+            {
+                if (btnPwd.Text == "密码") btnPwd.Text = "";
+            }
         }
         #endregion
 
+        #region 提交按钮处理
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            btnUser_LostFocus(null, null);
-            btnPwd_LostFocus(null, null);
+            btn_LostFocus(btnUser, null);
+            btn_LostFocus(btnPwd, null);
             if (bUser && bPasswd)
             {
                 MUser user = new UserBAL().Select(btnUser.Text.Trim());
@@ -106,5 +95,6 @@ namespace DoitForFree.UI
             }
             else MessageBox.Show("请正确填写登录信息！");
         }
+        #endregion
     }
 }

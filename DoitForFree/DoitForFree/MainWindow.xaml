@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DoitForFree"
-        xmlns:UI="clr-namespace:DoitForFree.UI" 
+        xmlns:UI="clr-namespace:DoitForFree.UI"
         mc:Ignorable="d" Icon="Images/icon.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MaxHeight="660" MinHeight="660" MaxWidth="1100" MinWidth="1100"
         Title="MainWindow" Height="660" Width="1100" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
   

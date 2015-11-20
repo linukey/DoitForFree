@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
 using System.Configuration;
 using System.Data.Common;
 using System.Windows;
@@ -134,6 +129,7 @@ namespace DoitForFree.DAL
                         da.SelectCommand = cmd;
                         dt = new DataTable();
                         da.Fill(dt);
+                        if (dt.Rows.Count == 0) dt = null;
                     }
                 }
                 catch(Exception ex)

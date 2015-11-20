@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DoitForFree.BAL;
 using DoitForFree.Model;
 using System.ComponentModel;
@@ -28,8 +19,9 @@ namespace DoitForFree
         #region 构造函数
         public MainWindow()
         {
-            Resource.userName = "linukey";
             InitializeComponent();
+            Resource.userName = "linukey";
+
             InitProjectList();
             InitSituationList();
             InitGoalList();
@@ -302,16 +294,19 @@ namespace DoitForFree
         {
             projectList = new List<MProject>();
             DataTable dt = new ProjectBAL().SelectAll(Resource.userName);
-            foreach (DataRow row in dt.Rows)
+            if (dt != null)
             {
-                MProject m = new MProject();
-                m.MName = row["项目名称"].ToString();
-                m.MDiscription = row["项目描述"].ToString();
-                m.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                m.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                m.MUser = row["用户编码"].ToString();
-                projectList.Add(m);
-                ;
+                foreach (DataRow row in dt.Rows)
+                {
+                    MProject m = new MProject();
+                    m.MName = row["项目名称"].ToString();
+                    m.MDiscription = row["项目描述"].ToString();
+                    m.MStartDate = DateTime.Parse(row["开始时间"].ToString());
+                    m.MEndDate = DateTime.Parse(row["截止时间"].ToString());
+                    m.MUser = row["用户编码"].ToString();
+                    projectList.Add(m);
+                    ;
+                }
             }
         }
         //初始化情境列表
@@ -319,26 +314,29 @@ namespace DoitForFree
         {
             situationList = new List<MSituation>();
             DataTable dt = new SituationBAL().SelectAll(Resource.userName);
-            DataRow row = dt.Rows[0];
-            string str = row["情境名称"].ToString();
-            int start = 0;
-            for (int i = 0; i < str.Length; i++)
+            if (dt != null)
             {
-                if (str[i] == ';')
+                DataRow row = dt.Rows[0];
+                string str = row["情境名称"].ToString();
+                int start = 0;
+                for (int i = 0; i < str.Length; i++)
                 {
-                    MSituation s = new MSituation();
-                    s.MName = str.Substring(start, i - start);
-                    s.MUser = Resource.userName;
-                    situationList.Add(s);
-                    start = i + 1;
-                }
-                else if (i + 1 == str.Length && start != str.Length)
-                {
-                    MSituation s = new MSituation();
-                    s.MName = str.Substring(start, i - start + 1);
-                    s.MUser = Resource.userName;
-                    situationList.Add(s);
-                    start = i + 1;
+                    if (str[i] == ';')
+                    {
+                        MSituation s = new MSituation();
+                        s.MName = str.Substring(start, i - start);
+                        s.MUser = Resource.userName;
+                        situationList.Add(s);
+                        start = i + 1;
+                    }
+                    else if (i + 1 == str.Length && start != str.Length)
+                    {
+                        MSituation s = new MSituation();
+                        s.MName = str.Substring(start, i - start + 1);
+                        s.MUser = Resource.userName;
+                        situationList.Add(s);
+                        start = i + 1;
+                    }
                 }
             }
         }
@@ -347,15 +345,18 @@ namespace DoitForFree
         {
             goalList = new List<MGoal>();
             DataTable dt = new GoalBAL().SelectAll(Resource.userName);
-            foreach (DataRow row in dt.Rows)
+            if (dt != null)
             {
-                MGoal g = new MGoal();
-                g.MName = row["目标名称"].ToString();
-                g.MDiscription = row["目标描述"].ToString();
-                g.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                g.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                g.MUser = row["用户编码"].ToString();
-                goalList.Add(g);
+                foreach (DataRow row in dt.Rows)
+                {
+                    MGoal g = new MGoal();
+                    g.MName = row["目标名称"].ToString();
+                    g.MDiscription = row["目标描述"].ToString();
+                    g.MStartDate = DateTime.Parse(row["开始时间"].ToString());
+                    g.MEndDate = DateTime.Parse(row["截止时间"].ToString());
+                    g.MUser = row["用户编码"].ToString();
+                    goalList.Add(g);
+                }
             }
         }
         //初始化任务列表
@@ -363,20 +364,23 @@ namespace DoitForFree
         {
             taskList = new List<MTask>();
             DataTable dt = new TaskBAL().SelectAll(Resource.userName);
-            foreach (DataRow row in dt.Rows)
+            if (dt != null)
             {
-                MTask t = new MTask();
-                t.MName = row["任务名称"].ToString();
-                t.MDiscription = row["任务描述"].ToString();
-                t.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                t.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                t.MType = MTask.stringToTaskType(row["类型"].ToString());
-                t.MSituation = row["所属情境"].ToString();
-                t.MProject = row["所属项目"].ToString();
-                t.MGoal = row["所属目标"].ToString();
-                t.MState = MTask.stringToTaskState(row["状态"].ToString());
-                t.MUser = row["用户编码"].ToString();
-                taskList.Add(t);
+                foreach (DataRow row in dt.Rows)
+                {
+                    MTask t = new MTask();
+                    t.MName = row["任务名称"].ToString();
+                    t.MDiscription = row["任务描述"].ToString();
+                    t.MStartDate = DateTime.Parse(row["开始时间"].ToString());
+                    t.MEndDate = DateTime.Parse(row["截止时间"].ToString());
+                    t.MType = MTask.stringToTaskType(row["类型"].ToString());
+                    t.MSituation = row["所属情境"].ToString();
+                    t.MProject = row["所属项目"].ToString();
+                    t.MGoal = row["所属目标"].ToString();
+                    t.MState = MTask.stringToTaskState(row["状态"].ToString());
+                    t.MUser = row["用户编码"].ToString();
+                    taskList.Add(t);
+                }
             }
         }
         #endregion
@@ -426,7 +430,12 @@ namespace DoitForFree
         //新任务
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            new NewTask(projectList, goalList, situationList).Show();
+            NewTask window = new NewTask(projectList, goalList, situationList);
+            InitProjectList();
+            InitSituationList();
+            InitGoalList();
+            InitTaskList();
+            window.Show();
         }
 
         //初始化按钮
@@ -575,10 +584,22 @@ namespace DoitForFree
             {
                 if (task.MName == ((TitleNodeButton)sender).Title)
                 {
-                    new NewTask(task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation).Show();
+                    NewTask window = new NewTask(task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
+                    window.Closing += Window_Closing;
+                    window.Show();
                 }
             }
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            InitProjectList();
+            InitSituationList();
+            InitGoalList();
+            InitTaskList();
+        }
+
         #endregion
+
     }
 }
