@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DoitForFree"
-        xmlns:UI="clr-namespace:DoitForFree.UI"
+        xmlns:UI="clr-namespace:DoitForFree.UI" 
         mc:Ignorable="d" Icon="Images/icon.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MaxHeight="660" MinHeight="660" MaxWidth="1100" MinWidth="1100"
         Title="MainWindow" Height="660" Width="1100" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
   
@@ -59,7 +59,7 @@
                     <Separator />
                     <UI:MenuButton x:Name="menu所有项目" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
                     <WrapPanel Name="wp所有项目" Background="Red" />
-                    <Separator />
+                        <Separator />
                     <UI:MenuButton x:Name="menu所有目标" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有目标" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有目标_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
                     <WrapPanel Name="wp所有目标" Background="Red" />
                     <Separator />
@@ -67,10 +67,8 @@
                     <WrapPanel Name="wp所有情境" Background="Red" />
                     <Separator />
                     <UI:MenuButton x:Name="menu已完成" Style="{StaticResource MenuButton左侧菜单按钮}" Text="已完成" ImagePath="Images/已完成.png" Template="{StaticResource MenuButton}" Click="menu已完成_Click" />
-                    <WrapPanel Name="wp已完成" Background="Red" />
                     <Separator />
                     <UI:MenuButton x:Name="menu垃圾箱" Style="{StaticResource MenuButton左侧菜单按钮}" Text="垃圾箱" ImagePath="Images/垃圾箱.png" Template="{StaticResource MenuButton}" Click="menu垃圾箱_Click" />
-                    <WrapPanel Name="wp垃圾箱" Background="Red" />
                     <Separator />
                 </StackPanel>
             </ScrollViewer>

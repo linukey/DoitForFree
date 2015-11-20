@@ -25,17 +25,7 @@ namespace DoitForFree
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region 字段声明
-        private List<MProject> projectList = null; //项目列表
-        private List<MSituation> situationList = null; //情境列表
-        private List<MGoal> goalList = null; //目标列表
-        private List<MTask> taskList = null; //任务列表
-        private Button curSelect = null; //当前选中节点
-
-        private const int MenuButtonNodeHeight = 30;
-        private const int MenuButtonNodeWidth = 245;
-        #endregion
-
+        #region 构造函数
         public MainWindow()
         {
             Resource.userName = "linukey";
@@ -45,6 +35,20 @@ namespace DoitForFree
             InitGoalList();
             InitTaskList();
         }
+        #endregion
+
+        #region 字段声明
+        private List<MProject> projectList = null; //项目列表
+        private List<MSituation> situationList = null; //情境列表
+        private List<MGoal> goalList = null; //目标列表
+        private List<MTask> taskList = null; //任务列表
+        private Button curSelect = null; //当前选中节点
+        string curMenu = null; //当前选中的左侧菜单
+        string curNode = null; //当前选中的 情境 项目 目标 里的节点
+
+        private const int MenuButtonNodeHeight = 30;
+        private const int MenuButtonNodeWidth = 245;
+        #endregion
 
         #region 窗体处理
         //窗体移动
@@ -69,38 +73,29 @@ namespace DoitForFree
         }
         #endregion
 
-        #region 左侧菜单栏处理
+        #region 左侧菜单栏点击事件
         private void menu收集箱_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            wp右侧显示.Children.Clear();
-            List<DateTime> time = new List<DateTime>();
-            HashSet<string> judge = new HashSet<string>();
-            foreach (MTask task in taskList)
-            {
-                if (task.MType.ToString() == "收集箱" && !judge.Contains(task.MStartDate.ToString()))
-                {
-                    judge.Add(task.MStartDate.ToString());
-                    time.Add(task.MStartDate);
-                }
-            }
-            time.Sort();
-            InitTitleButton(time);
+            InitTitleButton("收集箱");
         }
 
         private void menu今日待办_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
+            InitTitleButton("今日待办");
         }
 
         private void menu正在行动_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
+            InitTitleButton("正在行动");
         }
 
         private void menu过期_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
+            InitTitleButton("过期");
         }
 
         private void menu所有项目_Click(object sender, RoutedEventArgs e)
@@ -119,36 +114,51 @@ namespace DoitForFree
         {
             InitMenuButton(situationList, menu所有情境, wp所有情境);
             InitNewButton(sender as MenuButton);
-            if (this.menu所有情境.ImagePath == "Images/下箭头.png")
-            {
-                wp右侧显示.Children.Clear();
-                foreach (MSituation s in situationList)
-                {
-                    MenuButton m = new MenuButton();
-                    m.Style = (Style)FindResource("MenuButton情境节点");
-                    m.Template = (ControlTemplate)FindResource("MenuButtonTitle");
-                    m.Text = s.MName;
-                    m.MouseDoubleClick += MenuButton_MouseDoubleClick;
-                    m.Click += MenuButton_Click_1;
-                    wp右侧显示.Children.Add(m);
-                }
-            }
         }
 
         private void menu已完成_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
+            InitTitleButton("已完成");
         }
 
         private void menu垃圾箱_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
+            InitTitleButton("垃圾箱");
         }
         #endregion
 
         #region 右侧数据初始化
-        private void InitTitleButton(List<DateTime> time)
+        private void InitTitleButton(string judge)
         {
+            wp右侧显示.Children.Clear();
+            curMenu = judge;
+            List<DateTime> time = new List<DateTime>();
+            HashSet<string> j = new HashSet<string>();
+            if (judge == "已完成" || judge == "垃圾箱")
+            {
+                foreach (MTask task in taskList)
+                {
+                    if (task.MState.ToString() == judge && !j.Contains(task.MStartDate.ToString()))
+                    {
+                        j.Add(task.MStartDate.ToString());
+                        time.Add(task.MStartDate);
+                    }
+                }
+            }
+            else
+            {
+                foreach (MTask task in taskList)
+                {
+                    if (task.MType.ToString() == judge && !j.Contains(task.MStartDate.ToString()))
+                    {
+                        j.Add(task.MStartDate.ToString());
+                        time.Add(task.MStartDate);
+                    }
+                }
+            }
+            time.Sort();
             foreach (DateTime t in time)
             {
                 TitleButton title = new TitleButton();
@@ -162,12 +172,112 @@ namespace DoitForFree
                 WrapPanel w = new WrapPanel();
                 wp右侧显示.Children.Add(w);
                 try { wp右侧显示.UnregisterName("w" + t.Year + t.Month + t.Day); }
-                catch(Exception ex) { }
+                catch (Exception ex) { }
                 wp右侧显示.RegisterName("w" + t.Year + t.Month + t.Day, w);
             }
             foreach (MTask t in taskList)
             {
-                if (t.MType.ToString() == "收集箱")
+                if (judge == "已完成" || judge == "垃圾箱")
+                {
+                    if (t.MState.ToString() == judge)
+                    {
+                        TitleNodeButton node = new TitleNodeButton();
+                        node.Height = 45;
+                        node.Width = 830;
+                        node.Time = t.MStartDate.ToString("hh:mm:ss");
+                        node.Title = t.MName;
+                        node.Discription = t.MDiscription;
+                        node.ImagePath = @"Images/任务.png";
+                        node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                        node.Click += TitleNodeButton_Click;
+                        node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                        WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
+                        ww.Children.Add(node);
+                    }
+                }
+                else
+                {
+                    if (t.MType.ToString() == judge)
+                    {
+                        TitleNodeButton node = new TitleNodeButton();
+                        node.Height = 45;
+                        node.Width = 830;
+                        node.Time = t.MStartDate.ToString("hh:mm:ss");
+                        node.Title = t.MName;
+                        node.Discription = t.MDiscription;
+                        node.ImagePath = @"Images/任务.png";
+                        node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                        node.Click += TitleNodeButton_Click;
+                        node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                        WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
+                        ww.Children.Add(node);
+                    }
+                }
+            }
+        }
+
+        private void InitTitleButton(object sender, RoutedEventArgs e)
+        {
+            wp右侧显示.Children.Clear();
+            MenuButton menu = (MenuButton)sender;
+            WrapPanel parentWrap = (WrapPanel)menu.Parent;
+            curNode = menu.Name;
+            List<DateTime> time = new List<DateTime>();
+            HashSet<string> j = new HashSet<string>();
+            if (parentWrap.Name == (curMenu = "wp所有项目"))
+                foreach (MTask task in taskList)
+                {
+                    if (task.MProject == menu.Name && !j.Contains(task.MStartDate.ToString()))
+                    {
+                        j.Add(task.MStartDate.ToString());
+                        time.Add(task.MStartDate);
+                    }
+                }
+            else if (parentWrap.Name == (curMenu = "wp所有情境"))
+                foreach (MTask task in taskList)
+                {
+                    if (task.MSituation == menu.Name && !j.Contains(task.MStartDate.ToString()))
+                    {
+                        j.Add(task.MStartDate.ToString());
+                        time.Add(task.MStartDate);
+                    }
+                }
+            else if (parentWrap.Name == (curMenu = "wp所有目标"))
+                foreach (MTask task in taskList)
+                {
+                    if (task.MGoal == menu.Name && !j.Contains(task.MStartDate.ToString()))
+                    {
+                        j.Add(task.MStartDate.ToString());
+                        time.Add(task.MStartDate);
+                    }
+                }
+            time.Sort();
+            foreach (DateTime t in time)
+            {
+                TitleButton title = new TitleButton();
+                title.Template = (ControlTemplate)FindResource("TitleButton");
+                title.Click += TitleButton_Click2;
+                title.ImagePath = "Images/下箭头.png";
+                title.Week = t.DayOfWeek.ToString();
+                title.Month = t.ToString("yyyy-MM-dd");
+                title.Date = t;
+                wp右侧显示.Children.Add(title);
+                WrapPanel w = new WrapPanel();
+                wp右侧显示.Children.Add(w);
+                try { wp右侧显示.UnregisterName("w" + t.Year + t.Month + t.Day); }
+                catch (Exception ex) { }
+                wp右侧显示.RegisterName("w" + t.Year + t.Month + t.Day, w);
+            }
+            foreach (MTask t in taskList)
+            {
+                string judge = null;
+                if (parentWrap.Name == "wp所有项目")
+                    judge = t.MProject;
+                else if (parentWrap.Name == "wp所有情境")
+                    judge = t.MSituation;
+                else if (parentWrap.Name == "wp所有目标")
+                    judge = t.MGoal;
+                if (judge == menu.Name && t.MState.ToString() != "已完成")
                 {
                     TitleNodeButton node = new TitleNodeButton();
                     node.Height = 45;
@@ -271,7 +381,7 @@ namespace DoitForFree
         }
         #endregion
 
-        #region 左侧菜单效果
+        #region 左侧菜单处理
         //左侧菜单单击动态显示效果
         private void setMargin(MenuButton m, string judge)
         {
@@ -288,13 +398,15 @@ namespace DoitForFree
             {
                 foreach (IMBase mm in l)
                 {
-                    MenuButton project = new MenuButton();
-                    project.Height = MenuButtonNodeHeight;
-                    project.Width = MenuButtonNodeWidth;
-                    project.Template = (ControlTemplate)FindResource("MenuButton");
-                    project.ImagePath = "Images/情境节点.png";
-                    project.Text = mm.MName;
-                    wp.Children.Add(project);
+                    MenuButton button = new MenuButton();
+                    button.Height = MenuButtonNodeHeight;
+                    button.Width = MenuButtonNodeWidth;
+                    button.Template = (ControlTemplate)FindResource("MenuButton");
+                    button.ImagePath = "Images/情境节点.png";
+                    button.Text = mm.MName;
+                    button.Name = mm.MName;
+                    button.Click += InitTitleButton;
+                    wp.Children.Add(button);
                 }
             }
             else wp.Children.Clear();
@@ -366,12 +478,68 @@ namespace DoitForFree
                 title.ImagePath = @"Images/右箭头.png";
                 w.Children.Clear();
             }
-            else if(title.ImagePath == "Images/右箭头.png")
+            else if (title.ImagePath == "Images/右箭头.png")
+            {
+                title.ImagePath = "Images/下箭头.png";
+                if (curMenu == "已完成" || curMenu == "垃圾箱")
+                {
+                    foreach (MTask t in taskList)
+                    {
+                        if (t.MState.ToString() == curMenu && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                        {
+                            TitleNodeButton node = new TitleNodeButton();
+                            node.Height = 45;
+                            node.Width = 830;
+                            node.Time = t.MStartDate.ToString("hh:mm:ss");
+                            node.Title = t.MName;
+                            node.Discription = t.MDiscription;
+                            node.ImagePath = @"Images/任务.png";
+                            node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                            node.Click += TitleNodeButton_Click;
+                            node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                            WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
+                            ww.Children.Add(node);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (MTask t in taskList)
+                    {
+                        if (t.MType.ToString() == curMenu && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                        {
+                            TitleNodeButton node = new TitleNodeButton();
+                            node.Height = 45;
+                            node.Width = 830;
+                            node.Time = t.MStartDate.ToString("hh:mm:ss");
+                            node.Title = t.MName;
+                            node.Discription = t.MDiscription;
+                            node.ImagePath = @"Images/任务.png";
+                            node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                            node.Click += TitleNodeButton_Click;
+                            node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                            WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
+                            ww.Children.Add(node);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void TitleButton_Click2(object sender, RoutedEventArgs e)
+        {
+            TitleButton title = (TitleButton)sender;
+            WrapPanel w = (WrapPanel)wp右侧显示.FindName("w" + title.Date.Year + title.Date.Month + title.Date.Day);
+            if (title.ImagePath == "Images/右箭头.png")
             {
                 title.ImagePath = "Images/下箭头.png";
                 foreach (MTask t in taskList)
                 {
-                    if (t.MType.ToString() == "收集箱" && t.MStartDate.ToString("yyyy-M-d")==(title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                    string judge = null;
+                    if (curMenu == "wp所有项目") judge = t.MProject;
+                    else if (curMenu == "wp所有情境") judge = t.MSituation;
+                    else if (curMenu == "wp所有目标") judge = t.MGoal;
+                    if (judge == curNode && t.MState.ToString() != "已完成" && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
                     {
                         TitleNodeButton node = new TitleNodeButton();
                         node.Height = 45;
@@ -383,10 +551,14 @@ namespace DoitForFree
                         node.Template = (ControlTemplate)FindResource("TitleNodeButton");
                         node.Click += TitleNodeButton_Click;
                         node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
-                        WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
-                        ww.Children.Add(node);
+                        w.Children.Add(node);
                     }
                 }
+            }
+            else
+            {
+                title.ImagePath = "Images/右箭头.png";
+                w.Children.Clear();
             }
         }
 
@@ -396,18 +568,17 @@ namespace DoitForFree
             ((Button)sender).Template = (ControlTemplate)FindResource("TitleNodeButton2");
             curSelect = (Button)sender;
         }
-        #endregion
 
         private void TitleNodeButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("1");
-            foreach(MTask task in taskList)
+            foreach (MTask task in taskList)
             {
-                if(task.MName == ((TitleNodeButton)sender).Title)
+                if (task.MName == ((TitleNodeButton)sender).Title)
                 {
                     new NewTask(task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation).Show();
                 }
             }
         }
+        #endregion
     }
 }

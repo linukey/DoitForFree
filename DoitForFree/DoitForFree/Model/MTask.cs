@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoitForFree.Model
 {
-    public class MTask : IMBase 
+    public class MTask : IMBase
     {
         #region 枚举[类型 状态]
         public enum TaskType { 今日待办, 正在行动, 过期, 收集箱 };

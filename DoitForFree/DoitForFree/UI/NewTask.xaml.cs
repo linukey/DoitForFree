@@ -43,8 +43,8 @@ namespace DoitForFree.UI
         {
             type = WindowType.添加.ToString();
             InitializeComponent();
-            btn确定.IsEnabled = false;
-            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
+            //btn确定.IsEnabled = false;
+            //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
             this.projectList = projectList;
             this.goalList = goalList;
             this.situationList = situationList;
@@ -55,8 +55,8 @@ namespace DoitForFree.UI
             type = WindowType.修改.ToString();
             preTitle = title;
             InitializeComponent();
-            btn确定.IsEnabled = false;
-            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
+            //btn确定.IsEnabled = false;
+            //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
             tbx标题.Text = title;
             tbx描述.Text = discription;
             MenuButton情境.Text = situation;
@@ -168,6 +168,12 @@ namespace DoitForFree.UI
             if (((Button)sender).Name == "btn取消") this.Close();
             else if (((Button)sender).Name == "btn确定")
             {
+                if (tbx标题.Text.Trim() == "" || tbx标题.Text.Trim() == "标题" || MenuButton类型.Text == "收集箱" && MenuButton截止时间.Text == "截止时间")
+                {
+                    MessageBox.Show("标题、类型、截止时间为必填信息！");
+                    return;
+                }
+
                 MTask task = new MTask();
                 task.MName = tbx标题.Text.Trim();
                 task.MDiscription = tbx描述.Text.Trim();
@@ -175,6 +181,7 @@ namespace DoitForFree.UI
                 task.MSituation = MenuButton情境.Text.Trim();
                 task.MGoal = MenuButton目标.Text.Trim();
                 task.MStartDate = DateTime.Now;
+                MessageBox.Show(MenuButton截止时间.Text.Trim());
                 task.MEndDate = DateTime.Parse(MenuButton截止时间.Text.Trim().ToString());
                 task.MType = MTask.stringToTaskType(MenuButton类型.Text.Trim());
                 task.MState = MTask.stringToTaskState("未完成");
@@ -186,13 +193,15 @@ namespace DoitForFree.UI
             }
         }
 
+        //取消造成界面主键卡顿直至卡死
         private void Checkbtn确定()
         {
             ThreadPool.QueueUserWorkItem((o) =>
             {
                 while (true)
                 {
-                    try {
+                    try
+                    {
                         this.Dispatcher.Invoke(new Action(() =>
                         {
                             if (tbx标题.Text.Trim() == "" || tbx标题.Text.Trim() == "标题") btn确定.IsEnabled = false;
@@ -200,7 +209,7 @@ namespace DoitForFree.UI
                             else btn确定.IsEnabled = true;
                         }));
                     }
-                    catch(Exception ex) { }
+                    catch (Exception ex) { }
                 };
             });
         }
