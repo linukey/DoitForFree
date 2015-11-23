@@ -176,7 +176,7 @@ namespace DoitForFree
                         TitleNodeButton node = new TitleNodeButton();
                         node.Height = 45;
                         node.Width = 830;
-                        node.Time = t.MStartDate.ToString("hh:mm:ss");
+                        node.StartDate = t.MStartDate.ToString("hh:mm:ss");
                         node.Title = t.MName;
                         node.Discription = t.MDiscription;
                         node.ImagePath = @"Images/任务.png";
@@ -194,7 +194,7 @@ namespace DoitForFree
                         TitleNodeButton node = new TitleNodeButton();
                         node.Height = 45;
                         node.Width = 830;
-                        node.Time = t.MStartDate.ToString("hh:mm:ss");
+                        node.StartDate = t.MStartDate.ToString("hh:mm:ss");
                         node.Title = t.MName;
                         node.Discription = t.MDiscription;
                         node.ImagePath = @"Images/任务.png";
@@ -217,6 +217,10 @@ namespace DoitForFree
             List<DateTime> time = new List<DateTime>();
             HashSet<string> j = new HashSet<string>();
             if (parentWrap.Name == (curMenu = "wp所有项目"))
+            {
+                //添加查看项目、情境、目标按钮
+                InitNewButton(null, curMenu);
+
                 foreach (MTask task in taskList)
                 {
                     if (task.MProject == menu.Name && !j.Contains(task.MStartDate.ToString()))
@@ -225,7 +229,12 @@ namespace DoitForFree
                         time.Add(task.MStartDate);
                     }
                 }
+            }
             else if (parentWrap.Name == (curMenu = "wp所有情境"))
+            {
+                //添加查看项目、情境、目标按钮
+                InitNewButton(null, curMenu);
+
                 foreach (MTask task in taskList)
                 {
                     if (task.MSituation == menu.Name && !j.Contains(task.MStartDate.ToString()))
@@ -234,7 +243,12 @@ namespace DoitForFree
                         time.Add(task.MStartDate);
                     }
                 }
+            }
             else if (parentWrap.Name == (curMenu = "wp所有目标"))
+            {
+                //添加查看项目、情境、目标按钮
+                InitNewButton(null, curMenu);
+
                 foreach (MTask task in taskList)
                 {
                     if (task.MGoal == menu.Name && !j.Contains(task.MStartDate.ToString()))
@@ -243,6 +257,7 @@ namespace DoitForFree
                         time.Add(task.MStartDate);
                     }
                 }
+            }
             time.Sort();
             foreach (DateTime t in time)
             {
@@ -263,18 +278,15 @@ namespace DoitForFree
             foreach (MTask t in taskList)
             {
                 string judge = null;
-                if (parentWrap.Name == "wp所有项目")
-                    judge = t.MProject;
-                else if (parentWrap.Name == "wp所有情境")
-                    judge = t.MSituation;
-                else if (parentWrap.Name == "wp所有目标")
-                    judge = t.MGoal;
+                if (parentWrap.Name == "wp所有项目") judge = t.MProject;
+                else if (parentWrap.Name == "wp所有情境") judge = t.MSituation;
+                else if (parentWrap.Name == "wp所有目标") judge = t.MGoal;
                 if (judge == menu.Name && t.MState.ToString() != "已完成")
                 {
                     TitleNodeButton node = new TitleNodeButton();
                     node.Height = 45;
                     node.Width = 830;
-                    node.Time = t.MStartDate.ToString("hh:mm:ss");
+                    node.StartDate = t.MStartDate.ToString("hh:mm:ss");
                     node.Title = t.MName;
                     node.Discription = t.MDiscription;
                     node.ImagePath = @"Images/任务.png";
@@ -430,51 +442,91 @@ namespace DoitForFree
         //新任务
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            NewTask window = new NewTask(projectList, goalList, situationList);
-            InitProjectList();
-            InitSituationList();
-            InitGoalList();
-            InitTaskList();
-            window.Show();
+            MenuButton button = (MenuButton)sender;
+
+            if (button.Text == "新任务")
+            {
+                NewTask window = new NewTask(projectList, goalList, situationList);
+                window.Closing += Window_Closing;
+                window.Show();
+            }
+            else if (button.Text == "新项目")
+            {
+                NewProject window = new NewProject(projectList);
+                window.Closing += Window_Closing;
+                window.Show();
+            }
+            else if (button.Text == "新目标")
+            {
+                NewGoal window = new NewGoal(goalList);
+                window.Closing += Window_Closing;
+                window.Show();
+            }
+            else if(button.Text == "新情境")
+            {
+                NewSituation window = new NewSituation(situationList);
+                window.Closing += Window_Closing;
+                window.Show();
+            }
+            else if (button.Text == "编辑项目")
+            {
+                MProject project = new ProjectBAL().Select(curNode);
+                NewProject window = new NewProject(project.MName, project.MDiscription, project.MEndDate.ToString("yyyy-MM-dd"));
+                window.Closing += Window_Closing;
+                window.Show();
+            }
+            else if (button.Text == "编辑目标")
+            {
+                MGoal goal = new GoalBAL().Select(curNode);
+                NewGoal window = new NewGoal(goal.MName, goal.MDiscription, goal.MEndDate.ToString("yyyy-MM-dd"));
+                window.Closing += Window_Closing;
+                window.Show();
+            }
+            else if(button.Text == "编辑情境")
+            {
+                NewSituation window = new NewSituation(situationList, curNode);
+                window.Closing += Window_Closing;
+                window.Show();
+            }
         }
 
         //初始化按钮
-        private void InitNewButton(MenuButton button)
+        private void InitNewButton(MenuButton button, string parentName = null)
         {
-            spn添加栏.Children.Clear();
-            MenuButton m = new MenuButton();
-            if (button.Name == "menu收集箱" || button.Name == "menu今日待办" ||
-                button.Name == "menu正在行动" || button.Name == "menu过期" ||
-                button.Name == "menu已完成" || button.Name == "menu垃圾箱" ||
-                button.Name == "menu所有情境")
-                m.Text = "新任务";
-            else if (button.Name == "menu所有项目") m.Text = "新项目";
-            else if (button.Name == "menu所有目标") m.Text = "新目标";
+            if (button != null)
+            {
+                spn添加.Children.Clear();
+                MenuButton m = new MenuButton();
+                if (button.Name == "menu收集箱" || button.Name == "menu今日待办" ||
+                    button.Name == "menu正在行动" || button.Name == "menu过期" ||
+                    button.Name == "menu已完成" || button.Name == "menu垃圾箱")
+                    m.Text = "新任务";
+                else if (button.Name == "menu所有项目") m.Text = "新项目";
+                else if (button.Name == "menu所有目标") m.Text = "新目标";
+                else if (button.Name == "menu所有情境") m.Text = "新情境";
 
-            m.ImagePath = @"Images/新项目.png";
-            m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
-            m.MouseEnter += mouseChangeEnter;
-            m.MouseLeave += mouseChangeLeave;
-            m.Click += MenuButton_Click;
-            spn添加栏.Children.Add(m);
+                m.ImagePath = @"Images/新项目.png";
+                m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
+                m.MouseEnter += mouseChangeEnter;
+                m.MouseLeave += mouseChangeLeave;
+                m.Click += MenuButton_Click;
+                spn添加.Children.Add(m);
+            }
+            else if(parentName != null)
+            {
+                spn编辑.Children.Clear();
+                MenuButton m = new MenuButton();
+                if (parentName == "wp所有项目") m.Text = "编辑项目";
+                else if (parentName == "wp所有目标") m.Text = "编辑目标";
+                else if (parentName == "wp所有情境") m.Text = "编辑情境";
+                m.ImagePath = @"Images/新项目.png";
+                m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
+                m.MouseEnter += mouseChangeEnter;
+                m.MouseLeave += mouseChangeLeave;
+                m.Click += MenuButton_Click;
+                spn编辑.Children.Add(m);
+            }
         }
-        #endregion
-
-        #region 情境节点处理
-        //情境节点双击事件
-        private void MenuButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("1");
-        }
-        //情境节点点击事件
-        private void MenuButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            if (curSelect != null)
-                curSelect.Template = (ControlTemplate)FindResource("MenuButtonTitle");
-            ((MenuButton)sender).Template = (ControlTemplate)FindResource("MenuButtonNode");
-            curSelect = (MenuButton)sender;
-        }
-
         #endregion
 
         #region 任务列表点击事件处理
@@ -499,7 +551,7 @@ namespace DoitForFree
                             TitleNodeButton node = new TitleNodeButton();
                             node.Height = 45;
                             node.Width = 830;
-                            node.Time = t.MStartDate.ToString("hh:mm:ss");
+                            node.StartDate = t.MStartDate.ToString("hh:mm:ss");
                             node.Title = t.MName;
                             node.Discription = t.MDiscription;
                             node.ImagePath = @"Images/任务.png";
@@ -520,7 +572,7 @@ namespace DoitForFree
                             TitleNodeButton node = new TitleNodeButton();
                             node.Height = 45;
                             node.Width = 830;
-                            node.Time = t.MStartDate.ToString("hh:mm:ss");
+                            node.StartDate = t.MStartDate.ToString("hh:mm:ss");
                             node.Title = t.MName;
                             node.Discription = t.MDiscription;
                             node.ImagePath = @"Images/任务.png";
@@ -553,7 +605,7 @@ namespace DoitForFree
                         TitleNodeButton node = new TitleNodeButton();
                         node.Height = 45;
                         node.Width = 830;
-                        node.Time = t.MStartDate.ToString("hh:mm:ss");
+                        node.StartDate = t.MStartDate.ToString("hh:mm:ss");
                         node.Title = t.MName;
                         node.Discription = t.MDiscription;
                         node.ImagePath = @"Images/任务.png";
@@ -598,8 +650,6 @@ namespace DoitForFree
             InitGoalList();
             InitTaskList();
         }
-
         #endregion
-
     }
 }

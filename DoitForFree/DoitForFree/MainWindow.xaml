@@ -85,7 +85,12 @@
         <Grid Grid.Row="2" Grid.Column="2" Background="#FFFFFF">
             <Separator Margin="0,0,0,59" />
             <StackPanel Name="spn添加栏" Orientation="Horizontal" VerticalAlignment="Center">
-                
+                <StackPanel Name="spn添加" Orientation="Horizontal" VerticalAlignment="Center">
+                    
+                </StackPanel>
+                <StackPanel Name="spn编辑" Orientation="Horizontal" VerticalAlignment="Center">
+                    
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

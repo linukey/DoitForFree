@@ -1,0 +1,30 @@
+﻿<Window x:Class="DoitForFree.UI.NewSituation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DoitForFree.UI"
+        mc:Ignorable="d" WindowStyle="None" Background="#FFFFFF" Name="NewSituagionWindow" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="NewGoalWindow_MouseLeftButtonDown"
+        Height="200" Width="630" ResizeMode="NoResize" AllowsTransparency="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDirectory.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,15,10,0">
+            <TextBox Name="tbx标题" Text="标题" Style="{StaticResource TextBox输入}" Width="590" Height="30" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
+            <Label Content="多个情境之间用英文分号相隔开^_^" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft">
+            <Button Name="btn确定" Content="确定" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="20,10,10,10" Click="Button_Click" />
+            <Button Name="btn取消" Content="取消" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="10,10,10,10" Click="Button_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

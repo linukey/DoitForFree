@@ -132,6 +132,55 @@ namespace DoitForFree.BAL
             }
             return false;
         }
+
+        public void UpdateProject(string projectName, string userName, string preProject)
+        {
+            string cmdStr = "update T_task set 所属项目=@project where 用户编码=@user and 所属项目=@preproject";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter project = factory.CreateParameter();
+            project.ParameterName = "@project";
+            project.Value = projectName;
+            DbParameter username = factory.CreateParameter();
+            username.ParameterName = "@user";
+            username.Value = userName;
+            DbParameter preproject = factory.CreateParameter();
+            preproject.ParameterName = "@preproject";
+            preproject.Value = preProject;
+            new TaskDAL().Update(cmdStr, project, username, preproject);
+        }
+
+        public void UpdateGoal(string goalName, string userName, string preGoal)
+        {
+            string cmdStr = "update T_task set 所属目标=@goal where 用户编码=@user and 所属目标=@pregoal";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter goal = factory.CreateParameter();
+            goal.ParameterName = "@goal";
+            goal.Value = goalName;
+            DbParameter username = factory.CreateParameter();
+            username.ParameterName = "@user";
+            username.Value = userName;
+            DbParameter pregoal = factory.CreateParameter();
+            pregoal.ParameterName = "@pregoal";
+            pregoal.Value = preGoal;
+            new TaskDAL().Update(cmdStr, goal, username, pregoal);
+        }
+
+        public void UpdateSituation(string situationName, string userName, string preSituation)
+        {
+            string cmdStr = "update T_task set 所属情境=@situation where 用户编码=@user and 所属情境=@presituation";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter situation = factory.CreateParameter();
+            situation.ParameterName = "@situation";
+            situation.Value = situationName;
+            DbParameter username = factory.CreateParameter();
+            username.ParameterName = "@user";
+            username.Value = userName;
+            DbParameter presituation = factory.CreateParameter();
+            presituation.ParameterName = "@presituation";
+            presituation.Value = preSituation;
+            new TaskDAL().Update(cmdStr, situation, username, presituation);
+        }
+
         #endregion
 
         #region Select
@@ -169,9 +218,7 @@ namespace DoitForFree.BAL
             }
             return t;
         }
-        #endregion
 
-        #region SelectAll
         public DataTable SelectAll(string userName)
         {
             string cmdStr = "select * from T_task where 用户编码=@username";

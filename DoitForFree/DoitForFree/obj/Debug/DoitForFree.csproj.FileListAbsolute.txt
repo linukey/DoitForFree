@@ -31,6 +31,12 @@ C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Log
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Login.baml
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Register.g.cs
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\Register.baml
-C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree.csprojResolveAssemblyReference.cache
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewTask.g.cs
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewTask.baml
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewProject.g.cs
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewProject.baml
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewGoal.g.cs
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewGoal.baml
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\DoitForFree.csprojResolveAssemblyReference.cache
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewSituation.g.cs
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\DoitForFree\obj\Debug\UI\NewSituation.baml

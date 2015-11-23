@@ -126,6 +126,7 @@ namespace DoitForFree.UI
                 foreach (MSituation situation in situationList)
                 {
                     MenuItem m = new MenuItem();
+                    m.Click += MenuItem_Click;
                     m.Header = situation.MName;
                     m.Template = (ControlTemplate)FindResource("downMenu");
                     Menu情境.Items.Add(m);
@@ -174,8 +175,7 @@ namespace DoitForFree.UI
 
                 MTask task = new MTask();
                 task.MName = tbx标题.Text.Trim();
-                if (tbx描述.Text.Trim() != "描述")
-                    task.MDiscription = tbx描述.Text.Trim();
+                task.MDiscription = tbx描述.Text.Trim();
                 task.MProject = MenuButton项目.Text.Trim();
                 task.MSituation = MenuButton情境.Text.Trim();
                 task.MGoal = MenuButton目标.Text.Trim();

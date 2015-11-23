@@ -10,6 +10,7 @@ namespace DoitForFree.UI
         private string week;
         private string month;
         private string imagePath;
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -76,27 +77,29 @@ namespace DoitForFree.UI
                 date = value;
             }
         }
+
     }
 
     public class TitleNodeButton : Button, INotifyPropertyChanged
     {
-        private string time;
+        private string startDate;
+        private string endDate;
         private string title;
         private string discription;
         private string imagePath;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Time
+        public string StartDate
         {
             get
             {
-                return time;
+                return startDate;
             }
 
             set
             {
-                time = value;
+                startDate = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Time"));
@@ -151,6 +154,23 @@ namespace DoitForFree.UI
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("ImagePath"));
+                }
+            }
+        }
+
+        public string EndDate
+        {
+            get
+            {
+                return endDate;
+            }
+
+            set
+            {
+                endDate = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Time"));
                 }
             }
         }

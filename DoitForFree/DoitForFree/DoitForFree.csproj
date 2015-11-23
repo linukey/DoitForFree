@@ -69,6 +69,15 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MenuButton.cs" />
+    <Compile Include="UI\NewGoal.xaml.cs">
+      <DependentUpon>NewGoal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewProject.xaml.cs">
+      <DependentUpon>NewProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewSituation.xaml.cs">
+      <DependentUpon>NewSituation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\NewTask.xaml.cs">
       <DependentUpon>NewTask.xaml</DependentUpon>
     </Compile>
@@ -96,6 +105,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NewGoal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NewProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NewSituation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

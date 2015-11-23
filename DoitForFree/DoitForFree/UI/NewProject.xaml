@@ -1,0 +1,45 @@
+﻿<Window x:Class="DoitForFree.UI.NewProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DoitForFree.UI"
+        mc:Ignorable="d" WindowStyle="None" Background="#FFFFFF" Name="NewProjectWindow" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Height="300" Width="630" ResizeMode="NoResize" AllowsTransparency="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDirectory.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,15,10,0">
+            <TextBox Name="tbx标题" Text="标题" Style="{StaticResource TextBox输入}" Width="590" Height="30" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,0">
+            <TextBox Name="tbx描述" Text="描述" Style="{StaticResource TextBox输入}" Width="590" Height="90" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,10,10,10">
+            <local:MenuButton x:Name="MenuButton截止时间" Margin="10,5,10,0" Text="截止时间" ImagePath="../Images/日历.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton截止时间_Click">
+                <local:MenuButton.ContextMenu>
+                    <ContextMenu Name="MenuCalendar">
+                        <Calendar Name="Calendar截止时间" SelectedDatesChanged="Calendar_SelectedDatesChanged" MouseLeave="Calendar截止时间_MouseLeave"/>
+                    </ContextMenu>
+                </local:MenuButton.ContextMenu>
+            </local:MenuButton>
+        </StackPanel>
+        <Separator Grid.Row="3" Margin="20,0,20,0" />
+        <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft">
+            <Button Name="btn确定" Content="确定" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="20,10,10,10" Click="Button_Click"/>
+            <Button Name="btn取消" Content="取消" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="10,10,10,10" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
