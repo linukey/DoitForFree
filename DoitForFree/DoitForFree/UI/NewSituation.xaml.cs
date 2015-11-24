@@ -23,10 +23,10 @@ namespace DoitForFree.UI
     public partial class NewSituation : Window
     {
         #region 字段
-        private string preTitle; //修改前的任务名称
-        private List<MSituation> situationList;
+        private string preTitle = null; //修改前的任务名称
+        private List<MSituation> situationList = null;
         private enum WindowType { 添加, 修改 };
-        private string WType; //窗口类型
+        private string WType = null; //窗口类型
         #endregion
 
         #region 构造函数
@@ -80,7 +80,7 @@ namespace DoitForFree.UI
             if (((Button)sender).Name == "btn取消") this.Close();
             else if (((Button)sender).Name == "btn确定")
             {
-                if (preTitle != tbx标题.Text.Trim())
+                if (preTitle != null && preTitle != tbx标题.Text.Trim() || preTitle == null)
                 {
                     if (tbx标题.Text.Trim() == "" || tbx标题.Text.Trim() == "标题")
                     {

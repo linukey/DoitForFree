@@ -80,7 +80,7 @@ namespace DoitForFree.BAL
         #region Update
         public bool Update(string prename, MTask t)
         {
-            string cmdStr = "update T_task set 任务名称=@name,任务描述=@discription,开始时间=@startdate,截止时间=@enddate,类型=@type,所属情境=@situation,所属项目=@project,所属目标=@goal,状态=@state,用户编码=@user where 任务名称=@prename";
+            string cmdStr = "update T_task set 任务名称=@name,任务描述=@discription,截止时间=@enddate,类型=@type,所属情境=@situation,所属项目=@project,所属目标=@goal,状态=@state,用户编码=@user where 任务名称=@prename";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -90,9 +90,9 @@ namespace DoitForFree.BAL
             discription.ParameterName = "@discription";
             discription.Value = t.MDiscription;
 
-            DbParameter startdate = factory.CreateParameter();
-            startdate.ParameterName = "@startdate";
-            startdate.Value = t.MStartDate.ToString("yyyy-MM-dd");
+            //DbParameter startdate = factory.CreateParameter();
+            //startdate.ParameterName = "@startdate";
+            //startdate.Value = t.MStartDate.ToString("yyyy-MM-dd");
 
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
@@ -126,7 +126,7 @@ namespace DoitForFree.BAL
             user.ParameterName = "@user";
             user.Value = t.MUser;
 
-            if (new TaskDAL().Update(cmdStr, name, discription, startdate, enddate, type, situation, project, goal, state, pn, user) == 1)
+            if (new TaskDAL().Update(cmdStr, name, discription, enddate, type, situation, project, goal, state, pn, user) == 1)
             {
                 return true;
             }

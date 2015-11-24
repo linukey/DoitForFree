@@ -52,6 +52,7 @@
     <ControlTemplate x:Key="MenuButton" TargetType="local:MenuButton">
         <Border Name="bd" Background="#F2F3F5">
             <StackPanel Orientation="Horizontal">
+                <Rectangle Name="rt" Height="36" Width="5" Fill="#F2F3F5" />
                 <Rectangle Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30,5,10,5">
                     <Rectangle.Fill>
                         <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -63,6 +64,27 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="bd" Property="Background" Value="#EAEAEA" />
+                <Setter TargetName="rt" Property="Fill" Value="#EAEAEA" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MenuButton2" TargetType="local:MenuButton">
+        <Border Name="bd" Background="#F2F3F5">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Name="rt" Height="36" Width="5" Fill="#1162A0" />
+                <Rectangle Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30,5,10,5">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
+            </StackPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#EAEAEA" />
+                <Setter TargetName="rt" Property="Fill" Value="#1162A0" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

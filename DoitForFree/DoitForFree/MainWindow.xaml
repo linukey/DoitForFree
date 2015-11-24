@@ -48,7 +48,7 @@
         <!--左侧菜单-->
         <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Template="{StaticResource scrollviewer}">
-                <StackPanel Orientation="Vertical" Background="#F2F3F5">
+                <StackPanel Name="spMenu" Orientation="Vertical" Background="#F2F3F5">
                     <UI:MenuButton x:Name="menu收集" Style="{StaticResource MenuButton左侧菜单按钮}" Text="收集" Template="{StaticResource MenuButtonTitle}"/>
                     <UI:MenuButton x:Name="menu收集箱" Style="{StaticResource MenuButton左侧菜单按钮}" Text="收集箱" ImagePath="Images/收集箱.png" Template="{StaticResource MenuButton}" Click="menu收集箱_Click"/>
                     <Separator />
@@ -58,13 +58,13 @@
                     <UI:MenuButton x:Name="menu过期" Style="{StaticResource MenuButton左侧菜单按钮}" Text="过期" ImagePath="Images/过期.png" Template="{StaticResource MenuButton}" Click="menu过期_Click"/>
                     <Separator />
                     <UI:MenuButton x:Name="menu所有项目" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
-                    <WrapPanel Name="wp所有项目" Background="Red" />
-                        <Separator />
+                    <WrapPanel Name="wp所有项目" />
+                    <Separator />
                     <UI:MenuButton x:Name="menu所有目标" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有目标" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有目标_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
-                    <WrapPanel Name="wp所有目标" Background="Red" />
+                    <WrapPanel Name="wp所有目标" />
                     <Separator />
                     <UI:MenuButton x:Name="menu所有情境" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有情境" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有情境_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
-                    <WrapPanel Name="wp所有情境" Background="Red" />
+                    <WrapPanel Name="wp所有情境" />
                     <Separator />
                     <UI:MenuButton x:Name="menu已完成" Style="{StaticResource MenuButton左侧菜单按钮}" Text="已完成" ImagePath="Images/已完成.png" Template="{StaticResource MenuButton}" Click="menu已完成_Click" />
                     <Separator />

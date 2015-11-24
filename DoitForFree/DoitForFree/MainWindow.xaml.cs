@@ -35,6 +35,7 @@ namespace DoitForFree
         private List<MGoal> goalList = null; //目标列表
         private List<MTask> taskList = null; //任务列表
         private Button curSelect = null; //当前选中节点
+        private Button curSelectMenu = null; //当前选中的左侧菜单，需要进行效果处理
         string curMenu = null; //当前选中的左侧菜单
         string curNode = null; //当前选中的 情境 项目 目标 里的节点
 
@@ -69,25 +70,25 @@ namespace DoitForFree
         private void menu收集箱_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            InitTitleButton("收集箱");
+            InitTitleButton("收集箱", sender as MenuButton);
         }
 
         private void menu今日待办_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            InitTitleButton("今日待办");
+            InitTitleButton("今日待办", sender as MenuButton);
         }
 
         private void menu正在行动_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            InitTitleButton("正在行动");
+            InitTitleButton("正在行动", sender as MenuButton);
         }
 
         private void menu过期_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            InitTitleButton("过期");
+            InitTitleButton("过期", sender as MenuButton);
         }
 
         private void menu所有项目_Click(object sender, RoutedEventArgs e)
@@ -111,19 +112,24 @@ namespace DoitForFree
         private void menu已完成_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            InitTitleButton("已完成");
+            InitTitleButton("已完成", sender as MenuButton);
         }
 
         private void menu垃圾箱_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
-            InitTitleButton("垃圾箱");
+            InitTitleButton("垃圾箱", sender as MenuButton);
         }
         #endregion
 
         #region 右侧数据初始化
-        private void InitTitleButton(string judge)
+        private void InitTitleButton(string judge, MenuButton btn)
         {
+            //进行左侧菜单选中效果的处理
+            if (curSelectMenu != null) curSelectMenu.Template = (ControlTemplate)FindResource("MenuButton");
+            btn.Template = (ControlTemplate)FindResource("MenuButton2");
+            curSelectMenu = btn;
+
             wp右侧显示.Children.Clear();
             curMenu = judge;
             List<DateTime> time = new List<DateTime>();
@@ -212,6 +218,13 @@ namespace DoitForFree
         {
             wp右侧显示.Children.Clear();
             MenuButton menu = (MenuButton)sender;
+
+            //进行左侧菜单选中效果的处理
+            if (curSelectMenu != null) curSelectMenu.Template = (ControlTemplate)FindResource("MenuButton");
+            MenuButton button = (MenuButton)spMenu.FindName(menu.Name);
+            button.Template = (ControlTemplate)FindResource("MenuButton2");
+            curSelectMenu = button;
+
             WrapPanel parentWrap = (WrapPanel)menu.Parent;
             curNode = menu.Name;
             List<DateTime> time = new List<DateTime>();
@@ -408,6 +421,11 @@ namespace DoitForFree
         //左侧菜单单击数据加载
         private void InitMenuButton(IEnumerable<IMBase> l, MenuButton m, WrapPanel wp)
         {
+            //左侧菜单选中效果处理
+            if (curSelectMenu != null) curSelectMenu.Template = (ControlTemplate)FindResource("MenuButton");
+
+            wp右侧显示.Children.Clear();
+            curMenu = m.Name;
             m.ImagePath = m.ImagePath == "Images/下箭头.png" ? "Images/右箭头.png" : "Images/下箭头.png";
             setMargin(m, m.ImagePath == "Images/下箭头.png" ? "下箭头" : "右箭头");
             if (m.ImagePath == "Images/下箭头.png")
@@ -421,6 +439,9 @@ namespace DoitForFree
                     button.ImagePath = "Images/情境节点.png";
                     button.Text = mm.MName;
                     button.Name = mm.MName;
+                    try { wp.UnregisterName(mm.MName); }
+                    catch (Exception ex) { }
+                    wp.RegisterName(mm.MName, button);
                     button.Click += InitTitleButton;
                     wp.Children.Add(button);
                 }
@@ -462,7 +483,7 @@ namespace DoitForFree
                 window.Closing += Window_Closing;
                 window.Show();
             }
-            else if(button.Text == "新情境")
+            else if (button.Text == "新情境")
             {
                 NewSituation window = new NewSituation(situationList);
                 window.Closing += Window_Closing;
@@ -482,7 +503,7 @@ namespace DoitForFree
                 window.Closing += Window_Closing;
                 window.Show();
             }
-            else if(button.Text == "编辑情境")
+            else if (button.Text == "编辑情境")
             {
                 NewSituation window = new NewSituation(situationList, curNode);
                 window.Closing += Window_Closing;
@@ -500,11 +521,15 @@ namespace DoitForFree
                 if (button.Name == "menu收集箱" || button.Name == "menu今日待办" ||
                     button.Name == "menu正在行动" || button.Name == "menu过期" ||
                     button.Name == "menu已完成" || button.Name == "menu垃圾箱")
+                {
                     m.Text = "新任务";
+                    
+                }
                 else if (button.Name == "menu所有项目") m.Text = "新项目";
                 else if (button.Name == "menu所有目标") m.Text = "新目标";
                 else if (button.Name == "menu所有情境") m.Text = "新情境";
 
+                spn编辑.Children.Clear();
                 m.ImagePath = @"Images/新项目.png";
                 m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
                 m.MouseEnter += mouseChangeEnter;
@@ -512,7 +537,7 @@ namespace DoitForFree
                 m.Click += MenuButton_Click;
                 spn添加.Children.Add(m);
             }
-            else if(parentName != null)
+            else if (parentName != null)
             {
                 spn编辑.Children.Clear();
                 MenuButton m = new MenuButton();
@@ -636,19 +661,51 @@ namespace DoitForFree
             {
                 if (task.MName == ((TitleNodeButton)sender).Title)
                 {
-                    NewTask window = new NewTask(task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
+                    NewTask window = new NewTask(projectList, goalList, situationList, task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
                     window.Closing += Window_Closing;
                     window.Show();
+                    break;
                 }
             }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            #region 添加或修改数据后再次进行数据初始化
             InitProjectList();
             InitSituationList();
             InitGoalList();
             InitTaskList();
+            #endregion
+
+            #region 数据修改同步UI
+            if (curMenu == "今日待办" || curMenu == "正在行动" || curMenu == "收集箱" || curMenu == "过期" || curMenu == "已完成" || curMenu == "垃圾箱")
+            {
+                MenuButton button = (MenuButton)spMenu.FindName("menu" + curMenu);
+                InitTitleButton(curMenu, button);
+            }
+            else if (curMenu == "menu所有项目")
+            {
+                MenuButton button = (MenuButton)spMenu.FindName("menu所有项目");
+                WrapPanel wp = (WrapPanel)spMenu.FindName("wp所有项目");
+                InitMenuButton(projectList, button, wp);
+                InitMenuButton(projectList, button, wp);
+            }
+            else if (curMenu == "menu所有目标")
+            {
+                MenuButton button = (MenuButton)spMenu.FindName("menu所有目标");
+                WrapPanel wp = (WrapPanel)spMenu.FindName("wp所有目标");
+                InitMenuButton(projectList, button, wp);
+                InitMenuButton(projectList, button, wp);
+            }
+            else if (curMenu == "menu所有情境")
+            {
+                MenuButton button = (MenuButton)spMenu.FindName("menu所有情境");
+                WrapPanel wp = (WrapPanel)spMenu.FindName("wp所有情境");
+                InitMenuButton(projectList, button, wp);
+                InitMenuButton(projectList, button, wp);
+            }
+            #endregion
         }
         #endregion
     }

@@ -60,7 +60,7 @@ namespace DoitForFree.BAL
         #region Update
         public bool Update(string prename, MProject p)
         {
-            string cmdStr = "update T_project set 项目名称=@name,项目描述=@discription,开始时间=@startdate,截止时间=@enddate,用户编码=@user where 项目名称=@prename";
+            string cmdStr = "update T_project set 项目名称=@name,项目描述=@discription,截止时间=@enddate,用户编码=@user where 项目名称=@prename";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -70,9 +70,9 @@ namespace DoitForFree.BAL
             discription.ParameterName = "@discription";
             discription.Value = p.MDiscription;
 
-            DbParameter startdate = factory.CreateParameter();
-            startdate.ParameterName = "@startdate";
-            startdate.Value = p.MStartDate;
+            //DbParameter startdate = factory.CreateParameter();
+            //startdate.ParameterName = "@startdate";
+            //startdate.Value = p.MStartDate;
 
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
@@ -85,7 +85,7 @@ namespace DoitForFree.BAL
             DbParameter pn = factory.CreateParameter();
             pn.ParameterName = "@prename";
             pn.Value = prename;
-            if (new ProjectDAL().Update(cmdStr, name, discription, startdate, enddate, pn, user) == 1)
+            if (new ProjectDAL().Update(cmdStr, name, discription, enddate, pn, user) == 1)
             {
                 return true;
             }

@@ -83,7 +83,7 @@ namespace DoitForFree.UI
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime date = (DateTime)Calendar截止时间.SelectedDate;
-            this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("hh:mm:ss");
+            this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd");
         }
 
         private void Calendar截止时间_MouseLeave(object sender, MouseEventArgs e)

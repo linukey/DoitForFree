@@ -42,9 +42,12 @@ namespace DoitForFree.UI
             this.situationList = situationList;
         }
 
-        public NewTask(string title, string discription, string enddate, string type, string project, string goal, string situation)
+        public NewTask(List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList, string title, string discription, string enddate, string type, string project, string goal, string situation)
         {
             WType = WindowType.修改.ToString();
+            this.projectList = projectList;
+            this.goalList = goalList;
+            this.situationList = situationList;
             preTitle = title;
             InitializeComponent();
             //btn确定.IsEnabled = false;
@@ -113,6 +116,7 @@ namespace DoitForFree.UI
                 foreach (MGoal goal in goalList)
                 {
                     MenuItem m = new MenuItem();
+                    m.Click += MenuItem_Click;
                     m.Header = goal.MName;
                     m.Template = (ControlTemplate)FindResource("downMenu");
                     Menu目标.Items.Add(m);
@@ -139,7 +143,7 @@ namespace DoitForFree.UI
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime date = (DateTime)Calendar截止时间.SelectedDate;
-            this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("hh:mm:ss");
+            this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd");
         }
 
         private void Calendar截止时间_MouseLeave(object sender, MouseEventArgs e)
@@ -179,7 +183,7 @@ namespace DoitForFree.UI
                 task.MProject = MenuButton项目.Text.Trim();
                 task.MSituation = MenuButton情境.Text.Trim();
                 task.MGoal = MenuButton目标.Text.Trim();
-                task.MStartDate = DateTime.Now;
+                task.MStartDate = DateTime.Parse(MenuButton截止时间.Text.Trim().ToString());    
                 task.MEndDate = DateTime.Parse(MenuButton截止时间.Text.Trim().ToString());
                 task.MType = MTask.stringToTaskType(MenuButton类型.Text.Trim());
                 task.MState = MTask.stringToTaskState("未完成");

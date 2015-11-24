@@ -60,7 +60,7 @@ namespace DoitForFree.BAL
         #region Update
         public bool Update(string prename, MGoal p)
         {
-            string cmdStr = "update T_goal set 目标名称=@name,目标描述=@discription,开始时间=@startdate,截止时间=@enddate,用户编码=@user where 目标名称=@prename";
+            string cmdStr = "update T_goal set 目标名称=@name,目标描述=@discription,截止时间=@enddate,用户编码=@user where 目标名称=@prename";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter name = factory.CreateParameter();
             name.ParameterName = "@name";
@@ -70,9 +70,9 @@ namespace DoitForFree.BAL
             discription.ParameterName = "@discription";
             discription.Value = p.MDiscription;
 
-            DbParameter startdate = factory.CreateParameter();
-            startdate.ParameterName = "@startdate";
-            startdate.Value = p.MStartDate;
+            //DbParameter startdate = factory.CreateParameter();
+            //startdate.ParameterName = "@startdate";
+            //startdate.Value = p.MStartDate;
 
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
@@ -86,7 +86,7 @@ namespace DoitForFree.BAL
             pn.ParameterName = "@prename";
             pn.Value = prename;
 
-            if (new GoalDAL().Update(cmdStr, name, discription, startdate, enddate, user, pn) == 1)
+            if (new GoalDAL().Update(cmdStr, name, discription, enddate, user, pn) == 1)
             {
                 return true;
             }
