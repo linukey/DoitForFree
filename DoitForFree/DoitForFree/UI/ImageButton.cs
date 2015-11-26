@@ -3,6 +3,9 @@ using System.Windows.Controls;
 
 namespace DoitForFree.UI
 {
+    /// <summary>
+    /// 用于只存在图片的按钮
+    /// </summary>
     class ImageButton : Button, INotifyPropertyChanged
     {
         private string imagePath;

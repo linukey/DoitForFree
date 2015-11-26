@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace DoitForFree.UI
 {
+    /// <summary>
+    /// 用于右侧显示收缩栏
+    /// </summary>
     public class TitleButton : Button, INotifyPropertyChanged
     {
         private DateTime date;
@@ -80,6 +83,9 @@ namespace DoitForFree.UI
 
     }
 
+    /// <summary>
+    /// 用于右侧显示任务列表里的单个任务
+    /// </summary>
     public class TitleNodeButton : Button, INotifyPropertyChanged
     {
         private string startDate;

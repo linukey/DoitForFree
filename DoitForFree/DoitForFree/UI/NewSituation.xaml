@@ -18,10 +18,12 @@
             <RowDefinition Height="90"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+        <!--标题-->
         <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,15,10,0">
             <TextBox Name="tbx标题" Text="标题" Style="{StaticResource TextBox输入}" Width="590" Height="30" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
             <Label Content="多个情境之间用英文分号相隔开^_^" />
         </StackPanel>
+        <!--确定、取消-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft">
             <Button Name="btn确定" Content="确定" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="20,10,10,10" Click="Button_Click" />
             <Button Name="btn取消" Content="取消" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="10,10,10,10" Click="Button_Click" />

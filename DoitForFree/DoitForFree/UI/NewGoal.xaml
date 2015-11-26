@@ -21,12 +21,15 @@
             <RowDefinition Height="1"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+        <!--标题-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,15,10,0">
             <TextBox Name="tbx标题" Text="标题" Style="{StaticResource TextBox输入}" Width="590" Height="30" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
         </StackPanel>
+        <!--描述-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,0">
             <TextBox Name="tbx描述" Text="描述" Style="{StaticResource TextBox输入}" Width="590" Height="90" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
         </StackPanel>
+        <!--截止时间-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,10,10,10">
             <local:MenuButton x:Name="MenuButton截止时间" Margin="10,5,10,0" Text="截止时间" ImagePath="../Images/日历.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton截止时间_Click">
                 <local:MenuButton.ContextMenu>
@@ -37,6 +40,7 @@
             </local:MenuButton>
         </StackPanel>
         <Separator Grid.Row="3" Margin="20,0,20,0" />
+        <!--确定、取消-->
         <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft">
             <Button Name="btn确定" Content="确定" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="20,10,10,10" Click="Button_Click"/>
             <Button Name="btn取消" Content="取消" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="10,10,10,10" Click="Button_Click"/>

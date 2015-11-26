@@ -23,13 +23,16 @@
             <RowDefinition Height="1" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <!--标题-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,15,10,0">
             <TextBox Name="tbx标题" Text="标题" Style="{StaticResource TextBox输入}" Width="590" Height="30" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
         </StackPanel>
+        <!--描述-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,0">
             <TextBox Name="tbx描述" Text="描述" Style="{StaticResource TextBox输入}" Width="590" Height="90" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,10,10,10">
+            <!--类型-->
             <local:MenuButton x:Name="MenuButton类型" Margin="20,5,10,0" Text="类型" ImagePath="../Images/类型.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton菜单_Click">
                 <local:MenuButton.ContextMenu>
                     <ContextMenu Name="Menu类型">
@@ -39,6 +42,7 @@
                     </ContextMenu>
                 </local:MenuButton.ContextMenu>
             </local:MenuButton>
+            <!--截止时间-->
             <local:MenuButton x:Name="MenuButton截止时间" Margin="10,5,10,0" Text="截止时间" ImagePath="../Images/日历.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton菜单_Click">
                 <local:MenuButton.ContextMenu>
                     <ContextMenu Name="MenuCalendar">
@@ -49,18 +53,21 @@
         </StackPanel>
         <Separator Grid.Row="3" Margin="20,0,20,0" />
         <StackPanel Grid.Row="4" Orientation="Vertical" Margin="10,10,10,10">
+            <!--项目-->
             <local:MenuButton x:Name="MenuButton项目" Margin="20,5,10,5" Text="项目" ImagePath="../Images/项目.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton菜单_Click">
                 <local:MenuButton.ContextMenu>
                     <ContextMenu Name="Menu项目">
                     </ContextMenu>
                 </local:MenuButton.ContextMenu>            
             </local:MenuButton>
+            <!--目标-->
             <local:MenuButton x:Name="MenuButton目标" Margin="20,5,10,5" Text="目标" ImagePath="../Images/今日待办.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton菜单_Click">
                 <local:MenuButton.ContextMenu>
                     <ContextMenu Name="Menu目标">
                     </ContextMenu>
                 </local:MenuButton.ContextMenu>
             </local:MenuButton>
+            <!--情境-->
             <local:MenuButton x:Name="MenuButton情境" Margin="20,5,10,5" Text="情境" ImagePath="../Images/situation.png" Template="{StaticResource MenuButtonCalendar}" Click="MenuButton菜单_Click">
                 <local:MenuButton.ContextMenu>
                     <ContextMenu Name="Menu情境">
@@ -69,6 +76,7 @@
             </local:MenuButton>
         </StackPanel>
         <Separator Grid.Row="5" Margin="20,0,20,0" />
+        <!--确定、取消-->
         <StackPanel Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft">
             <Button Name="btn确定" Content="确定" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="20,10,10,10" Click="Button_Click"/>
             <Button Name="btn取消" Content="取消" Width="70" Height="40" Template="{StaticResource Button确定取消}" Margin="10,10,10,10" Click="Button_Click"/>

@@ -10,8 +10,8 @@ namespace DoitForFree.UI
     /// </summary>
     public partial class Login : Window
     {
-        bool bUser = false;
-        bool bPasswd = false;
+        private bool bUser = false;
+        private bool bPasswd = false;
 
         #region 构造函数
         public Login()
@@ -31,13 +31,12 @@ namespace DoitForFree.UI
         {
             this.Close();
         }
-
-        //设置菜单点击事件
+        //窗体设置菜单点击事件
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
             this.downMenu.IsOpen = true;
         }
-
+        //打开注册窗口
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Register register = new Register();
@@ -46,6 +45,7 @@ namespace DoitForFree.UI
         #endregion
 
         #region 登录信息处理
+        //当失去光标时
         private void btn_LostFocus(object sender, RoutedEventArgs e)
         {
             MenuButton button = (MenuButton)sender;
@@ -61,6 +61,7 @@ namespace DoitForFree.UI
                 else if (btnPwd.Text != "密码") bPasswd = true;
             }
         }
+        //当得到光标时
         private void btn_GotFocus(object sender, RoutedEventArgs e)
         {
             MenuButton button = (MenuButton)sender;

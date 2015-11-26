@@ -30,7 +30,7 @@ namespace DoitForFree.UI
             //btn确定.IsEnabled = false;
             //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
         }
-
+        //添加任务
         public NewTask(List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList)
         {
             WType = WindowType.添加.ToString();
@@ -41,7 +41,7 @@ namespace DoitForFree.UI
             this.goalList = goalList;
             this.situationList = situationList;
         }
-
+        //修改任务
         public NewTask(List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList, string title, string discription, string enddate, string type, string project, string goal, string situation)
         {
             WType = WindowType.修改.ToString();
@@ -63,6 +63,7 @@ namespace DoitForFree.UI
         #endregion
 
         #region 主窗口处理
+        //窗体拖动
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -70,12 +71,13 @@ namespace DoitForFree.UI
         #endregion
 
         #region 输入框处理
+        //得到光标时
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (((TextBox)sender).Text.Trim() == "标题") this.tbx标题.Text = "";
             else if (((TextBox)sender).Text.Trim() == "描述") this.tbx描述.Text = "";
         }
-
+        //失去光标时
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (((TextBox)sender).Text.Trim() == "" && ((TextBox)sender).Name == "tbx标题") this.tbx标题.Text = "标题";
@@ -139,19 +141,19 @@ namespace DoitForFree.UI
                 curMenu = "情境";
             }
         }
-
+        //当日历控件选择日期变化时
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime date = (DateTime)Calendar截止时间.SelectedDate;
             if (date.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd")) MenuButton类型.Text = "今日待办";
             this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd");
         }
-
+        //鼠标移到日历控件外面时
         private void Calendar截止时间_MouseLeave(object sender, MouseEventArgs e)
         {
             this.MenuCalendar.Visibility = Visibility.Hidden;
         }
-
+        //当选择了项目、目标、类型、情境后
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (curMenu == "类型")
@@ -199,7 +201,7 @@ namespace DoitForFree.UI
         }
         #endregion
 
-        //取消造成界面主键卡顿直至卡死
+        //取消造成界面卡顿直至卡死
         //private void Checkbtn确定()
         //{
         //    ThreadPool.QueueUserWorkItem((o) =>

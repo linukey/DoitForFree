@@ -14,12 +14,12 @@ namespace DoitForFree.UI
     public partial class Register : Window
     {
         #region 字段声明
-        HashSet<string> checkEmail = new HashSet<string>(); //现有邮件列表
-        HashSet<string> checkUsername = new HashSet<string>(); //现有用户名列表
+        private HashSet<string> checkEmail = new HashSet<string>(); //现有邮件列表
+        private HashSet<string> checkUsername = new HashSet<string>(); //现有用户名列表
         //判断信息填写是否已经合格
-        bool bUser = false;
-        bool bEmail = false;
-        bool bPasswd = false;
+        private bool bUser = false;
+        private bool bEmail = false;
+        private bool bPasswd = false;
         #endregion
 
         #region 构造函数
@@ -28,7 +28,7 @@ namespace DoitForFree.UI
             InitializeComponent();
 
             DataTable dt = new UserBAL().SelectAll();
-            if (dt != null)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 foreach (DataRow row in dt.Rows)
                 {
@@ -40,11 +40,12 @@ namespace DoitForFree.UI
         #endregion
 
         #region 顶层菜单栏处理
+        //窗体拖动
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
-
+        //窗体关闭
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -82,7 +83,7 @@ namespace DoitForFree.UI
         #endregion
 
         #region 注册信息处理
-
+        //当失去光标时
         private void btn_LostFocus(object sender, RoutedEventArgs e)
         {
             MenuButton button = (MenuButton)sender;
@@ -111,7 +112,7 @@ namespace DoitForFree.UI
                 else if (btnPasswdCheck.Text.Trim() != "密码确认" && btnPasswdCheck.Text.Trim() != "密码不一致!") bPasswd = true;
             }
         }
-
+        //当得到光标时
         private void btn_GotFocus(object sender, RoutedEventArgs e)
         {
             MenuButton button = (MenuButton)sender;

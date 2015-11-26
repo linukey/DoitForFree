@@ -57,13 +57,13 @@
                     <UI:MenuButton x:Name="menu正在行动" Style="{StaticResource MenuButton左侧菜单按钮}" Text="正在行动" ImagePath="Images/正在行动.png" Template="{StaticResource MenuButton}" Click="menu正在行动_Click"/>
                     <UI:MenuButton x:Name="menu过期" Style="{StaticResource MenuButton左侧菜单按钮}" Text="过期" ImagePath="Images/过期.png" Template="{StaticResource MenuButton}" Click="menu过期_Click"/>
                     <Separator />
-                    <UI:MenuButton x:Name="menu所有项目" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
+                    <UI:MenuButton x:Name="menu所有项目" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有项目" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有项目_Click" MouseEnter="mouseChange" MouseLeave="mouseChange"/>
                     <WrapPanel Name="wp所有项目" />
                     <Separator />
-                    <UI:MenuButton x:Name="menu所有目标" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有目标" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有目标_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
+                    <UI:MenuButton x:Name="menu所有目标" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有目标" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有目标_Click" MouseEnter="mouseChange" MouseLeave="mouseChange"/>
                     <WrapPanel Name="wp所有目标" />
                     <Separator />
-                    <UI:MenuButton x:Name="menu所有情境" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有情境" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有情境_Click" MouseEnter="mouseChangeEnter" MouseLeave="mouseChangeLeave"/>
+                    <UI:MenuButton x:Name="menu所有情境" Style="{StaticResource MenuButton左侧菜单按钮}" Text="所有情境" ImagePath="Images/右箭头.png" Template="{StaticResource MenuButtonTitle}" Click="menu所有情境_Click" MouseEnter="mouseChange" MouseLeave="mouseChange"/>
                     <WrapPanel Name="wp所有情境" />
                     <Separator />
                     <UI:MenuButton x:Name="menu已完成" Style="{StaticResource MenuButton左侧菜单按钮}" Text="已完成" ImagePath="Images/已完成.png" Template="{StaticResource MenuButton}" Click="menu已完成_Click" />

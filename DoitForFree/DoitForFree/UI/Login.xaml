@@ -21,7 +21,9 @@
         </Grid.RowDefinitions>
         <!--顶栏菜单-->
         <StackPanel Grid.Row="0" FlowDirection="RightToLeft" Orientation="Horizontal">
+            <!--关闭-->
             <local:ImageButton Width="27" Height="26" Margin="5" ImagePath="../Images/关闭.png" Template="{StaticResource imageButton}" Click="ImageButton_Click"/>
+            <!--设置-->
             <local:ImageButton x:Name="btnMenu" Width="27" Height="26" ImagePath="Images/设置菜单.png" Template="{StaticResource imageButton}" Click="btnMenu_Click">
                 <local:ImageButton.ContextMenu>
                     <ContextMenu Name="downMenu" Width="200" Placement="MousePoint" BorderBrush="AliceBlue" BorderThickness="1">

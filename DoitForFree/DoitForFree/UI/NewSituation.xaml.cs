@@ -24,7 +24,7 @@ namespace DoitForFree.UI
     {
         #region 字段
         private string preTitle = null; //修改前的任务名称
-        private List<MSituation> situationList = null;
+        private List<MSituation> situationList = null; //情境列表
         private enum WindowType { 添加, 修改 };
         private string WType = null; //窗口类型
         #endregion
@@ -37,7 +37,7 @@ namespace DoitForFree.UI
             preTitle = dt.Rows[0]["情境名称"].ToString();
             tbx标题.Text = dt.Rows[0]["情境名称"].ToString();
         }
-
+        //添加和修改情境都是这一个构造函数
         public NewSituation(List<MSituation> list,string situationName = null)
         {
             InitializeComponent();
@@ -56,6 +56,7 @@ namespace DoitForFree.UI
         #endregion
 
         #region 窗口处理
+        //窗体拖动
         private void NewGoalWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -63,11 +64,12 @@ namespace DoitForFree.UI
         #endregion
 
         #region 输入框处理
+        //得到光标时
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (((TextBox)sender).Text.Trim() == "标题") this.tbx标题.Text = "";
         }
-
+        //失去光标时
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (((TextBox)sender).Text.Trim() == "" && ((TextBox)sender).Name == "tbx标题") this.tbx标题.Text = "标题";
@@ -108,7 +110,7 @@ namespace DoitForFree.UI
                     }
                     else if(WType == "添加")
                     {
-                        string s = null;
+                        string s = "";
                         foreach(MSituation situation in situationList)
                         {
                             s += (situation.MName + ";");

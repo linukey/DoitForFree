@@ -3,11 +3,13 @@ using System.Windows.Controls;
 
 namespace DoitForFree.UI
 {
+    /// <summary>
+    /// 用于存在图片和文字的按钮
+    /// </summary>
     class MenuButton : Button, INotifyPropertyChanged
     {
         private string imagePath;
         private string text;
-        //private string parendName; //当MenuButton为另一个容器的元素时，记录该容器的姓名
 
         public string ImagePath
         {

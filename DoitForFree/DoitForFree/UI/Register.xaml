@@ -22,22 +22,27 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <!--关闭-->
         <StackPanel Grid.Row="0" FlowDirection="RightToLeft" Orientation="Horizontal">
             <local:ImageButton Width="27" Height="26" Margin="5" ImagePath="../Images/关闭.png" Template="{StaticResource imageButton}" Click="ImageButton_Click"/>
         </StackPanel>
+        <!--用户名-->
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <local:MenuButton x:Name="btnUser" Width="300" Height="40" ImagePath="../Images/LoginUser.png" Text="用户名" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus" />
         </Grid>
+        <!--邮箱-->
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <local:MenuButton x:Name="btnEmail" Width="300" Height="40" ImagePath="../Images/邮箱.png" Text="邮箱" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus" />
         </Grid>
+        <!--密码-->
         <Grid Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
             <local:MenuButton x:Name="btnPasswd" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Text="密码" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus" />
         </Grid>
+        <!--密码检查-->
         <Grid Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center">
             <local:MenuButton x:Name="btnPasswdCheck" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Text="密码确认" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus" />
         </Grid>
-        
+        <!--注册按钮-->
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Name="btnLogin" Content="注册" Width="50" Height="50" Margin="0,0,0,3" Style="{StaticResource LoginBtn}" Click="btnLogin_Click"/>
         </StackPanel>
