@@ -90,34 +90,31 @@ namespace DoitForFree.UI
                     if (WType == "修改")
                     {
                         string preSituationName = null;
-                        MSituation situation = new MSituation();
-                        foreach (MSituation s in situationList)
+                        string s = null;
+                        foreach (MSituation situation in situationList)
                         {
-                            preSituationName += (s.MName + ";");
-                            if (s.MName != preTitle)
+                            preSituationName += (situation.MName + ";");
+                            if (situation.MName != preTitle)
                             {
-                                situation.MName += (s.MName + ";");
+                                s += (situation.MName + ";");
                             }
                             else
                             {
-                                situation.MName += (tbx标题.Text.Trim() + ";");
+                                s += (tbx标题.Text.Trim() + ";");
                             }
                         }
-                        situation.MUser = Resource.userName;
-                        new SituationBAL().Update(preSituationName, situation);
+                        new SituationBAL().Update(s, Resource.userName);
                         new TaskBAL().UpdateSituation(tbx标题.Text.Trim(), Resource.userName, preTitle);
                     }
                     else if(WType == "添加")
                     {
-                        string preSituationName = null;
-                        foreach(MSituation s in situationList)
+                        string s = null;
+                        foreach(MSituation situation in situationList)
                         {
-                            preSituationName += (s.MName + ";");
+                            s += (situation.MName + ";");
                         }
-                        MSituation situation = new MSituation();
-                        situation.MName = preSituationName + tbx标题.Text.Trim() + ";";
-                        situation.MUser = Resource.userName;
-                        new SituationBAL().Update(preSituationName, situation);
+                        s += (tbx标题.Text.Trim() + ";");
+                        new SituationBAL().Update(s, Resource.userName);
                     }
                     this.Close();
                 }

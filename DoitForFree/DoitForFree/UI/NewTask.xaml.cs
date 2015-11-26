@@ -143,6 +143,7 @@ namespace DoitForFree.UI
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime date = (DateTime)Calendar截止时间.SelectedDate;
+            if (date.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd")) MenuButton类型.Text = "今日待办";
             this.MenuButton截止时间.Text = date.ToString("yyyy-MM-dd");
         }
 

@@ -62,18 +62,57 @@ namespace DoitForFree.BAL
         #endregion
 
         #region Delete
-        public bool Delete(string name)
+        public bool Delete(string name, string userName)
         {
-            string cmdStr = "delete from T_task where 任务名称 = @name";
+            string cmdStr = "delete from T_task where 任务名称 = @name and 用户编码=@user";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
             n.Value = name;
-            if(new GoalDAL().Delete(cmdStr, n) == 1)
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = userName;
+            if(new TaskDAL().Delete(cmdStr, n, user) == 1)
             {
                 return true;
             }
             return false;
+        }
+        public int DeleteByProject(string name, string userName)
+        {
+            string cmdStr = "delete from T_task where 所属项目=@project and 用户编码=@user";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter n = factory.CreateParameter();
+            n.ParameterName = "@project";
+            n.Value = name;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = userName;
+            return new TaskDAL().Delete(cmdStr, n, user);
+        }
+        public int DeleteByGoal(string name, string userName)
+        {
+            string cmdStr = "delete from T_task where 所属目标=@goal and 用户编码=@user";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter n = factory.CreateParameter();
+            n.ParameterName = "@goal";
+            n.Value = name;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = userName;
+            return new TaskDAL().Delete(cmdStr, n, user);
+        }
+        public int DeleteBySituation(string name, string userName)
+        {
+            string cmdStr = "delete from T_task where 所属情境=@situation and 用户编码=@user";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter n = factory.CreateParameter();
+            n.ParameterName = "@situation";
+            n.Value = name;
+            DbParameter user = factory.CreateParameter();
+            user.ParameterName = "@user";
+            user.Value = userName;
+            return new TaskDAL().Delete(cmdStr, n, user);
         }
         #endregion
 
@@ -181,6 +220,37 @@ namespace DoitForFree.BAL
             new TaskDAL().Update(cmdStr, situation, username, presituation);
         }
 
+        public void UpdateTaskState(string taskName, string state, string userName)
+        {
+            string cmdStr = "update T_task set 状态=@state where 用户编码=@user and 任务名称=@name";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter taskname = factory.CreateParameter();
+            taskname.ParameterName = "@name";
+            taskname.Value = taskName;
+            DbParameter s = factory.CreateParameter();
+            s.ParameterName = "@state";
+            s.Value = state;
+            DbParameter username = factory.CreateParameter();
+            username.ParameterName = "@user";
+            username.Value = userName;
+            new TaskDAL().Update(cmdStr, taskname, s, username);
+        }
+
+        public void UpdateTaskType(string taskName, string type, string userName)
+        {
+            string cmdStr = "update T_task set 类型=@type where 用户编码=@user and 任务名称=@name";
+            DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+            DbParameter taskname = factory.CreateParameter();
+            taskname.ParameterName = "@name";
+            taskname.Value = taskName;
+            DbParameter t = factory.CreateParameter();
+            t.ParameterName = "@type";
+            t.Value = type;
+            DbParameter username = factory.CreateParameter();
+            username.ParameterName = "@user";
+            username.Value = userName;
+            new TaskDAL().Update(cmdStr, taskname, t, username);
+        }
         #endregion
 
         #region Select

@@ -42,14 +42,17 @@ namespace DoitForFree.BAL
         #endregion
 
         #region Delete
-        public bool Delete(string name)
+        public bool Delete(string name, string user)
         {
-            string cmdStr = "delete from T_project where 项目名称=@name";
+            string cmdStr = "delete from T_project where 项目名称=@name and 用户编码=@user";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter n = factory.CreateParameter();
             n.ParameterName = "@name";
             n.Value = name;
-            if(new ProjectDAL().Delete(cmdStr, n) == 1)
+            DbParameter u = factory.CreateParameter();
+            u.ParameterName = "@user";
+            u.Value = user;
+            if(new ProjectDAL().Delete(cmdStr, n, u) == 1)
             {
                 return true;
             }

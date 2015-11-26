@@ -1,13 +1,13 @@
-﻿using System;
+﻿using DoitForFree.BAL;
+using DoitForFree.Model;
+using DoitForFree.UI;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using DoitForFree.BAL;
-using DoitForFree.Model;
-using System.ComponentModel;
-using DoitForFree.UI;
-using System.Data;
 
 namespace DoitForFree
 {
@@ -22,29 +22,29 @@ namespace DoitForFree
             InitializeComponent();
             Resource.userName = "linukey";
 
-            InitProjectList();
-            InitSituationList();
-            InitGoalList();
-            InitTaskList();
+            InitProjectList();  //初始化项目列表
+            InitSituationList();//初始化情境列表
+            InitGoalList();     //初始化目标列表
+            InitTaskList();     //初始化任务列表
+            CheckTaskState();   //检查任务是否过期
         }
         #endregion
 
         #region 字段声明
-        private List<MProject> projectList = null; //项目列表
+        private List<MProject> projectList = null;     //项目列表
         private List<MSituation> situationList = null; //情境列表
-        private List<MGoal> goalList = null; //目标列表
-        private List<MTask> taskList = null; //任务列表
-        private Button curSelect = null; //当前选中节点
-        private Button curSelectMenu = null; //当前选中的左侧菜单，需要进行效果处理
-        string curMenu = null; //当前选中的左侧菜单
-        string curNode = null; //当前选中的 情境 项目 目标 里的节点
-
+        private List<MGoal> goalList = null;           //目标列表
+        private List<MTask> taskList = null;           //任务列表
+        private TitleNodeButton curSelect = null;      //当前选中节点
+        private MenuButton curSelectMenuButton = null;       //当前选中的左侧菜单按钮，需要进行效果处理
+        string curMenu = null;                         //当前选中的左侧菜单
+        string curNode = null;                         //当前选中的 情境 项目 目标 里的节点
         private const int MenuButtonNodeHeight = 30;
         private const int MenuButtonNodeWidth = 245;
         #endregion
 
         #region 窗体处理
-        //窗体移动
+        //窗体拖动
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -59,7 +59,7 @@ namespace DoitForFree
         {
             this.WindowState = WindowState.Minimized;
         }
-        //设置菜单
+        //窗体设置菜单
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
             this.downMenu.IsOpen = true;
@@ -72,63 +72,56 @@ namespace DoitForFree
             InitNewButton(sender as MenuButton);
             InitTitleButton("收集箱", sender as MenuButton);
         }
-
         private void menu今日待办_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
             InitTitleButton("今日待办", sender as MenuButton);
         }
-
         private void menu正在行动_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
             InitTitleButton("正在行动", sender as MenuButton);
         }
-
         private void menu过期_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
             InitTitleButton("过期", sender as MenuButton);
         }
-
-        private void menu所有项目_Click(object sender, RoutedEventArgs e)
-        {
-            InitMenuButton(projectList, menu所有项目, wp所有项目);
-            InitNewButton(sender as MenuButton);
-        }
-
-        private void menu所有目标_Click(object sender, RoutedEventArgs e)
-        {
-            InitMenuButton(goalList, menu所有目标, wp所有目标);
-            InitNewButton(sender as MenuButton);
-        }
-
-        private void menu所有情境_Click(object sender, RoutedEventArgs e)
-        {
-            InitMenuButton(situationList, menu所有情境, wp所有情境);
-            InitNewButton(sender as MenuButton);
-        }
-
         private void menu已完成_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
             InitTitleButton("已完成", sender as MenuButton);
         }
-
         private void menu垃圾箱_Click(object sender, RoutedEventArgs e)
         {
             InitNewButton(sender as MenuButton);
             InitTitleButton("垃圾箱", sender as MenuButton);
         }
+        private void menu所有项目_Click(object sender, RoutedEventArgs e)
+        {
+            InitMenuButton(projectList, menu所有项目, wp所有项目);
+            InitNewButton(sender as MenuButton);
+        }
+        private void menu所有目标_Click(object sender, RoutedEventArgs e)
+        {
+            InitMenuButton(goalList, menu所有目标, wp所有目标);
+            InitNewButton(sender as MenuButton);
+        }
+        private void menu所有情境_Click(object sender, RoutedEventArgs e)
+        {
+            InitMenuButton(situationList, menu所有情境, wp所有情境);
+            InitNewButton(sender as MenuButton);
+        }
         #endregion
 
         #region 右侧数据初始化
+        //右侧显示收缩栏初始化
         private void InitTitleButton(string judge, MenuButton btn)
         {
             //进行左侧菜单选中效果的处理
-            if (curSelectMenu != null) curSelectMenu.Template = (ControlTemplate)FindResource("MenuButton");
+            if (curSelectMenuButton != null) curSelectMenuButton.Template = (ControlTemplate)FindResource("MenuButton");
             btn.Template = (ControlTemplate)FindResource("MenuButton2");
-            curSelectMenu = btn;
+            curSelectMenuButton = btn;
 
             wp右侧显示.Children.Clear();
             curMenu = judge;
@@ -149,7 +142,7 @@ namespace DoitForFree
             {
                 foreach (MTask task in taskList)
                 {
-                    if (task.MType.ToString() == judge && !j.Contains(task.MStartDate.ToString()))
+                    if (task.MType.ToString() == judge && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                     {
                         j.Add(task.MStartDate.ToString());
                         time.Add(task.MStartDate);
@@ -157,6 +150,7 @@ namespace DoitForFree
                 }
             }
             time.Sort();
+            //添加右侧显示任务收缩栏
             foreach (DateTime t in time)
             {
                 TitleButton title = new TitleButton();
@@ -173,6 +167,7 @@ namespace DoitForFree
                 catch (Exception ex) { }
                 wp右侧显示.RegisterName("w" + t.Year + t.Month + t.Day, w);
             }
+            //添加右侧显示任务列表
             foreach (MTask t in taskList)
             {
                 if (judge == "已完成" || judge == "垃圾箱")
@@ -193,9 +188,9 @@ namespace DoitForFree
                         ww.Children.Add(node);
                     }
                 }
-                else
+                else if(judge == "收集箱" || judge == "今日待办" || judge == "正在行动" || judge == "过期")
                 {
-                    if (t.MType.ToString() == judge)
+                    if (t.MType.ToString() == judge && t.MState.ToString() == "未完成")
                     {
                         TitleNodeButton node = new TitleNodeButton();
                         node.Height = 45;
@@ -213,30 +208,27 @@ namespace DoitForFree
                 }
             }
         }
-
         private void InitTitleButton(object sender, RoutedEventArgs e)
         {
-            wp右侧显示.Children.Clear();
-            MenuButton menu = (MenuButton)sender;
-
             //进行左侧菜单选中效果的处理
-            if (curSelectMenu != null) curSelectMenu.Template = (ControlTemplate)FindResource("MenuButton");
-            MenuButton button = (MenuButton)spMenu.FindName(menu.Name);
-            button.Template = (ControlTemplate)FindResource("MenuButton2");
-            curSelectMenu = button;
+            if (curSelectMenuButton != null) curSelectMenuButton.Template = (ControlTemplate)FindResource("MenuButton");
+            ((MenuButton)sender).Template = (ControlTemplate)FindResource("MenuButton2");
+            curSelectMenuButton = ((MenuButton)sender);
 
-            WrapPanel parentWrap = (WrapPanel)menu.Parent;
-            curNode = menu.Name;
+            wp右侧显示.Children.Clear();
+            WrapPanel parentWrap = (WrapPanel)curSelectMenuButton.Parent;
+            curNode = curSelectMenuButton.Name;
+
+            #region 筛选出有多少种日期并进行排序
             List<DateTime> time = new List<DateTime>();
             HashSet<string> j = new HashSet<string>();
             if (parentWrap.Name == (curMenu = "wp所有项目"))
             {
                 //添加查看项目、情境、目标按钮
                 InitNewButton(null, curMenu);
-
                 foreach (MTask task in taskList)
                 {
-                    if (task.MProject == menu.Name && !j.Contains(task.MStartDate.ToString()))
+                    if (task.MProject == curSelectMenuButton.Name && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                     {
                         j.Add(task.MStartDate.ToString());
                         time.Add(task.MStartDate);
@@ -247,10 +239,9 @@ namespace DoitForFree
             {
                 //添加查看项目、情境、目标按钮
                 InitNewButton(null, curMenu);
-
                 foreach (MTask task in taskList)
                 {
-                    if (task.MSituation == menu.Name && !j.Contains(task.MStartDate.ToString()))
+                    if (task.MSituation == curSelectMenuButton.Name && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                     {
                         j.Add(task.MStartDate.ToString());
                         time.Add(task.MStartDate);
@@ -261,10 +252,9 @@ namespace DoitForFree
             {
                 //添加查看项目、情境、目标按钮
                 InitNewButton(null, curMenu);
-
                 foreach (MTask task in taskList)
                 {
-                    if (task.MGoal == menu.Name && !j.Contains(task.MStartDate.ToString()))
+                    if (task.MGoal == curSelectMenuButton.Name && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                     {
                         j.Add(task.MStartDate.ToString());
                         time.Add(task.MStartDate);
@@ -272,6 +262,9 @@ namespace DoitForFree
                 }
             }
             time.Sort();
+            #endregion
+
+            //添加右侧显示收缩栏
             foreach (DateTime t in time)
             {
                 TitleButton title = new TitleButton();
@@ -288,13 +281,15 @@ namespace DoitForFree
                 catch (Exception ex) { }
                 wp右侧显示.RegisterName("w" + t.Year + t.Month + t.Day, w);
             }
+
+            //添加右侧显示任务列表
             foreach (MTask t in taskList)
             {
                 string judge = null;
                 if (parentWrap.Name == "wp所有项目") judge = t.MProject;
                 else if (parentWrap.Name == "wp所有情境") judge = t.MSituation;
                 else if (parentWrap.Name == "wp所有目标") judge = t.MGoal;
-                if (judge == menu.Name && t.MState.ToString() != "已完成")
+                if (judge == curSelectMenuButton.Name && t.MState.ToString() == "未完成")
                 {
                     TitleNodeButton node = new TitleNodeButton();
                     node.Height = 45;
@@ -313,7 +308,7 @@ namespace DoitForFree
         }
         #endregion
 
-        #region 数据初始化
+        #region 数据初始化、检查任务是否过期
         //初始化项目列表
         public void InitProjectList()
         {
@@ -408,21 +403,30 @@ namespace DoitForFree
                 }
             }
         }
+        //更新数据逻辑
+        public void CheckTaskState()
+        {
+            //检测任务是否过期
+            foreach (MTask task in taskList)
+            {
+                if (task.MEndDate < DateTime.Now)
+                {
+                    new TaskBAL().UpdateTaskType(task.MName, "过期", Resource.userName);
+                }
+                if (task.MEndDate == DateTime.Now)
+                {
+                    new TaskBAL().UpdateTaskType(task.MName, "今日待办", Resource.userName);
+                }
+            }
+        }
         #endregion
 
         #region 左侧菜单处理
-        //左侧菜单单击动态显示效果
-        private void setMargin(MenuButton m, string judge)
-        {
-            if (judge == "下箭头")
-                m.Margin = new Thickness(m.Margin.Left, m.Margin.Top, m.Margin.Right, m.Margin.Bottom + 10);
-            else m.Margin = new Thickness(m.Margin.Left, m.Margin.Top, m.Margin.Right, m.Margin.Bottom - 10);
-        }
         //左侧菜单单击数据加载
         private void InitMenuButton(IEnumerable<IMBase> l, MenuButton m, WrapPanel wp)
         {
             //左侧菜单选中效果处理
-            if (curSelectMenu != null) curSelectMenu.Template = (ControlTemplate)FindResource("MenuButton");
+            if (curSelectMenuButton != null) curSelectMenuButton.Template = (ControlTemplate)FindResource("MenuButton");
 
             wp右侧显示.Children.Clear();
             curMenu = m.Name;
@@ -448,6 +452,13 @@ namespace DoitForFree
             }
             else wp.Children.Clear();
         }
+        //左侧菜单单击动态显示效果
+        private void setMargin(MenuButton m, string judge)
+        {
+            if (judge == "下箭头")
+                m.Margin = new Thickness(m.Margin.Left, m.Margin.Top, m.Margin.Right, m.Margin.Bottom + 10);
+            else m.Margin = new Thickness(m.Margin.Left, m.Margin.Top, m.Margin.Right, m.Margin.Bottom - 10);
+        }
         //左侧菜单鼠标手势变换
         private void mouseChangeEnter(object sender, MouseEventArgs e)
         {
@@ -459,7 +470,65 @@ namespace DoitForFree
         }
         #endregion
 
-        #region 添加栏
+        #region 添加任务、项目、目标、情境
+        //初始化按钮
+        private void InitNewButton(MenuButton button = null, string judge = null)
+        {
+            spn通用.Children.Clear();
+            if (button != null)//对应菜单栏的添加任务、项目、目标、情境按钮
+            {
+                spn添加.Children.Clear();
+
+                MenuButton m = new MenuButton();
+                if (button.Name == "menu收集箱" || button.Name == "menu今日待办" ||
+                    button.Name == "menu正在行动" || button.Name == "menu过期" ||
+                    button.Name == "menu已完成")
+                    m.Text = "新任务";
+                else if (button.Name == "menu垃圾箱") m.Text = "清空垃圾箱";
+                else if (button.Name == "menu所有项目") m.Text = "新项目";
+                else if (button.Name == "menu所有目标") m.Text = "新目标";
+                else if (button.Name == "menu所有情境") m.Text = "新情境";
+                m.ImagePath = @"Images/新项目.png";
+                m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
+                m.MouseEnter += mouseChangeEnter;
+                m.MouseLeave += mouseChangeLeave;
+                m.Click += MenuButton_Click;
+
+                spn添加.Children.Add(m);
+            }
+            else if (judge != null) //对项目、目标、情境的编辑删除按钮
+            {
+                if (curMenu != "垃圾箱")
+                {
+                    if (curMenu != "已完成")//已完成菜单栏里的任务不能再有完成任务这一功能了
+                    {
+                        MenuButton m1 = new MenuButton();
+                        if (judge == "wp所有项目") m1.Text = "编辑项目";
+                        else if (judge == "wp所有目标") m1.Text = "编辑目标";
+                        else if (judge == "wp所有情境") m1.Text = "编辑情境";
+                        else if (judge == "已完成") m1.Text = "完成任务";
+                        m1.ImagePath = @"Images/新项目.png";
+                        m1.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
+                        m1.MouseEnter += mouseChangeEnter;
+                        m1.MouseLeave += mouseChangeLeave;
+                        m1.Click += MenuButton_Click;
+                        spn通用.Children.Add(m1);
+                    }
+
+                    MenuButton m2 = new MenuButton();
+                    if (judge == "wp所有项目") m2.Text = "删除项目";
+                    else if (judge == "wp所有目标") m2.Text = "删除目标";
+                    else if (judge == "wp所有情境") m2.Text = "删除情境";
+                    else if (judge == "已完成") m2.Text = "删除任务";
+                    m2.ImagePath = @"Images/新项目.png";
+                    m2.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
+                    m2.MouseEnter += mouseChangeEnter;
+                    m2.MouseLeave += mouseChangeLeave;
+                    m2.Click += MenuButton_Click;
+                    spn通用.Children.Add(m2);
+                }
+            }
+        }
         //新任务
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -509,166 +578,91 @@ namespace DoitForFree
                 window.Closing += Window_Closing;
                 window.Show();
             }
-        }
-
-        //初始化按钮
-        private void InitNewButton(MenuButton button, string parentName = null)
-        {
-            if (button != null)
+            else if (button.Text == "清空垃圾箱")
             {
-                spn添加.Children.Clear();
-                MenuButton m = new MenuButton();
-                if (button.Name == "menu收集箱" || button.Name == "menu今日待办" ||
-                    button.Name == "menu正在行动" || button.Name == "menu过期" ||
-                    button.Name == "menu已完成" || button.Name == "menu垃圾箱")
+                foreach (MTask task in taskList)
                 {
-                    m.Text = "新任务";
-                    
-                }
-                else if (button.Name == "menu所有项目") m.Text = "新项目";
-                else if (button.Name == "menu所有目标") m.Text = "新目标";
-                else if (button.Name == "menu所有情境") m.Text = "新情境";
-
-                spn编辑.Children.Clear();
-                m.ImagePath = @"Images/新项目.png";
-                m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
-                m.MouseEnter += mouseChangeEnter;
-                m.MouseLeave += mouseChangeLeave;
-                m.Click += MenuButton_Click;
-                spn添加.Children.Add(m);
-            }
-            else if (parentName != null)
-            {
-                spn编辑.Children.Clear();
-                MenuButton m = new MenuButton();
-                if (parentName == "wp所有项目") m.Text = "编辑项目";
-                else if (parentName == "wp所有目标") m.Text = "编辑目标";
-                else if (parentName == "wp所有情境") m.Text = "编辑情境";
-                m.ImagePath = @"Images/新项目.png";
-                m.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
-                m.MouseEnter += mouseChangeEnter;
-                m.MouseLeave += mouseChangeLeave;
-                m.Click += MenuButton_Click;
-                spn编辑.Children.Add(m);
-            }
-        }
-        #endregion
-
-        #region 任务列表点击事件处理
-        private void TitleButton_Click(object sender, RoutedEventArgs e)
-        {
-            TitleButton title = (TitleButton)sender;
-            WrapPanel w = (WrapPanel)wp右侧显示.FindName("w" + title.Date.Year + title.Date.Month + title.Date.Day);
-            if (title.ImagePath == "Images/下箭头.png")
-            {
-                title.ImagePath = @"Images/右箭头.png";
-                w.Children.Clear();
-            }
-            else if (title.ImagePath == "Images/右箭头.png")
-            {
-                title.ImagePath = "Images/下箭头.png";
-                if (curMenu == "已完成" || curMenu == "垃圾箱")
-                {
-                    foreach (MTask t in taskList)
+                    if (task.MState.ToString() == "垃圾箱")
                     {
-                        if (t.MState.ToString() == curMenu && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                        new TaskBAL().Delete(task.MName, Resource.userName);
+                    }
+                }
+                Window_Closing(null, null);
+            }
+            else if (button.Text == "删除项目")
+            {
+                if (OperatorAsk("项目"))
+                {
+                    new ProjectBAL().Delete(curNode, Resource.userName);
+                    foreach (MTask task in taskList)
+                    {
+                        if (task.MProject == curNode)
                         {
-                            TitleNodeButton node = new TitleNodeButton();
-                            node.Height = 45;
-                            node.Width = 830;
-                            node.StartDate = t.MStartDate.ToString("hh:mm:ss");
-                            node.Title = t.MName;
-                            node.Discription = t.MDiscription;
-                            node.ImagePath = @"Images/任务.png";
-                            node.Template = (ControlTemplate)FindResource("TitleNodeButton");
-                            node.Click += TitleNodeButton_Click;
-                            node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
-                            WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
-                            ww.Children.Add(node);
+                            new TaskBAL().DeleteByProject(curNode, Resource.userName);
                         }
                     }
                 }
-                else
+                Window_Closing(null, null);
+            }
+            else if (button.Text == "删除目标")
+            {
+                if (OperatorAsk("目标"))
                 {
-                    foreach (MTask t in taskList)
+                    new GoalBAL().Delete(curNode, Resource.userName);
+                    foreach (MTask task in taskList)
                     {
-                        if (t.MType.ToString() == curMenu && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                        if (task.MGoal == curNode)
                         {
-                            TitleNodeButton node = new TitleNodeButton();
-                            node.Height = 45;
-                            node.Width = 830;
-                            node.StartDate = t.MStartDate.ToString("hh:mm:ss");
-                            node.Title = t.MName;
-                            node.Discription = t.MDiscription;
-                            node.ImagePath = @"Images/任务.png";
-                            node.Template = (ControlTemplate)FindResource("TitleNodeButton");
-                            node.Click += TitleNodeButton_Click;
-                            node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
-                            WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
-                            ww.Children.Add(node);
+                            new TaskBAL().DeleteByGoal(curNode, Resource.userName);
                         }
                     }
                 }
+                Window_Closing(null, null);
             }
-        }
-
-        private void TitleButton_Click2(object sender, RoutedEventArgs e)
-        {
-            TitleButton title = (TitleButton)sender;
-            WrapPanel w = (WrapPanel)wp右侧显示.FindName("w" + title.Date.Year + title.Date.Month + title.Date.Day);
-            if (title.ImagePath == "Images/右箭头.png")
+            else if (button.Text == "删除情境")
             {
-                title.ImagePath = "Images/下箭头.png";
-                foreach (MTask t in taskList)
+                if (OperatorAsk("情境"))
                 {
-                    string judge = null;
-                    if (curMenu == "wp所有项目") judge = t.MProject;
-                    else if (curMenu == "wp所有情境") judge = t.MSituation;
-                    else if (curMenu == "wp所有目标") judge = t.MGoal;
-                    if (judge == curNode && t.MState.ToString() != "已完成" && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                    string s = null;
+                    foreach (MSituation situation in situationList)
                     {
-                        TitleNodeButton node = new TitleNodeButton();
-                        node.Height = 45;
-                        node.Width = 830;
-                        node.StartDate = t.MStartDate.ToString("hh:mm:ss");
-                        node.Title = t.MName;
-                        node.Discription = t.MDiscription;
-                        node.ImagePath = @"Images/任务.png";
-                        node.Template = (ControlTemplate)FindResource("TitleNodeButton");
-                        node.Click += TitleNodeButton_Click;
-                        node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
-                        w.Children.Add(node);
+                        if (situation.MName != curNode)
+                        {
+                            s += (situation.MName + ";");
+                        }
+                    }
+                    new SituationBAL().Update(s, Resource.userName);
+                    foreach (MTask task in taskList)
+                    {
+                        if (task.MSituation == curNode)
+                        {
+                            new TaskBAL().DeleteBySituation(curNode, Resource.userName);
+                        }
                     }
                 }
+                Window_Closing(null, null);
             }
-            else
+            else if (button.Text == "完成任务")
             {
-                title.ImagePath = "Images/右箭头.png";
-                w.Children.Clear();
+                new TaskBAL().UpdateTaskState(curSelect.Title, "已完成", Resource.userName);
+                spn通用.Children.Clear();
+                Window_Closing(null, null);
             }
-        }
-
-        private void TitleNodeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (curSelect != null) curSelect.Template = (ControlTemplate)FindResource("TitleNodeButton");
-            ((Button)sender).Template = (ControlTemplate)FindResource("TitleNodeButton2");
-            curSelect = (Button)sender;
-        }
-
-        private void TitleNodeButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            foreach (MTask task in taskList)
+            else if (button.Text == "删除任务")
             {
-                if (task.MName == ((TitleNodeButton)sender).Title)
-                {
-                    NewTask window = new NewTask(projectList, goalList, situationList, task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
-                    window.Closing += Window_Closing;
-                    window.Show();
-                    break;
-                }
+                new TaskBAL().UpdateTaskState(curSelect.Title, "垃圾箱", Resource.userName);
+                spn通用.Children.Clear();
+                Window_Closing(null, null);
             }
         }
-
+        //用户删除项目、目标、情境时进行询问
+        private bool OperatorAsk(string type)
+        {
+            MessageBoxResult result = MessageBox.Show("删除该" + type + "的话，该项目下的任务将会一并删除，是否继续？", "警告", MessageBoxButton.YesNo);
+            if (result.GetHashCode() == 7) return false;
+            else return true;
+        }
+        //添加窗体运行完毕后执行数据更新事件
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             #region 添加或修改数据后再次进行数据初始化
@@ -706,6 +700,123 @@ namespace DoitForFree
                 InitMenuButton(projectList, button, wp);
             }
             #endregion
+        }
+        #endregion
+
+        #region 右侧显示任务列表点击事件处理
+        //右侧显示任务日期统计栏点击事件
+        private void TitleButton_Click(object sender, RoutedEventArgs e)
+        {
+            TitleButton title = (TitleButton)sender;
+            WrapPanel w = (WrapPanel)wp右侧显示.FindName("w" + title.Date.Year + title.Date.Month + title.Date.Day);
+            if (title.ImagePath == "Images/下箭头.png")
+            {
+                title.ImagePath = @"Images/右箭头.png";
+                w.Children.Clear();
+            }
+            else if (title.ImagePath == "Images/右箭头.png")
+            {
+                title.ImagePath = "Images/下箭头.png";
+                if (curMenu == "已完成" || curMenu == "垃圾箱")
+                {
+                    foreach (MTask t in taskList)
+                    {
+                        if (t.MState.ToString() == curMenu && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                        {
+                            TitleNodeButton node = new TitleNodeButton();
+                            node.Height = 45;
+                            node.Width = 830;
+                            node.StartDate = t.MStartDate.ToString("hh:mm:ss");
+                            node.Title = t.MName;
+                            node.Discription = t.MDiscription;
+                            node.ImagePath = @"Images/任务.png";
+                            node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                            node.Click += TitleNodeButton_Click;
+                            node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                            WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
+                            ww.Children.Add(node);
+                        }
+                    }
+                }
+                else if(curMenu == "今日待办" || curMenu=="正在行动" || curMenu == "过期" || curMenu == "收集箱")
+                {
+                    foreach (MTask t in taskList)
+                    {
+                        if (t.MType.ToString() == curMenu && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                        {
+                            TitleNodeButton node = new TitleNodeButton();
+                            node.Height = 45;
+                            node.Width = 830;
+                            node.StartDate = t.MStartDate.ToString("hh:mm:ss");
+                            node.Title = t.MName;
+                            node.Discription = t.MDiscription;
+                            node.ImagePath = @"Images/任务.png";
+                            node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                            node.Click += TitleNodeButton_Click;
+                            node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                            WrapPanel ww = (WrapPanel)wp右侧显示.FindName("w" + t.MStartDate.Year + t.MStartDate.Month + t.MStartDate.Day);
+                            ww.Children.Add(node);
+                        }
+                    }
+                }
+            }
+        }
+        private void TitleButton_Click2(object sender, RoutedEventArgs e)
+        {
+            TitleButton title = (TitleButton)sender;
+            WrapPanel w = (WrapPanel)wp右侧显示.FindName("w" + title.Date.Year + title.Date.Month + title.Date.Day);
+            if (title.ImagePath == "Images/右箭头.png")
+            {
+                title.ImagePath = "Images/下箭头.png";
+                foreach (MTask t in taskList)
+                {
+                    string judge = null;
+                    if (curMenu == "wp所有项目") judge = t.MProject;
+                    else if (curMenu == "wp所有情境") judge = t.MSituation;
+                    else if (curMenu == "wp所有目标") judge = t.MGoal;
+                    if (judge == curNode && t.MState.ToString() != "已完成" && t.MStartDate.ToString("yyyy-M-d") == (title.Date.Year + "-" + title.Date.Month + "-" + title.Date.Day))
+                    {
+                        TitleNodeButton node = new TitleNodeButton();
+                        node.Height = 45;
+                        node.Width = 830;
+                        node.StartDate = t.MStartDate.ToString("hh:mm:ss");
+                        node.Title = t.MName;
+                        node.Discription = t.MDiscription;
+                        node.ImagePath = @"Images/任务.png";
+                        node.Template = (ControlTemplate)FindResource("TitleNodeButton");
+                        node.Click += TitleNodeButton_Click;
+                        node.MouseDoubleClick += TitleNodeButton_MouseDoubleClick;
+                        w.Children.Add(node);
+                    }
+                }
+            }
+            else
+            {
+                title.ImagePath = "Images/右箭头.png";
+                w.Children.Clear();
+            }
+        }
+        //右侧显示单个任务点击事件
+        private void TitleNodeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSelect != null) curSelect.Template = (ControlTemplate)FindResource("TitleNodeButton");
+            ((Button)sender).Template = (ControlTemplate)FindResource("TitleNodeButton2");
+            curSelect = (TitleNodeButton)sender;
+            InitNewButton(null, "已完成"); //初始化下侧菜单按钮
+        }
+        //右侧显示单个任务双击事件
+        private void TitleNodeButton_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            foreach (MTask task in taskList)
+            {
+                if (task.MName == ((TitleNodeButton)sender).Title)
+                {
+                    NewTask window = new NewTask(projectList, goalList, situationList, task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
+                    window.Closing += Window_Closing;
+                    window.Show();
+                    break;
+                }
+            }
         }
         #endregion
     }

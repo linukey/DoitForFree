@@ -38,20 +38,17 @@ namespace DoitForFree.BAL
         }
         #endregion
         #region Update
-        public bool Update(string prename, MSituation s)
+        public bool Update(string name, string user)
         {
-            string cmdStr = "update T_situation set 情境名称=@name,用户编码=@user where 情境名称=@prename";
+            string cmdStr = "update T_situation set 情境名称=@name where 用户编码=@user";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
-            DbParameter name = factory.CreateParameter();
-            name.ParameterName = "@name";
-            name.Value = s.MName;
-            DbParameter user = factory.CreateParameter();
-            user.ParameterName = "@user";
-            user.Value = s.MUser;
-            DbParameter pn = factory.CreateParameter();
-            pn.ParameterName = "@prename";
-            pn.Value = prename;
-            if (new SituationDAL().Add(cmdStr, name, user, pn) == 1)
+            DbParameter n = factory.CreateParameter();
+            n.ParameterName = "@name";
+            n.Value = name;
+            DbParameter u = factory.CreateParameter();
+            u.ParameterName = "@user";
+            u.Value = user;
+            if (new SituationDAL().Add(cmdStr, n, u) == 1)
             {
                 return true;
             }
