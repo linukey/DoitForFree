@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/%e4%bb%bb%e5%8a%a1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("plugs/psendbug.dll")]
 
 

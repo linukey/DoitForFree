@@ -6,6 +6,10 @@ using System.Windows;
 
 namespace DoitForFree.DAL
 {
+    /// <summary>
+    /// 基于工厂设计模式编写独立于特定数据库的数据库操作代码
+    /// 根据配置文件里面的 providerName 信息来区别是哪一种数据库
+    /// </summary>
     internal class DbHelper
     {
         //provider

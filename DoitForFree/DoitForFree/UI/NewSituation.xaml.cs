@@ -89,6 +89,14 @@ namespace DoitForFree.UI
                         MessageBox.Show("标题为必填信息！");
                         return;
                     }
+                    foreach(MSituation s in situationList)
+                    {
+                        if(tbx标题.Text.Trim() == s.MName)
+                        {
+                            MessageBox.Show("该情境已经存在！", "警告！", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                    }
                     if (WType == "修改")
                     {
                         string preSituationName = null;

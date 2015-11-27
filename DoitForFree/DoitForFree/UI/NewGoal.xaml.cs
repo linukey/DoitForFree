@@ -41,8 +41,9 @@ namespace DoitForFree.UI
             this.goalList = goalList;
         }
         //修改现有目标的时候
-        public NewGoal(string title, string discription, string enddate)
+        public NewGoal(List<MGoal> goalList, string title, string discription, string enddate)
         {
+            this.goalList = goalList;
             WType = WindowType.修改.ToString();
             preTitle = title;
             InitializeComponent();
@@ -106,6 +107,15 @@ namespace DoitForFree.UI
                     MessageBox.Show("标题、截止时间为必填信息！");
                     return;
                 }
+                foreach(MGoal g in goalList)
+                {
+                    if(g.MName == tbx标题.Text.Trim())
+                    {
+                        MessageBox.Show("该目标已经存在！", "警告！", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
                 MGoal goal = new MGoal();
                 goal.MName = tbx标题.Text.Trim();
                 goal.MDiscription = tbx描述.Text.Trim();

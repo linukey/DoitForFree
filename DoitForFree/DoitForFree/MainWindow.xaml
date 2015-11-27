@@ -34,11 +34,8 @@
                 <UI:ImageButton x:Name="btnMin" Width="27" Height="26" ImagePath="Images/最小化.png" Template="{StaticResource imageButton}" Click="btnMin_Click" />
                 <UI:ImageButton x:Name="btnMenu" Width="27" Height="26" ImagePath="Images/设置菜单.png" Template="{StaticResource imageButton}" Click="btnMenu_Click">
                     <UI:ImageButton.ContextMenu>
-                        <ContextMenu Name="downMenu" Width="200" Placement="MousePoint" BorderBrush="AliceBlue" BorderThickness="1">
-                            <MenuItem Header="设置" Template="{StaticResource downMenu}"/>
-                            <MenuItem Header="计划于回顾" Template="{StaticResource downMenu}"/>
-                            <MenuItem Header="新增" Template="{StaticResource downMenu}"/>
-                            <MenuItem Header="退出账户" Template="{StaticResource downMenu}"/>
+                        <ContextMenu Name="downMenu" Width="100" Placement="Mouse" BorderBrush="AliceBlue" BorderThickness="1">
+                            <MenuItem Header="退出账户" Template="{StaticResource downMenu}" Click="MenuItem退出账户_Click" />
                         </ContextMenu>
                     </UI:ImageButton.ContextMenu>
                 </UI:ImageButton>

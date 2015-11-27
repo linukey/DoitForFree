@@ -8,6 +8,9 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using IDoitPlug;
+using System.IO;
+using System.Reflection;
 
 namespace DoitForFree
 {
@@ -19,6 +22,7 @@ namespace DoitForFree
             InitializeComponent();
             Resource.userName = "linukey";
 
+            InitPlug();         //初始化外部查件
             InitProjectList();  //初始化项目列表
             InitSituationList();//初始化情境列表
             InitGoalList();     //初始化目标列表
@@ -176,14 +180,14 @@ namespace DoitForFree
                     }
                 }
             }
-            else if(judge == null)
+            else if (judge == null)
             {
                 WrapPanel parentWrap = (WrapPanel)curSelectMenuButton.Parent;
                 curNode = curSelectMenuButton.Name;
                 foreach (MTask task in taskList)
                 {
                     if (parentWrap.Name == (curMenu = "wp所有项目"))
-                    {                      
+                    {
                         if (task.MProject == curSelectMenuButton.Name && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                         {
                             j.Add(task.MStartDate.ToString());
@@ -191,7 +195,7 @@ namespace DoitForFree
                         }
                     }
                     else if (parentWrap.Name == (curMenu = "wp所有情境"))
-                    {        
+                    {
                         if (task.MSituation == curSelectMenuButton.Name && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                         {
                             j.Add(task.MStartDate.ToString());
@@ -199,7 +203,7 @@ namespace DoitForFree
                         }
                     }
                     else if (parentWrap.Name == (curMenu = "wp所有目标"))
-                    {                                          
+                    {
                         if (task.MGoal == curSelectMenuButton.Name && task.MState.ToString() == "未完成" && !j.Contains(task.MStartDate.ToString()))
                         {
                             j.Add(task.MStartDate.ToString());
@@ -474,14 +478,14 @@ namespace DoitForFree
                 }
             }
         }
-        //新任务
+        //新窗口
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             MenuButton button = (MenuButton)sender;
 
             if (button.Text == "新任务")
             {
-                NewTask window = new NewTask(projectList, goalList, situationList);
+                NewTask window = new NewTask(taskList, projectList, goalList, situationList);
                 window.Closing += Window_Closing;
                 window.Show();
             }
@@ -506,14 +510,14 @@ namespace DoitForFree
             else if (button.Text == "编辑项目")
             {
                 MProject project = new ProjectBAL().Select(curNode);
-                NewProject window = new NewProject(project.MName, project.MDiscription, project.MEndDate.ToString("yyyy-MM-dd"));
+                NewProject window = new NewProject(projectList, project.MName, project.MDiscription, project.MEndDate.ToString("yyyy-MM-dd"));
                 window.Closing += Window_Closing;
                 window.Show();
             }
             else if (button.Text == "编辑目标")
             {
                 MGoal goal = new GoalBAL().Select(curNode);
-                NewGoal window = new NewGoal(goal.MName, goal.MDiscription, goal.MEndDate.ToString("yyyy-MM-dd"));
+                NewGoal window = new NewGoal(goalList, goal.MName, goal.MDiscription, goal.MEndDate.ToString("yyyy-MM-dd"));
                 window.Closing += Window_Closing;
                 window.Show();
             }
@@ -525,14 +529,17 @@ namespace DoitForFree
             }
             else if (button.Text == "清空垃圾箱")
             {
-                foreach (MTask task in taskList)
+                if (MessageBox.Show("是否要清空垃圾箱？", "询问！", MessageBoxButton.YesNo).GetHashCode() == 6)
                 {
-                    if (task.MState.ToString() == "垃圾箱")
+                    foreach (MTask task in taskList)
                     {
-                        new TaskBAL().Delete(task.MName, Resource.userName);
+                        if (task.MState.ToString() == "垃圾箱")
+                        {
+                            new TaskBAL().Delete(task.MName, Resource.userName);
+                        }
                     }
+                    Window_Closing(null, null);
                 }
-                Window_Closing(null, null);
             }
             else if (button.Text == "删除项目")
             {
@@ -616,33 +623,27 @@ namespace DoitForFree
             InitGoalList();
             InitTaskList();
             #endregion
-
             #region 数据修改同步UI
             if (curMenu == "今日待办" || curMenu == "正在行动" || curMenu == "收集箱" || curMenu == "过期" || curMenu == "已完成" || curMenu == "垃圾箱")
             {
                 MenuButton button = (MenuButton)spMenu.FindName("menu" + curMenu);
                 InitTitleButton(curMenu, button);
             }
-            else if (curMenu == "menu所有项目")
+            //通过模拟菜单的两次单击来刷新数据
+            else if (curMenu == "menu所有项目" || curMenu == "wp所有项目")
             {
-                MenuButton button = (MenuButton)spMenu.FindName("menu所有项目");
-                WrapPanel wp = (WrapPanel)spMenu.FindName("wp所有项目");
-                InitMenuButton(projectList, button, wp);
-                InitMenuButton(projectList, button, wp);
+                menu所有项目_Click(null, null);
+                menu所有项目_Click(null, null);
             }
-            else if (curMenu == "menu所有目标")
+            else if (curMenu == "menu所有目标" || curMenu == "wp所有目标")
             {
-                MenuButton button = (MenuButton)spMenu.FindName("menu所有目标");
-                WrapPanel wp = (WrapPanel)spMenu.FindName("wp所有目标");
-                InitMenuButton(projectList, button, wp);
-                InitMenuButton(projectList, button, wp);
+                menu所有目标_Click(null, null);
+                menu所有目标_Click(null, null);
             }
-            else if (curMenu == "menu所有情境")
+            else if (curMenu == "menu所有情境" || curMenu == "wp所有情境")
             {
-                MenuButton button = (MenuButton)spMenu.FindName("menu所有情境");
-                WrapPanel wp = (WrapPanel)spMenu.FindName("wp所有情境");
-                InitMenuButton(projectList, button, wp);
-                InitMenuButton(projectList, button, wp);
+                menu所有情境_Click(null, null);
+                menu所有情境_Click(null, null);
             }
             #endregion
         }
@@ -746,7 +747,7 @@ namespace DoitForFree
             {
                 if (task.MName == ((TitleNodeButton)sender).Title)
                 {
-                    NewTask window = new NewTask(projectList, goalList, situationList, task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
+                    NewTask window = new NewTask(taskList, projectList, goalList, situationList, task.MName, task.MDiscription, task.MEndDate.ToString("yyyy-MM-dd hh:mm:ss"), task.MType.ToString(), task.MProject, task.MGoal, task.MSituation);
                     window.Closing += Window_Closing;
                     window.Show();
                     break;
@@ -754,5 +755,52 @@ namespace DoitForFree
             }
         }
         #endregion
+
+        #region 插件处理
+        #region 外部插件处理，通过反射机制加载外部插件
+        private void InitPlug()
+        {
+            string[] files = Directory.GetFiles("Plugs", "*.dll");
+            foreach (string file in files)
+            {
+                Assembly asm = Assembly.LoadFile(Directory.GetCurrentDirectory() + "/" + file);
+                Type[] types = asm.GetExportedTypes();
+                foreach (Type type in types)
+                {
+                    Type p = typeof(IPlug);
+                    if (p.IsAssignableFrom(type) && !type.IsAbstract && !type.IsInterface)
+                    {
+                        IPlug plug = (IPlug)Activator.CreateInstance(type);
+                        MenuItem button = new MenuItem();
+                        button.Template = (ControlTemplate)FindResource("downMenu");
+                        button.Header = plug.Name;
+                        button.Click += MenuItem_Click;
+                        button.Tag = plug;
+                        downMenu.Items.Add(button);
+                    }
+                }
+            }
+        }
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            IPlug plug = (IPlug)((MenuItem)sender).Tag;
+            plug.Execute(Resource.userName);
+        }
+        #endregion
+
+        #region 内部插件处理
+        //退出账户
+        private void MenuItem退出账户_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("是否要退出此账户？", "退出！", MessageBoxButton.OKCancel, MessageBoxImage.Question).GetHashCode() == 1)
+            {
+                new Login().Show();
+                this.Close();
+            }
+        }
+        #endregion
+        #endregion
+
+
     }
 }

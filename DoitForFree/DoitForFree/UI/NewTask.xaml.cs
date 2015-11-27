@@ -14,6 +14,7 @@ namespace DoitForFree.UI
     public partial class NewTask : Window
     {
         #region 字段
+        private List<MTask> taskList = null;
         private List<MProject> projectList = null;
         private List<MGoal> goalList = null;
         private List<MSituation> situationList = null;
@@ -31,20 +32,22 @@ namespace DoitForFree.UI
             //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
         }
         //添加任务
-        public NewTask(List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList)
+        public NewTask(List<MTask> taskList, List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList)
         {
             WType = WindowType.添加.ToString();
             InitializeComponent();
             //btn确定.IsEnabled = false;
             //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Execute(Checkbtn确定));
+            this.taskList = taskList;
             this.projectList = projectList;
             this.goalList = goalList;
             this.situationList = situationList;
         }
         //修改任务
-        public NewTask(List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList, string title, string discription, string enddate, string type, string project, string goal, string situation)
+        public NewTask(List<MTask> taskList, List<MProject> projectList, List<MGoal> goalList, List<MSituation> situationList, string title, string discription, string enddate, string type, string project, string goal, string situation)
         {
             WType = WindowType.修改.ToString();
+            this.taskList = taskList;
             this.projectList = projectList;
             this.goalList = goalList;
             this.situationList = situationList;
@@ -178,6 +181,14 @@ namespace DoitForFree.UI
                 {
                     MessageBox.Show("标题、类型、截止时间为必填信息！");
                     return;
+                }
+                foreach(MTask t in taskList)
+                {
+                    if(t.MName == tbx标题.Text.Trim())
+                    {
+                        MessageBox.Show("该任务已经存在！", "警告!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                 }
 
                 MTask task = new MTask();

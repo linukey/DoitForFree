@@ -41,8 +41,9 @@ namespace DoitForFree.UI
             this.projectList = projectList;
         }
         //修改项目时
-        public NewProject(string title, string discription, string enddate)
+        public NewProject(List<MProject> projectList, string title, string discription, string enddate)
         {
+            this.projectList = projectList;
             WType = WindowType.修改.ToString();
             preTitle = title;
             InitializeComponent();
@@ -106,7 +107,14 @@ namespace DoitForFree.UI
                     MessageBox.Show("标题、截止时间为必填信息！");
                     return;
                 }
-
+                foreach(MProject p in projectList)
+                {
+                    if(p.MName == tbx标题.Text.Trim())
+                    {
+                        MessageBox.Show("该项目已经存在！", "警告！", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
                 MProject project = new MProject();
                 project.MName = tbx标题.Text.Trim();
                 project.MDiscription = tbx描述.Text.Trim();
