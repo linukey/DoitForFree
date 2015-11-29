@@ -47,9 +47,9 @@ namespace PSendBUG
         }
         #endregion
 
-        public void Execute(string userName)
+        public void Execute(string userName, string version, string providername, string conStr)
         {
-            new BugInfo().Show();
+            new BugInfo(providername,conStr).Show();
         }
     }
 }

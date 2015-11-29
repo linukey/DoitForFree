@@ -10,8 +10,6 @@ namespace PUpdate
     {
         public Update()
         {
-            providername = "System.Data.SqlClient";
-            conStr = "server=(local);integrated security=SSPI;database=DoitDB";
             name = "检查更新!";
             discription = "检查更新！";
         }
@@ -19,8 +17,6 @@ namespace PUpdate
         #region 字段
         private string name;
         private string discription;
-        private string providername;
-        private string conStr;
 
         public string Name
         {
@@ -49,7 +45,7 @@ namespace PUpdate
         }
         #endregion
 
-        public void Execute(string userName)
+        public void Execute(string userName, string version, string providername, string conStr)
         {
             string cmdStr1 = "select * from T_update where 用户编码=@user";
             string cmdStr2 = "select * from T_update where 用户编码=@doit";
@@ -98,16 +94,16 @@ namespace PUpdate
                 {
                     DataRow rowUser = dtUser.Rows[0];
                     DataRow rowDoit = dtDoit.Rows[0];
-                    if ((DateTime)rowUser["最后一次更新时间"] < (DateTime)rowDoit["最后一次更新时间"])
+                    if ((DateTime)rowUser[1] < (DateTime)rowDoit[1])
                     {
                         if (MessageBox.Show("检测到新版本，是否进行更新？", "更新！", MessageBoxButtons.OKCancel, MessageBoxIcon.Information).GetHashCode() == 1)
                         {
-                            new ToCheck(rowDoit["下载地址"].ToString()).Show();
+                            new ToCheck(rowDoit[2].ToString()).Show();
                         }
                     }
                     else
                     {
-                        MessageBox.Show("您的版本已经是最新版本，无需更新！", "更新", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("您的版本已经是最新版本，无需更新！\n目前版本：" + version, "更新", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else

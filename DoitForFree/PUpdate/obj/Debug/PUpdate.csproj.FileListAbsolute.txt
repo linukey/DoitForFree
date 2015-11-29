@@ -1,0 +1,9 @@
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\bin\Debug\PUpdate.dll
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\bin\Debug\PUpdate.pdb
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\bin\Debug\IDoitPlug.dll
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\bin\Debug\IDoitPlug.pdb
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\obj\Debug\PUpdate.csprojResolveAssemblyReference.cache
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\obj\Debug\PUpdate.ToCheck.resources
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\obj\Debug\PUpdate.csproj.GenerateResource.Cache
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\obj\Debug\PUpdate.dll
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PUpdate\obj\Debug\PUpdate.pdb

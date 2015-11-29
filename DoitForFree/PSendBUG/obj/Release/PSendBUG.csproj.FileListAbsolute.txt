@@ -1,0 +1,9 @@
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\bin\Release\PSendBUG.dll
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\bin\Release\PSendBUG.pdb
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\bin\Release\IDoitPlug.dll
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\bin\Release\IDoitPlug.pdb
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\obj\Release\PSendBUG.csprojResolveAssemblyReference.cache
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\obj\Release\PSendBUG.BugInfo.resources
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\obj\Release\PSendBUG.csproj.GenerateResource.Cache
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\obj\Release\PSendBUG.dll
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\PSendBUG\obj\Release\PSendBUG.pdb

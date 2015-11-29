@@ -1,6 +1,7 @@
 ﻿using DoitForFree.BAL;
 using DoitForFree.Model;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DoitForFree.UI
@@ -19,8 +20,16 @@ namespace DoitForFree.UI
             InitializeComponent();
         }
         #endregion
-
+        
         #region 窗体处理
+        //回车事件
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnLogin_Click(null, null);
+            }
+        }
         //窗体移动
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -97,5 +106,6 @@ namespace DoitForFree.UI
             else MessageBox.Show("请正确填写登录信息！");
         }
         #endregion
+
     }
 }

@@ -13,10 +13,10 @@ namespace DoitForFree.DAL
     internal class DbHelper
     {
         //provider
-        public static readonly string provider = ConfigurationManager.ConnectionStrings[0].ProviderName;
+        public static readonly string provider = ConfigurationManager.ConnectionStrings["conStr"].ProviderName;
 
         #region 获取连接字符串
-        private static string getConnectionStringByProvider(string provider)
+        internal static string getConnectionStringByProvider(string provider)
         {
             string connStr = null;
             if (provider != null)

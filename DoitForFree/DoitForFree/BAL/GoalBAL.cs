@@ -73,10 +73,6 @@ namespace DoitForFree.BAL
             discription.ParameterName = "@discription";
             discription.Value = p.MDiscription;
 
-            //DbParameter startdate = factory.CreateParameter();
-            //startdate.ParameterName = "@startdate";
-            //startdate.Value = p.MStartDate;
-
             DbParameter enddate = factory.CreateParameter();
             enddate.ParameterName = "@enddate";
             enddate.Value = p.MEndDate;
@@ -111,11 +107,11 @@ namespace DoitForFree.BAL
             {
                 p = new MGoal();
                 DataRow row = dt.Rows[0];
-                p.MName = row["目标名称"].ToString();
-                p.MDiscription = row["目标描述"].ToString();
-                p.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                p.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                p.MUser = row["用户编码"].ToString();
+                p.MName = row[1].ToString();
+                p.MDiscription = row[2].ToString();
+                p.MStartDate = DateTime.Parse(row[3].ToString());
+                p.MEndDate = DateTime.Parse(row[4].ToString());
+                p.MUser = row[5].ToString();
             }
             return p;
         }

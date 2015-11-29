@@ -4,6 +4,7 @@ using DoitForFree.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using IDoitPlug;
 using System.IO;
 using System.Reflection;
+using DoitForFree.DAL;
 
 namespace DoitForFree
 {
@@ -20,7 +22,6 @@ namespace DoitForFree
         public MainWindow()
         {
             InitializeComponent();
-            Resource.userName = "linukey";
 
             InitPlug();         //初始化外部查件
             InitProjectList();  //初始化项目列表
@@ -289,6 +290,7 @@ namespace DoitForFree
         private void LeftMenuButtonNode_Click(object sender, RoutedEventArgs e)
         {
             InitTitleButton(null, sender as MenuButton);
+            InitNewButton(null, curMenu);
         }
         #endregion
 
@@ -303,11 +305,11 @@ namespace DoitForFree
                 foreach (DataRow row in dt.Rows)
                 {
                     MProject m = new MProject();
-                    m.MName = row["项目名称"].ToString();
-                    m.MDiscription = row["项目描述"].ToString();
-                    m.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                    m.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                    m.MUser = row["用户编码"].ToString();
+                    m.MName = row[1].ToString();
+                    m.MDiscription = row[2].ToString();
+                    m.MStartDate = DateTime.Parse(row[3].ToString());
+                    m.MEndDate = DateTime.Parse(row[4].ToString());
+                    m.MUser = row[5].ToString();
                     projectList.Add(m);
                 }
             }
@@ -320,7 +322,7 @@ namespace DoitForFree
             if (dt != null && dt.Rows.Count > 0)
             {
                 DataRow row = dt.Rows[0];
-                string str = row["情境名称"].ToString();
+                string str = row[1].ToString();
                 int start = 0;
                 for (int i = 0; i < str.Length; i++)
                 {
@@ -329,7 +331,7 @@ namespace DoitForFree
                         MSituation s = new MSituation();
                         s.MName = str.Substring(start, i - start);
                         s.MUser = Resource.userName;
-                        situationList.Add(s);
+                        if (s.MName != "") situationList.Add(s);
                         start = i + 1;
                     }
                     else if (i + 1 == str.Length && start != str.Length)
@@ -353,11 +355,11 @@ namespace DoitForFree
                 foreach (DataRow row in dt.Rows)
                 {
                     MGoal g = new MGoal();
-                    g.MName = row["目标名称"].ToString();
-                    g.MDiscription = row["目标描述"].ToString();
-                    g.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                    g.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                    g.MUser = row["用户编码"].ToString();
+                    g.MName = row[1].ToString();
+                    g.MDiscription = row[2].ToString();
+                    g.MStartDate = DateTime.Parse(row[3].ToString());
+                    g.MEndDate = DateTime.Parse(row[4].ToString());
+                    g.MUser = row[5].ToString();
                     goalList.Add(g);
                 }
             }
@@ -372,16 +374,16 @@ namespace DoitForFree
                 foreach (DataRow row in dt.Rows)
                 {
                     MTask t = new MTask();
-                    t.MName = row["任务名称"].ToString();
-                    t.MDiscription = row["任务描述"].ToString();
-                    t.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                    t.MEndDate = DateTime.Parse(row["截止时间"].ToString());
-                    t.MType = MTask.stringToTaskType(row["类型"].ToString());
-                    t.MSituation = row["所属情境"].ToString();
-                    t.MProject = row["所属项目"].ToString();
-                    t.MGoal = row["所属目标"].ToString();
-                    t.MState = MTask.stringToTaskState(row["状态"].ToString());
-                    t.MUser = row["用户编码"].ToString();
+                    t.MName = row[1].ToString();
+                    t.MDiscription = row[2].ToString();
+                    t.MStartDate = DateTime.Parse(row[3].ToString());
+                    t.MEndDate = DateTime.Parse(row[4].ToString());
+                    t.MType = MTask.stringToTaskType(row[5].ToString());
+                    t.MSituation = row[6].ToString();
+                    t.MProject = row[7].ToString();
+                    t.MGoal = row[8].ToString();
+                    t.MState = MTask.stringToTaskState(row[9].ToString());
+                    t.MUser = row[10].ToString();
                     taskList.Add(t);
                 }
             }
@@ -454,7 +456,7 @@ namespace DoitForFree
                         MenuButton m1 = new MenuButton();
                         if (judge == "wp所有项目") m1.Text = "编辑项目";
                         else if (judge == "wp所有目标") m1.Text = "编辑目标";
-                        else if (judge == "wp所有情境") m1.Text = "编辑情境";
+                        else if (judge == "wp所有情境" || judge == "menu所有情境") m1.Text = "编辑情境";
                         else if (judge == "已完成") m1.Text = "完成任务";
                         m1.ImagePath = @"Images/新项目.png";
                         m1.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
@@ -467,7 +469,7 @@ namespace DoitForFree
                     MenuButton m2 = new MenuButton();
                     if (judge == "wp所有项目") m2.Text = "删除项目";
                     else if (judge == "wp所有目标") m2.Text = "删除目标";
-                    else if (judge == "wp所有情境") m2.Text = "删除情境";
+                    else if (judge == "wp所有情境" || judge == "menu所有情境") m2.Text = "删除情境";
                     else if (judge == "已完成") m2.Text = "删除任务";
                     m2.ImagePath = @"Images/新项目.png";
                     m2.Template = (ControlTemplate)FindResource("MenuButton添加按钮");
@@ -784,7 +786,7 @@ namespace DoitForFree
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             IPlug plug = (IPlug)((MenuItem)sender).Tag;
-            plug.Execute(Resource.userName);
+            plug.Execute(Resource.userName, ConfigurationManager.AppSettings.GetValues("version")[0], DbHelper.provider, DbHelper.getConnectionStringByProvider(DbHelper.provider));
         }
         #endregion
 
@@ -800,7 +802,6 @@ namespace DoitForFree
         }
         #endregion
         #endregion
-
 
     }
 }

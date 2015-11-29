@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" BorderBrush="AliceBlue" BorderThickness="5"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" BorderBrush="AliceBlue" Topmost="True" BorderThickness="5" Background="AliceBlue" KeyDown="Window_KeyDown"
         xmlns:local="clr-namespace:DoitForFree.UI" Icon="../Images/icon.ico" MaxHeight="270" MinHeight="270" MaxWidth="350" MinWidth="350" WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Height="270" Width="350" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" AllowsTransparency="True" Background="#FFFFFF">
+        mc:Ignorable="d" Height="270" Width="350" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" AllowsTransparency="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +14,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="40" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -26,24 +26,24 @@
             <!--设置-->
             <local:ImageButton x:Name="btnMenu" Width="27" Height="26" ImagePath="Images/设置菜单.png" Template="{StaticResource imageButton}" Click="btnMenu_Click">
                 <local:ImageButton.ContextMenu>
-                    <ContextMenu Name="downMenu" Width="200" Placement="MousePoint" BorderBrush="AliceBlue" BorderThickness="1">
+                    <ContextMenu Name="downMenu" Width="200" Placement="Mouse" BorderBrush="AliceBlue" BorderThickness="1">
                         <MenuItem Header="注册" Template="{StaticResource downMenu}" Click="MenuItem_Click"/>
-                        <MenuItem Header="忘记密码" Template="{StaticResource downMenu}"/>
+                        <!--<MenuItem Header="忘记密码" Template="{StaticResource downMenu}"/>-->
                     </ContextMenu>
                 </local:ImageButton.ContextMenu>
             </local:ImageButton>
         </StackPanel>
-        
+
         <!--用户名-->
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <local:MenuButton x:Name="btnUser" Width="300" Height="40" ImagePath="../Images/LoginUser.png" Text="用户名" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus"/>
         </Grid>
-        
+
         <!--密码-->
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <local:MenuButton x:Name="btnPwd" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Text="密码" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus" />
         </Grid>
-        
+
         <!--登录-->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Name="btnLogin" Width="50" Height="50" Content="登录" Margin="0" Style="{StaticResource LoginBtn}" Click="btnLogin_Click" />

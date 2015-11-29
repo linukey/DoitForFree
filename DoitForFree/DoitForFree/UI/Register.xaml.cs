@@ -5,6 +5,8 @@ using System.Windows.Input;
 using DoitForFree.BAL;
 using System.Text.RegularExpressions;
 using DoitForFree.Model;
+using System.Data.Common;
+using DoitForFree.DAL;
 
 namespace DoitForFree.UI
 {
@@ -32,8 +34,8 @@ namespace DoitForFree.UI
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    checkEmail.Add(row["邮箱"].ToString());
-                    checkUsername.Add(row["用户编码"].ToString());
+                    checkEmail.Add(row[3].ToString());
+                    checkUsername.Add(row[1].ToString());
                 }
             }
         }
@@ -69,8 +71,29 @@ namespace DoitForFree.UI
                 //初始化用户默认情境
                 MSituation userS = new MSituation();
                 userS.MName = "家里;办公室;外出;";
-                userS.MUser = Resource.userName;
+                userS.MUser = btnUser.Text.Trim();
                 new SituationBAL().Add(userS);
+                //初始化当前版本
+                DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
+                string cmdStr = "insert into T_update(最后一次更新时间,用户编码) values(@date, @user)";
+                using (DbConnection conn = factory.CreateConnection())
+                {
+                    conn.ConnectionString = DbHelper.getConnectionStringByProvider(DbHelper.provider);
+                    DbCommand cmd = factory.CreateCommand();
+                    cmd.CommandText = cmdStr;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    DbParameter date = factory.CreateParameter();
+                    date.ParameterName = "@date";
+                    date.Value = "2015-11-28";
+                    cmd.Parameters.Add(date);
+                    DbParameter u = factory.CreateParameter();
+                    u.ParameterName = "@user";
+                    u.Value = btnUser.Text.Trim();
+                    cmd.Parameters.Add(u);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
 
                 MessageBox.Show("注册成功！");
                 this.Close();

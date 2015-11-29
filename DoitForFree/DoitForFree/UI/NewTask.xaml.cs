@@ -182,12 +182,15 @@ namespace DoitForFree.UI
                     MessageBox.Show("标题、类型、截止时间为必填信息！");
                     return;
                 }
-                foreach(MTask t in taskList)
+                if (WType == "添加")
                 {
-                    if(t.MName == tbx标题.Text.Trim())
+                    foreach (MTask t in taskList)
                     {
-                        MessageBox.Show("该任务已经存在！", "警告!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
+                        if (t.MName == tbx标题.Text.Trim())
+                        {
+                            MessageBox.Show("该任务已经存在！", "警告!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                     }
                 }
 

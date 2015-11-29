@@ -68,8 +68,8 @@ namespace DoitForFree.BAL
             if(dt != null)
             {
                 DataRow row = dt.Rows[0];
-                s.MName = row["情境名称"].ToString();
-                s.MUser = row["用户编码"].ToString();
+                s.MName = row[1].ToString();
+                s.MUser = row[2].ToString();
             }
             return s;
         }

@@ -13,6 +13,6 @@ namespace IDoitPlug
     {
         string Name { set; get; }
         string Discription { set; get; }
-        void Execute(string userName = null);
+        void Execute(string userName = null, string version = null, string providername = null, string conStr = null);
     }
 }

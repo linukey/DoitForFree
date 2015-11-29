@@ -2,6 +2,7 @@
 using DoitForFree.Model;
 using System.Data;
 using System.Data.Common;
+using System.Windows;
 
 namespace DoitForFree.BAL
 {
@@ -65,22 +66,22 @@ namespace DoitForFree.BAL
         }
         #endregion
         #region Select
-        public MUser Select(string n)
+        public MUser Select(string name)
         {
             string cmdStr = "select * from T_user where 用户编码=@user";
             DbProviderFactory factory = DbProviderFactories.GetFactory(DbHelper.provider);
             DbParameter user = factory.CreateParameter();
             user.ParameterName = "@user";
-            user.Value = n;
+            user.Value = name;
             DataTable dt = new UserDAL().Select(cmdStr, user);
             MUser s = null;
             if (dt != null)
             {
                 s = new MUser();
                 DataRow row = dt.Rows[0];
-                s.MEmail = row["邮箱"].ToString();
-                s.MPwd = row["密码"].ToString();
-                s.MName = row["用户编码"].ToString();
+                s.MEmail = row[3].ToString();
+                s.MPwd = row[2].ToString();
+                s.MName = row[1].ToString();
             }
             return s;
         }

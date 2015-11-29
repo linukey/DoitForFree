@@ -267,23 +267,23 @@ namespace DoitForFree.BAL
             {
                 t = new MTask();
                 DataRow row = dt.Rows[0];
-                t.MName = row["任务名称"].ToString();
-                t.MDiscription = row["任务描述"].ToString();
-                t.MStartDate = DateTime.Parse(row["开始时间"].ToString());
-                t.MEndDate = DateTime.Parse(row["截止时间"].ToString());
+                t.MName = row[1].ToString();
+                t.MDiscription = row[2].ToString();
+                t.MStartDate = DateTime.Parse(row[3].ToString());
+                t.MEndDate = DateTime.Parse(row[4].ToString());
 
-                if (row["类型"].ToString() == "今日待办") t.MType = MTask.TaskType.今日待办;
-                else if (row["类型"].ToString() == "正在行动") t.MType = MTask.TaskType.正在行动;
-                else if (row["类型"].ToString() == "过期") t.MType = MTask.TaskType.过期;
+                if (row[5].ToString() == "今日待办") t.MType = MTask.TaskType.今日待办;
+                else if (row[5].ToString() == "正在行动") t.MType = MTask.TaskType.正在行动;
+                else if (row[5].ToString() == "过期") t.MType = MTask.TaskType.过期;
                 else t.MType = MTask.TaskType.收集箱;
 
-                t.MSituation = row["所属情境"].ToString();
-                t.MProject = row["所属项目"].ToString();
-                t.MGoal = row["所属目标"].ToString();
-                t.MSituation = row["用户编码"].ToString();
+                t.MSituation = row[6].ToString();
+                t.MProject = row[7].ToString();
+                t.MGoal = row[8].ToString();
+                t.MSituation = row[10].ToString();
 
-                if (row["状态"].ToString() == "已完成") t.MState = MTask.TaskState.已完成;
-                else if (row["状态"].ToString() == "未完成") t.MState = MTask.TaskState.未完成;
+                if (row[9].ToString() == "已完成") t.MState = MTask.TaskState.已完成;
+                else if (row[9].ToString() == "未完成") t.MState = MTask.TaskState.未完成;
                 else t.MState = MTask.TaskState.垃圾箱;
             }
             return t;

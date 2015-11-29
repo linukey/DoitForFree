@@ -6,7 +6,7 @@ namespace DoitForFree.UI
     /// <summary>
     /// 用于存在图片和文字的按钮
     /// </summary>
-    class MenuButton : Button, INotifyPropertyChanged
+    internal class MenuButton : Button, INotifyPropertyChanged
     {
         private string imagePath;
         private string text;
@@ -27,7 +27,6 @@ namespace DoitForFree.UI
                 }
             }
         }
-
         public string Text
         {
             get

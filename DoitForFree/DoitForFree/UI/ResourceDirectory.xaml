@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    
                     xmlns:local="clr-namespace:DoitForFree.UI">
     <!--图像按钮-->
     <ControlTemplate x:Key="imageButton" TargetType="Button">
@@ -142,7 +143,7 @@
 
     <!--登录填写框-->
     <ControlTemplate x:Key="LoginTbx1" TargetType="local:MenuButton">
-        <Border BorderThickness="1" BorderBrush="Gray">
+        <Border BorderThickness="1" BorderBrush="Gray" Background="White">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Rectangle Height="18" Width="18" Margin="2">
                     <Rectangle.Fill>
@@ -153,15 +154,16 @@
             </StackPanel>
         </Border>
     </ControlTemplate>
+    <!--密码框-->
     <ControlTemplate x:Key="LoginTbx2" TargetType="local:MenuButton">
         <Border BorderThickness="1" BorderBrush="Gray">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Rectangle Height="18" Width="18" Margin="2">
                     <Rectangle.Fill>
-                        <ImageBrush ImageSource="{Binding ImagePath, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ImageBrush ImageSource="../Images/LoginPwd.png" />
                     </Rectangle.Fill>
                 </Rectangle>
-                <PasswordBox x:Name="tbx" Height="34" Width="245" PasswordChar="*" Password="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" />
+                <PasswordBox Height="40" Width="245" BorderThickness="0" Padding="10" FontSize="12" local:PasswordBoxBindingHelper.IsPasswordBindingEnabled="True" local:PasswordBoxBindingHelper.BindedPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </Border>
     </ControlTemplate>
@@ -279,7 +281,7 @@
         <Setter Property="Width" Value="855" />
         <Setter Property="Margin" Value="5,1,5,1" />
     </Style>
-    
+
     <!--NewTask输入框样式-->
     <Style x:Key="TextBox输入" TargetType="TextBox">
         <Setter Property="FontSize" Value="16" />

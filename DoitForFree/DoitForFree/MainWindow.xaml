@@ -26,7 +26,7 @@
             <ColumnDefinition Width="245"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
+        
         <!--顶栏菜单-->
         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="#1162A0">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="5,5,15,5">

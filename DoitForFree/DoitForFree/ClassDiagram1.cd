@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DoitForFree.App" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAiRIIgIo0IAQhJIAQgAIYAIEQiAAADEIACEAhAE=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.BAL.GoalBAL" Collapsed="true">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BAL\GoalBAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.BAL.ProjectBAL" Collapsed="true">
+    <Position X="5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BAL\ProjectBAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.BAL.SituationBAL" Collapsed="true">
+    <Position X="6.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BAL\SituationBAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.BAL.TaskBAL" Collapsed="true">
+    <Position X="2" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAAAQAUAAAAAEAAEAAAEIAAAIQAAACAA=</HashCode>
+      <FileName>BAL\TaskBAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.BAL.UserBAL" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BAL\UserBAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.DAL.DbHelper" Collapsed="true">
+    <Position X="8" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAIAAAAAEAgACAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\DbHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.DAL.GoalDAL" Collapsed="true">
+    <Position X="3.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DAL\GoalDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.DAL.ProjectDAL" Collapsed="true">
+    <Position X="5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DAL\ProjectDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.DAL.SituationDAL" Collapsed="true">
+    <Position X="6.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DAL\SituationDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.DAL.TaskDAL" Collapsed="true">
+    <Position X="2" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DAL\TaskDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.DAL.UserDAL" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DAL\UserDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.Model.MGoal" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="8.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>ABIAoAASAAAAAAAAAAAAgAAAAAAACAAAAAgAAAAAACA=</HashCode>
+      <FileName>Model\MGoal.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.Model.MProject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="8.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>ABIAoAASAAAAAAAAAAAAgAAAAAAACAAAAAgAAAAAACA=</HashCode>
+      <FileName>Model\MProject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.Model.MSituation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="8.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Model\MSituation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.Model.MTask" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="8.25" Width="1.25" />
+    <NestedTypes>
+      <Enum Name="DoitForFree.Model.MTask.TaskType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\MTask.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="DoitForFree.Model.MTask.TaskState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\MTask.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABIIoAASCAGAgAABCIAAgDAAAAAwCAAAAAgAAAAAACA=</HashCode>
+      <FileName>Model\MTask.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.Model.MUser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="8.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAABCAAAAQAAAAAAAAACAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Model\MUser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.201" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.Model.Resource" Collapsed="true">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Model\Resource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.Properties.Resources" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.Properties.Settings" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoitForFree.UI.ImageButton" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAIAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ImageButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.Login" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAABBAAAAgAAAAAACAAAAAAAgABAkAA=</HashCode>
+      <FileName>UI\Login.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.MenuButton" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAIAAgAAAAAAIAAAACAAAAAA=</HashCode>
+      <FileName>UI\MenuButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.NewGoal" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="DoitForFree.UI.NewGoal.WindowType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>UI\NewGoal.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQQAABAAAAAIAAAAAAAACAEAAAAAAgAAABAAAAEAAAQ=</HashCode>
+      <FileName>UI\NewGoal.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.NewProject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="DoitForFree.UI.NewProject.WindowType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>UI\NewProject.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQQAABAAAAAIAAAAAAAACAEAQAAAAAAAABAAAAEAAAQ=</HashCode>
+      <FileName>UI\NewProject.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.NewSituation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="DoitForFree.UI.NewSituation.WindowType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>UI\NewSituation.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAIACAEAAgAAAAAAABAAAAAAAAQ=</HashCode>
+      <FileName>UI\NewSituation.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.NewTask" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="DoitForFree.UI.NewTask.WindowType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>UI\NewTask.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQQAIAAAAAIIAAAAAAIACgEAYAAAAgAAABAAAAEAAAQ=</HashCode>
+      <FileName>UI\NewTask.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.Register" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAIAAABAAAAAAAAAAIACAAAAAAAgABAkAA=</HashCode>
+      <FileName>UI\Register.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.TitleButton" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAIAAgAQAAAAFgAAAAYAAAAA=</HashCode>
+      <FileName>UI\TitleButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DoitForFree.UI.TitleNodeButton" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAQAAAAEAAgCAAAIAggAAAgAAAAIAAAEAAAAA=</HashCode>
+      <FileName>UI\TitleButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="DoitForFree.Model.IMBase" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="7.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MBase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

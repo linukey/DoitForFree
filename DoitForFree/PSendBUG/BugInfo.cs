@@ -8,16 +8,14 @@ namespace PSendBUG
 {
     public partial class BugInfo : Form
     {
-        private string providername;
-        private string conStr;
-
-        public BugInfo()
+        public BugInfo(string providername, string conStr)
         {
             InitializeComponent();
-            providername = "System.Data.SqlClient";
-            conStr = "server=(local);integrated security=SSPI;database=DoitDB";
+            this.providername = providername;
+            this.conStr = conStr;
         }
-
+        private string providername;
+        private string conStr;
         //提交
         private void btnSubmit_Click(object sender, EventArgs e)
         {
