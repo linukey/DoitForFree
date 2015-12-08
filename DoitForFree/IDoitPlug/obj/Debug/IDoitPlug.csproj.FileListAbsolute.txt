@@ -2,3 +2,4 @@ C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\IDoitPlug\bin\Debug\IDoitPlu
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\IDoitPlug\bin\Debug\IDoitPlug.pdb
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\IDoitPlug\obj\Debug\IDoitPlug.dll
 C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\IDoitPlug\obj\Debug\IDoitPlug.pdb
+C:\Users\linukey\Desktop\DoitForFreeGIT\DoitForFree\IDoitPlug\obj\Debug\IDoitPlug.csprojResolveAssemblyReference.cache

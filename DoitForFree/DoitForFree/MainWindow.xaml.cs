@@ -22,7 +22,7 @@ namespace DoitForFree
         public MainWindow()
         {
             InitializeComponent();
-
+            Resource.userName = "linukey";
             InitPlug();         //初始化外部查件
             InitProjectList();  //初始化项目列表
             InitSituationList();//初始化情境列表
@@ -394,7 +394,7 @@ namespace DoitForFree
             //检测任务是否过期
             foreach (MTask task in taskList)
             {
-                if (task.MEndDate < DateTime.Now)
+                if (task.MEndDate.Month < DateTime.Now.Month && task.MEndDate.Day < DateTime.Now.Day)
                 {
                     new TaskBAL().UpdateTaskType(task.MName, "过期", Resource.userName);
                 }

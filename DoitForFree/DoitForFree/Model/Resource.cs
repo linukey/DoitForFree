@@ -3,6 +3,5 @@
     internal static class Resource
     {
         public static string userName;
-        public static string mSituation;
     }
 }

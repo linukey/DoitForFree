@@ -40,8 +40,16 @@
         </Grid>
 
         <!--密码-->
+        <!--<Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid>
+                <local:MenuButton x:Name="btnPwd" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Template="{StaticResource LoginTbx2}" />
+                <local:MenuButton x:Name="btnPwdTbx" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Text="密码" Template="{StaticResource LoginTbx1}" />
+            </Grid>
+        </Grid>-->
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <local:MenuButton x:Name="btnPwd" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Text="密码" Template="{StaticResource LoginTbx1}" LostFocus="btn_LostFocus" GotFocus="btn_GotFocus" />
+            <Grid>
+                <local:MenuButton x:Name="btnPwd" Width="300" Height="40" ImagePath="../Images/LoginPwd.png" Template="{StaticResource LoginTbx1}" GotFocus="btn_GotFocus" LostFocus="btn_LostFocus" />
+            </Grid>
         </Grid>
 
         <!--登录-->

@@ -104,8 +104,8 @@ namespace DoitForFree.UI
                 }
             }
             else MessageBox.Show("请正确填写登录信息！");
+            MessageBox.Show(btnPwd.Text.Trim());
         }
         #endregion
-
     }
 }

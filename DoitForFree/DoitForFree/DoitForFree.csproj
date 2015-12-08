@@ -93,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\PasswordBoxBingdingHelper.cs" />
     <Compile Include="UI\ImageButton.cs" />
     <Compile Include="UI\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -110,7 +111,6 @@
     <Compile Include="UI\NewTask.xaml.cs">
       <DependentUpon>NewTask.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\PasswordBoxBindingHelper.cs" />
     <Compile Include="UI\Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>

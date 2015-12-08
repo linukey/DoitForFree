@@ -156,14 +156,17 @@
     </ControlTemplate>
     <!--密码框-->
     <ControlTemplate x:Key="LoginTbx2" TargetType="local:MenuButton">
-        <Border BorderThickness="1" BorderBrush="Gray">
+        <Border BorderThickness="1" BorderBrush="Gray" Background="White">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Rectangle Height="18" Width="18" Margin="2">
                     <Rectangle.Fill>
                         <ImageBrush ImageSource="../Images/LoginPwd.png" />
                     </Rectangle.Fill>
                 </Rectangle>
-                <PasswordBox Height="40" Width="245" BorderThickness="0" Padding="10" FontSize="12" local:PasswordBoxBindingHelper.IsPasswordBindingEnabled="True" local:PasswordBoxBindingHelper.BindedPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <PasswordBox Name="pwd" Height="40" Width="245" BorderThickness="0" Padding="10" FontSize="12" PasswordChar="*"
+                  local:PasswordBoxBingdingHelper.IsPasswordBoxEnabled="True"
+                      local:PasswordBoxBingdingHelper.PasswordStore="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                </PasswordBox>
             </StackPanel>
         </Border>
     </ControlTemplate>
